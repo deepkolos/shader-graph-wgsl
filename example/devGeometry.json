@@ -1,0 +1,297 @@
+{
+  "id": "demo@0.1.0",
+  "nodes": {
+    "1": {
+      "id": 1,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 2,
+              "output": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "outputs": {},
+      "blocks": [
+        {
+          "id": 5,
+          "data": {
+            "baseColorValue": [
+              0,
+              0.8,
+              1
+            ],
+            "baseColorValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "baseColor": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "BaseColorBlock",
+          "contextId": 1
+        }
+      ],
+      "position": [
+        550,
+        0
+      ],
+      "name": "Fragment"
+    },
+    "2": {
+      "id": 2,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 1,
+              "input": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "id": 3,
+          "data": {
+            "positionValue": [
+              0,
+              0,
+              0
+            ],
+            "positionValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "position": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "PositionBlock",
+          "contextId": 2
+        },
+        {
+          "id": 4,
+          "data": {
+            "normalValue": [
+              0,
+              0,
+              0
+            ],
+            "normalValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "normal": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "NormalBlock",
+          "contextId": 2
+        }
+      ],
+      "position": [
+        550,
+        -300
+      ],
+      "name": "Vertex"
+    },
+    "6": {
+      "id": 6,
+      "data": {
+        "outValue": [
+          0,
+          0
+        ],
+        "outValueType": "vec2",
+        "channelValue": "UV0",
+        "exposed": true,
+        "expanded": true,
+        "preview": true,
+        "previewType": "2d"
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -242.28228024910547,
+        -229.69810622360754
+      ],
+      "name": "UV"
+    },
+    "11": {
+      "id": 11,
+      "data": {
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "spaceValue": "world",
+        "exposed": true,
+        "expanded": true,
+        "preview": true,
+        "previewType": "3d"
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        34.79242576474714,
+        -226.2983500884126
+      ],
+      "name": "Normal"
+    },
+    "21": {
+      "id": 21,
+      "data": {
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "spaceValue": "world",
+        "exposed": true,
+        "expanded": true,
+        "preview": true,
+        "previewType": "3d"
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        274.96952951667595,
+        168.82148903444332
+      ],
+      "name": "Position"
+    },
+    "34": {
+      "id": 34,
+      "data": {
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "spaceValue": "world",
+        "exposed": true,
+        "expanded": true,
+        "preview": true,
+        "previewType": "3d"
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -246.10611979166669,
+        142.48704020182294
+      ],
+      "name": "ViewVector"
+    },
+    "195": {
+      "id": 195,
+      "data": {
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "spaceValue": "world",
+        "exposed": true,
+        "expanded": true,
+        "previewType": "3d",
+        "preview": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        18.256482118813096,
+        166.88480439174964
+      ],
+      "name": "ViewDirection"
+    }
+  },
+  "parameters": [],
+  "UIState": {
+    "showMainPreview": true,
+    "showBlackBoard": false,
+    "showInspector": true
+  },
+  "type": "ShaderGraph",
+  "version": "0.0.0",
+  "setting": {
+    "template": "unlit",
+    "precision": "single",
+    "allowMaterialOverride": false,
+    "surfaceType": "opaque",
+    "blendingMode": "alpha",
+    "renderFace": "front",
+    "depthWrite": "auto",
+    "depthTest": "l equal",
+    "alphaClipping": false,
+    "castShadows": true
+  }
+}

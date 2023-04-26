@@ -1,0 +1,376 @@
+{
+  "id": "demo@0.1.0",
+  "nodes": {
+    "1": {
+      "id": 1,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 2,
+              "output": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "outputs": {},
+      "blocks": [
+        {
+          "id": 5,
+          "data": {
+            "baseColorValue": [
+              0,
+              0,
+              0
+            ],
+            "baseColorValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "baseColor": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "BaseColorBlock",
+          "contextId": 1
+        }
+      ],
+      "position": [
+        550,
+        0
+      ],
+      "name": "Fragment"
+    },
+    "2": {
+      "id": 2,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 1,
+              "input": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "id": 3,
+          "data": {
+            "positionValue": [
+              0,
+              0,
+              0
+            ],
+            "positionValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "position": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "PositionBlock",
+          "contextId": 2
+        },
+        {
+          "id": 4,
+          "data": {
+            "normalValue": [
+              0,
+              0,
+              0
+            ],
+            "normalValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "normal": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "NormalBlock",
+          "contextId": 2
+        }
+      ],
+      "position": [
+        550,
+        -300
+      ],
+      "name": "Vertex"
+    },
+    "6": {
+      "id": 6,
+      "data": {
+        "rValue": 0,
+        "rValueType": "float",
+        "gValue": 0,
+        "gValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "aValue": -0.64,
+        "aValueType": "float",
+        "rgbaValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rgbaValueType": "vec4",
+        "rgbValue": [
+          0,
+          0,
+          0
+        ],
+        "rgbValueType": "vec3",
+        "rgValue": [
+          0,
+          0
+        ],
+        "rgValueType": "vec2",
+        "expanded": true
+      },
+      "inputs": {
+        "r": {
+          "connections": []
+        },
+        "g": {
+          "connections": []
+        },
+        "b": {
+          "connections": []
+        },
+        "a": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "rgba": {
+          "connections": [
+            {
+              "node": 19,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        },
+        "rgb": {
+          "connections": []
+        },
+        "rg": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -382.2566186836709,
+        -195.31173142694664
+      ],
+      "name": "Combine"
+    },
+    "7": {
+      "id": 7,
+      "data": {
+        "inValue": 0,
+        "inValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "flipXValue": true,
+        "flipYValue": false,
+        "flipZValue": false,
+        "flipWValue": false,
+        "expanded": true,
+        "preview": true,
+        "flipXValueType": "bool",
+        "flipYValueType": "bool",
+        "flipZValueType": "bool",
+        "flipWValueType": "bool"
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 14,
+              "output": "r",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        227.26905797424973,
+        -208.99322502887605
+      ],
+      "name": "Flip"
+    },
+    "14": {
+      "id": 14,
+      "data": {
+        "inValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "inValueType": "vec4",
+        "rValue": 0,
+        "rValueType": "float",
+        "gValue": 0,
+        "gValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "aValue": 0,
+        "aValueType": "float",
+        "expanded": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 19,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "r": {
+          "connections": [
+            {
+              "node": 7,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        },
+        "g": {
+          "connections": []
+        },
+        "b": {
+          "connections": []
+        },
+        "a": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        11.491344750757946,
+        -189.67228533282162
+      ],
+      "name": "Split"
+    },
+    "19": {
+      "id": 19,
+      "data": {
+        "inValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "inValueType": "vec4",
+        "outValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec4",
+        "swizzleValue": "wzyx",
+        "expanded": true,
+        "swizzleValueType": "string"
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 6,
+              "output": "rgba",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 14,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -174.41740904053958,
+        -178.58194803446546
+      ],
+      "name": "Swizzle"
+    }
+  },
+  "parameters": [],
+  "UIState": {
+    "showMainPreview": true,
+    "showBlackBoard": false,
+    "showInspector": false
+  },
+  "type": "ShaderGraph",
+  "version": "0.0.0",
+  "setting": {
+    "template": "unlit",
+    "precision": "single",
+    "allowMaterialOverride": false,
+    "surfaceType": "opaque",
+    "blendingMode": "alpha",
+    "renderFace": "front",
+    "depthWrite": "auto",
+    "depthTest": "l equal",
+    "alphaClipping": false,
+    "castShadows": true
+  }
+}

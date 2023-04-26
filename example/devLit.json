@@ -1,0 +1,341 @@
+{
+  "id": "demo@0.1.0",
+  "nodes": {
+    "1": {
+      "id": 1,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 2,
+              "output": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "outputs": {},
+      "blocks": [
+        {
+          "id": 5,
+          "data": {
+            "baseColorValue": [
+              0,
+              0.5176470588235295,
+              1
+            ],
+            "baseColorValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "baseColor": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "BaseColorBlock",
+          "contextId": 1
+        },
+        {
+          "id": 6,
+          "data": {
+            "metallicValue": 0,
+            "metallicValueType": "float",
+            "expanded": true
+          },
+          "inputs": {
+            "metallic": {
+              "connections": [
+                {
+                  "node": 9,
+                  "output": "out",
+                  "data": {}
+                }
+              ]
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "MetallicBlock",
+          "contextId": 1
+        },
+        {
+          "id": 7,
+          "data": {
+            "smoothnessValue": 0.5,
+            "smoothnessValueType": "float",
+            "expanded": true
+          },
+          "inputs": {
+            "smoothness": {
+              "connections": [
+                {
+                  "node": 40,
+                  "output": "out",
+                  "data": {}
+                }
+              ]
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "SmoothnessBlock",
+          "contextId": 1
+        }
+      ],
+      "position": [
+        550,
+        0
+      ],
+      "name": "Fragment"
+    },
+    "2": {
+      "id": 2,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 1,
+              "input": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "id": 3,
+          "data": {
+            "positionValue": [
+              0,
+              0,
+              0
+            ],
+            "positionValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "position": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "PositionBlock",
+          "contextId": 2
+        },
+        {
+          "id": 4,
+          "data": {
+            "normalValue": [
+              0,
+              0,
+              0
+            ],
+            "normalValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "normal": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "NormalBlock",
+          "contextId": 2
+        }
+      ],
+      "position": [
+        550,
+        -300
+      ],
+      "name": "Vertex"
+    },
+    "8": {
+      "id": 8,
+      "data": {
+        "timeValue": 0,
+        "timeValueType": "float",
+        "sinTimeValue": 0,
+        "sinTimeValueType": "float",
+        "cosTimeValue": 0,
+        "cosTimeValueType": "float",
+        "deltaTimeValue": 0,
+        "deltaTimeValueType": "float",
+        "smoothDeltaValue": 0,
+        "smoothDeltaValueType": "float",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "time": {
+          "connections": []
+        },
+        "sinTime": {
+          "connections": [
+            {
+              "node": 9,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        },
+        "cosTime": {
+          "connections": [
+            {
+              "node": 40,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        },
+        "deltaTime": {
+          "connections": []
+        },
+        "smoothDelta": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        61.26432440982322,
+        186.76287029773871
+      ],
+      "name": "Time"
+    },
+    "9": {
+      "id": 9,
+      "data": {
+        "inValue": 0,
+        "inValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 8,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 6,
+              "input": "metallic",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        311.2121966994865,
+        164.82689728265802
+      ],
+      "name": "Absolute"
+    },
+    "40": {
+      "id": 40,
+      "data": {
+        "inValue": 0,
+        "inValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 8,
+              "output": "cosTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 7,
+              "input": "smoothness",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        308.99839782027817,
+        308.9444605360585
+      ],
+      "name": "Absolute"
+    }
+  },
+  "parameters": [],
+  "UIState": {
+    "showMainPreview": true,
+    "showBlackBoard": true,
+    "showInspector": true
+  },
+  "type": "ShaderGraph",
+  "version": "0.0.0",
+  "setting": {
+    "template": "lit",
+    "precision": "single",
+    "allowMaterialOverride": false,
+    "surfaceType": "opaque",
+    "blendingMode": "alpha",
+    "renderFace": "front",
+    "depthWrite": "auto",
+    "depthTest": "l equal",
+    "alphaClipping": false,
+    "castShadows": true,
+    "clearCoat": false
+  }
+}

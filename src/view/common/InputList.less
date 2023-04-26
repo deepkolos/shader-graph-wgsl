@@ -1,0 +1,66 @@
+.sg-input-list {
+  @radius: 3px;
+  border-top-left-radius: @radius;
+  border-top-right-radius: @radius;
+  overflow: hidden;
+
+  &-label {
+    background-color: #b6b6b6;
+    padding: 2px 5px;
+    color: #0c0c0c;
+    border-bottom: 1px solid #a4a4a4;
+    font-size: 14.5px;
+  }
+
+  &-body {
+    border-bottom-left-radius: @radius;
+    border-bottom-right-radius: @radius;
+    overflow: hidden;
+    background-color: #c8c8c8;
+
+    &-placeholder {
+      color: #0c0c0c;
+      padding: 2px 5px;
+      font-size: 14px;
+    }
+  }
+
+  &-btn {
+    width: 30px;
+    height: 20px;
+    text-align: center;
+    line-height: 16px;
+    background-color: #c8c8c8;
+    overflow: hidden;
+    color: #555555;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #c1c1c1;
+    }
+
+    &[data-aria-disabled='true'] {
+      color: #8e8e8e;
+      cursor: default;
+
+      &:hover {
+        background-color: #c8c8c8;
+      }
+    }
+
+    &-add {
+      border-bottom-left-radius: @radius;
+    }
+
+    &-del {
+      border-bottom-right-radius: @radius;
+    }
+
+    &-can {
+      display: flex;
+      justify-content: right;
+      padding-right: 10px;
+    }
+  }
+}

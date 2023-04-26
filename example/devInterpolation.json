@@ -1,0 +1,410 @@
+{
+  "id": "demo@0.1.0",
+  "nodes": {
+    "1": {
+      "id": 1,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 2,
+              "output": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "outputs": {},
+      "blocks": [
+        {
+          "id": 5,
+          "data": {
+            "baseColorValue": [
+              0,
+              0,
+              0
+            ],
+            "baseColorValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "baseColor": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "BaseColorBlock",
+          "contextId": 1
+        }
+      ],
+      "position": [
+        550,
+        0
+      ],
+      "name": "Fragment"
+    },
+    "2": {
+      "id": 2,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 1,
+              "input": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "id": 3,
+          "data": {
+            "positionValue": [
+              0,
+              0,
+              0
+            ],
+            "positionValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "position": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "PositionBlock",
+          "contextId": 2
+        },
+        {
+          "id": 4,
+          "data": {
+            "normalValue": [
+              0,
+              0,
+              0
+            ],
+            "normalValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "normal": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "NormalBlock",
+          "contextId": 2
+        }
+      ],
+      "position": [
+        550,
+        -300
+      ],
+      "name": "Vertex"
+    },
+    "26": {
+      "id": 26,
+      "data": {
+        "timeValue": 0,
+        "timeValueType": "float",
+        "sinTimeValue": 0,
+        "sinTimeValueType": "float",
+        "cosTimeValue": 0,
+        "cosTimeValueType": "float",
+        "deltaTimeValue": 0,
+        "deltaTimeValueType": "float",
+        "smoothDeltaValue": 0,
+        "smoothDeltaValueType": "float",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "time": {
+          "connections": []
+        },
+        "sinTime": {
+          "connections": [
+            {
+              "node": 39,
+              "input": "a",
+              "data": {}
+            },
+            {
+              "node": 46,
+              "input": "a",
+              "data": {}
+            },
+            {
+              "node": 59,
+              "input": "edge1",
+              "data": {}
+            }
+          ]
+        },
+        "cosTime": {
+          "connections": [
+            {
+              "node": 39,
+              "input": "b",
+              "data": {}
+            },
+            {
+              "node": 46,
+              "input": "b",
+              "data": {}
+            },
+            {
+              "node": 59,
+              "input": "edge2",
+              "data": {}
+            }
+          ]
+        },
+        "deltaTime": {
+          "connections": [
+            {
+              "node": 39,
+              "input": "t",
+              "data": {}
+            },
+            {
+              "node": 46,
+              "input": "t",
+              "data": {}
+            },
+            {
+              "node": 59,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        },
+        "smoothDelta": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -674.6061470522939,
+        -215.28631863084811
+      ],
+      "name": "Time"
+    },
+    "39": {
+      "id": 39,
+      "data": {
+        "aValue": 0,
+        "aValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "tValue": 0,
+        "tValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 26,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 26,
+              "output": "cosTime",
+              "data": {}
+            }
+          ]
+        },
+        "t": {
+          "connections": [
+            {
+              "node": 26,
+              "output": "deltaTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -327.14296456400336,
+        -224.29098776226482
+      ],
+      "name": "InverseLerp"
+    },
+    "46": {
+      "id": 46,
+      "data": {
+        "aValue": 0,
+        "aValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "tValue": 0,
+        "tValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 26,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 26,
+              "output": "cosTime",
+              "data": {}
+            }
+          ]
+        },
+        "t": {
+          "connections": [
+            {
+              "node": 26,
+              "output": "deltaTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -13.115085227970866,
+        -230.07615704328254
+      ],
+      "name": "Lerp"
+    },
+    "59": {
+      "id": 59,
+      "data": {
+        "edge1Value": 0,
+        "edge1ValueType": "float",
+        "edge2Value": 0,
+        "edge2ValueType": "float",
+        "inValue": 0,
+        "inValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "edge1": {
+          "connections": [
+            {
+              "node": 26,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "edge2": {
+          "connections": [
+            {
+              "node": 26,
+              "output": "cosTime",
+              "data": {}
+            }
+          ]
+        },
+        "in": {
+          "connections": [
+            {
+              "node": 26,
+              "output": "deltaTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -328.39782280562054,
+        180.33056356983317
+      ],
+      "name": "Smoothstep"
+    }
+  },
+  "parameters": [],
+  "UIState": {
+    "showMainPreview": true,
+    "showBlackBoard": true
+  },
+  "type": "ShaderGraph",
+  "version": "0.0.0",
+  "setting": {
+    "template": "unlit",
+    "precision": "single",
+    "allowMaterialOverride": false,
+    "surfaceType": "opaque",
+    "blendingMode": "alpha",
+    "renderFace": "front",
+    "depthWrite": "auto",
+    "depthTest": "l equal",
+    "alphaClipping": false,
+    "castShadows": true
+  }
+}

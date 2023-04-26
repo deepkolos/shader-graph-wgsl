@@ -1,0 +1,225 @@
+{
+  "id": "demo@0.1.0",
+  "nodes": {
+    "49": {
+      "id": 49,
+      "data": {
+        "expanded": true,
+        "fnInAValue": 0,
+        "fnInAValueType": "float",
+        "fnInBValue": 0,
+        "fnInBValueType": "float"
+      },
+      "inputs": {
+        "fnInA": {
+          "connections": [
+            {
+              "node": 51,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "fnInB": {
+          "connections": [
+            {
+              "node": 70,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {},
+      "blocks": [],
+      "position": [
+        621.5813397293051,
+        313.1354875406407
+      ],
+      "name": "Output"
+    },
+    "50": {
+      "id": 50,
+      "data": {
+        "timeValue": 0,
+        "timeValueType": "float",
+        "sinTimeValue": 0,
+        "sinTimeValueType": "float",
+        "cosTimeValue": 0,
+        "cosTimeValueType": "float",
+        "deltaTimeValue": 0,
+        "deltaTimeValueType": "float",
+        "smoothDeltaValue": 0,
+        "smoothDeltaValueType": "float",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "time": {
+          "connections": []
+        },
+        "sinTime": {
+          "connections": [
+            {
+              "node": 51,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        },
+        "cosTime": {
+          "connections": []
+        },
+        "deltaTime": {
+          "connections": []
+        },
+        "smoothDelta": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        50.24053767915614,
+        278.01443728480547
+      ],
+      "name": "Time"
+    },
+    "51": {
+      "id": 51,
+      "data": {
+        "inValue": 0,
+        "inValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 50,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 49,
+              "input": "fnInA",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        329.379234804955,
+        316.61729614919636
+      ],
+      "name": "Absolute"
+    },
+    "65": {
+      "id": 65,
+      "data": {
+        "outValue": 0,
+        "outValueType": "float",
+        "outValueName": "Float",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 70,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        192.11481036829184,
+        538.1177250593151
+      ],
+      "name": "Parameter"
+    },
+    "70": {
+      "id": 70,
+      "data": {
+        "aValue": 0,
+        "aValueType": "float",
+        "bValue": "0.5",
+        "bValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 65,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 49,
+              "input": "fnInB",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        391.1168977188427,
+        505.62301923433586
+      ],
+      "name": "Add"
+    }
+  },
+  "UIState": {
+    "showMainPreview": true,
+    "showBlackBoard": true,
+    "showInspector": true
+  },
+  "type": "SubGraph",
+  "version": "0.0.0",
+  "setting": {
+    "template": "unlit",
+    "precision": "single",
+    "allowMaterialOverride": false,
+    "surfaceType": "opaque",
+    "blendingMode": "alpha",
+    "renderFace": "front",
+    "depthWrite": "auto",
+    "depthTest": "l equal",
+    "alphaClipping": false,
+    "castShadows": true,
+    "clearCoat": false
+  },
+  "parameters": [
+    {
+      "name": "Float",
+      "type": "float",
+      "defalutValue": 0,
+      "exposed": true
+    }
+  ]
+}

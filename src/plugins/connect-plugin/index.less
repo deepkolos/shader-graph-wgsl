@@ -1,0 +1,30 @@
+.connection {
+  overflow: visible !important;
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.rete-connection-path {
+  cursor: pointer;
+  fill: none;
+  stroke-width: 5px;
+  pointer-events: all;
+
+  &:hover {
+    stroke-width: 7px;
+  }
+
+  &.selected {
+    stroke: #67bff9 !important;
+  }
+
+  &.disable-hover {
+    pointer-events: none;
+  }
+}
+
+svg,
+svg * {
+  pointer-events: none;
+}

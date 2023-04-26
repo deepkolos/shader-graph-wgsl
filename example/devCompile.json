@@ -1,0 +1,677 @@
+{
+  "id": "demo@0.1.0",
+  "nodes": {
+    "1": {
+      "id": 1,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 2,
+              "output": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "outputs": {},
+      "blocks": [
+        {
+          "id": 5,
+          "data": {
+            "baseColorValue": [
+              0,
+              0,
+              0
+            ],
+            "baseColorValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "baseColor": {
+              "connections": [
+                {
+                  "node": 16,
+                  "output": "out",
+                  "data": {}
+                }
+              ]
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "BaseColorBlock",
+          "contextId": 1
+        }
+      ],
+      "position": [
+        550,
+        0
+      ],
+      "name": "Fragment"
+    },
+    "2": {
+      "id": 2,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 1,
+              "input": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "id": 3,
+          "data": {
+            "positionValue": [
+              0,
+              0,
+              0
+            ],
+            "positionValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "position": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "PositionBlock",
+          "contextId": 2
+        },
+        {
+          "id": 4,
+          "data": {
+            "normalValue": [
+              0,
+              0,
+              0
+            ],
+            "normalValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "normal": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "NormalBlock",
+          "contextId": 2
+        },
+        {
+          "id": 149,
+          "data": {
+            "varyingValue": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "varyingValueType": "vec4",
+            "varyingValueName": "CustomInterpolator0",
+            "expanded": true
+          },
+          "inputs": {
+            "varying": {
+              "connections": [
+                {
+                  "node": 6,
+                  "output": "out",
+                  "data": {}
+                }
+              ]
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "CustomInterpolatorBlock",
+          "contextId": 2
+        }
+      ],
+      "position": [
+        550,
+        -300
+      ],
+      "name": "Vertex"
+    },
+    "6": {
+      "id": 6,
+      "data": {
+        "aValue": [
+          0,
+          0
+        ],
+        "aValueType": "vec2",
+        "bValue": [
+          0,
+          0
+        ],
+        "bValueType": "vec2",
+        "outValue": [
+          0,
+          0
+        ],
+        "outValueType": "vec2",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 8,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 7,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 149,
+              "input": "varying",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        218.36834366412307,
+        -203.4134984390337
+      ],
+      "name": "Add"
+    },
+    "7": {
+      "id": 7,
+      "data": {
+        "xValue": 0,
+        "xValueType": "float",
+        "yValue": "1",
+        "yValueType": "float",
+        "outValue": [
+          0,
+          0
+        ],
+        "outValueType": "vec2",
+        "expanded": true
+      },
+      "inputs": {
+        "x": {
+          "connections": [
+            {
+              "node": 15,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "y": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 6,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -30.039813198324023,
+        -126.25761173184357
+      ],
+      "name": "Vector 2"
+    },
+    "8": {
+      "id": 8,
+      "data": {
+        "xValue": 0,
+        "xValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true
+      },
+      "inputs": {
+        "x": {
+          "connections": [
+            {
+              "node": 14,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 6,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        6.572429337231969,
+        -260.0380726120858
+      ],
+      "name": "Float"
+    },
+    "14": {
+      "id": 14,
+      "data": {
+        "outValue": 0,
+        "outValueType": "float",
+        "outValueName": "u1",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 8,
+              "input": "x",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -227.88650860539227,
+        -265.349891965068
+      ],
+      "name": "Parameter"
+    },
+    "15": {
+      "id": 15,
+      "data": {
+        "outValue": [
+          0,
+          0
+        ],
+        "outValueType": "vec2",
+        "outValueName": "u2",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 7,
+              "input": "x",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -255.81757688096252,
+        -146.70558530604853
+      ],
+      "name": "Parameter"
+    },
+    "16": {
+      "id": 16,
+      "data": {
+        "aValue": 0.71,
+        "aValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 47,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 21,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 5,
+              "input": "baseColor",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        159.6022523911694,
+        19.62450853555544
+      ],
+      "name": "Add"
+    },
+    "21": {
+      "id": 21,
+      "data": {
+        "timeValue": 0,
+        "timeValueType": "float",
+        "sinTimeValue": 0,
+        "sinTimeValueType": "float",
+        "cosTimeValue": 0,
+        "cosTimeValueType": "float",
+        "deltaTimeValue": 0,
+        "deltaTimeValueType": "float",
+        "smoothDeltaValue": 0,
+        "smoothDeltaValueType": "float",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "time": {
+          "connections": []
+        },
+        "sinTime": {
+          "connections": [
+            {
+              "node": 16,
+              "input": "b",
+              "data": {}
+            },
+            {
+              "node": 60,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        },
+        "cosTime": {
+          "connections": [
+            {
+              "node": 47,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        },
+        "deltaTime": {
+          "connections": []
+        },
+        "smoothDelta": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -423.5314729650581,
+        56.50378668463679
+      ],
+      "name": "Time"
+    },
+    "36": {
+      "id": 36,
+      "data": {
+        "outValue": 0,
+        "outValueType": "float",
+        "outValueName": "u1",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -139.43210740267395,
+        23.758032339269732
+      ],
+      "name": "Parameter"
+    },
+    "47": {
+      "id": 47,
+      "data": {
+        "aValue": 0,
+        "aValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 21,
+              "output": "cosTime",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 60,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 16,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -61.760677725085756,
+        175.8281690979806
+      ],
+      "name": "Subtract"
+    },
+    "60": {
+      "id": 60,
+      "data": {
+        "aValue": 0,
+        "aValueType": "float",
+        "bValue": 2,
+        "bValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 21,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 47,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -282.61258344235756,
+        285.6731691028225
+      ],
+      "name": "Divide"
+    },
+    "174": {
+      "id": 174,
+      "data": {
+        "outValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec4",
+        "exposed": true,
+        "expanded": true,
+        "outValueName": "CustomInterpolator0",
+        "preview": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -189.53883020626265,
+        -5.430307726699425
+      ],
+      "name": "Varying"
+    }
+  },
+  "parameters": [
+    {
+      "name": "u1",
+      "type": "float",
+      "defalutValue": 0,
+      "exposed": true
+    },
+    {
+      "name": "u2",
+      "type": "vec2",
+      "defalutValue": [
+        0,
+        0
+      ],
+      "exposed": true
+    },
+    {
+      "name": "u3",
+      "type": "vec3",
+      "defalutValue": [
+        0,
+        0,
+        0
+      ],
+      "exposed": true
+    },
+    {
+      "name": "u4",
+      "type": "vec4",
+      "defalutValue": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "exposed": true
+    }
+  ],
+  "UIState": {
+    "showMainPreview": true,
+    "showBlackBoard": true
+  },
+  "type": "ShaderGraph",
+  "version": "0.0.0",
+  "setting": {
+    "template": "unlit"
+  }
+}

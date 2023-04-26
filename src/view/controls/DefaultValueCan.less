@@ -1,0 +1,25 @@
+.sg-default-value {
+  &-can {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(-10px);
+    display: flex;
+    flex-wrap: nowrap;
+    border-radius: 2px;
+    align-items: center;
+    border: 1px solid #202020;
+    cursor: default;
+  }
+
+  &-line {
+    width: 24px;
+    height: 5px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    transform: translateX(calc(100% - 7px));
+    z-index: -1;
+    pointer-events: none;
+  }
+}

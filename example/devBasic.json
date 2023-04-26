@@ -1,0 +1,469 @@
+{
+  "id": "demo@0.1.0",
+  "nodes": {
+    "1": {
+      "id": 1,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 2,
+              "output": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "outputs": {},
+      "blocks": [
+        {
+          "id": 5,
+          "data": {
+            "baseColorValue": [
+              0,
+              0,
+              0
+            ],
+            "baseColorValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "baseColor": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "BaseColorBlock",
+          "contextId": 1
+        }
+      ],
+      "position": [
+        550,
+        0
+      ],
+      "name": "Fragment"
+    },
+    "2": {
+      "id": 2,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 1,
+              "input": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "id": 3,
+          "data": {
+            "positionValue": [
+              0,
+              0,
+              0
+            ],
+            "positionValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "position": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "PositionBlock",
+          "contextId": 2
+        },
+        {
+          "id": 4,
+          "data": {
+            "normalValue": [
+              0,
+              0,
+              0
+            ],
+            "normalValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "normal": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "NormalBlock",
+          "contextId": 2
+        }
+      ],
+      "position": [
+        550,
+        -300
+      ],
+      "name": "Vertex"
+    },
+    "6": {
+      "id": 6,
+      "data": {
+        "aValue": 0,
+        "aValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 97,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 97,
+              "output": "cosTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -339.5976295542017,
+        -753.0930214175255
+      ],
+      "name": "Add"
+    },
+    "11": {
+      "id": 11,
+      "data": {
+        "aValue": 0,
+        "aValueType": "float",
+        "bValue": 2,
+        "bValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 97,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 97,
+              "output": "cosTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -34.518539133349556,
+        -746.7130156370395
+      ],
+      "name": "Divide"
+    },
+    "20": {
+      "id": 20,
+      "data": {
+        "aValue": 0,
+        "aValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 97,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 97,
+              "output": "cosTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        270.3783516699081,
+        -752.1999714885642
+      ],
+      "name": "Power"
+    },
+    "51": {
+      "id": 51,
+      "data": {
+        "aValue": 1,
+        "aValueType": "float",
+        "bValue": 1,
+        "bValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 97,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 97,
+              "output": "cosTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -344.79226521066374,
+        -369.65062454457524
+      ],
+      "name": "Subtract"
+    },
+    "76": {
+      "id": 76,
+      "data": {
+        "aValue": 0,
+        "aValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 97,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 97,
+              "output": "cosTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -24.90727327364731,
+        -362.1239188519396
+      ],
+      "name": "SquareRoot"
+    },
+    "97": {
+      "id": 97,
+      "data": {
+        "timeValue": 0,
+        "timeValueType": "float",
+        "sinTimeValue": 0,
+        "sinTimeValueType": "float",
+        "cosTimeValue": 0,
+        "cosTimeValueType": "float",
+        "deltaTimeValue": 0,
+        "deltaTimeValueType": "float",
+        "smoothDeltaValue": 0,
+        "smoothDeltaValueType": "float",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "time": {
+          "connections": []
+        },
+        "sinTime": {
+          "connections": [
+            {
+              "node": 6,
+              "input": "a",
+              "data": {}
+            },
+            {
+              "node": 11,
+              "input": "a",
+              "data": {}
+            },
+            {
+              "node": 20,
+              "input": "a",
+              "data": {}
+            },
+            {
+              "node": 51,
+              "input": "a",
+              "data": {}
+            },
+            {
+              "node": 76,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        },
+        "cosTime": {
+          "connections": [
+            {
+              "node": 6,
+              "input": "b",
+              "data": {}
+            },
+            {
+              "node": 20,
+              "input": "b",
+              "data": {}
+            },
+            {
+              "node": 11,
+              "input": "b",
+              "data": {}
+            },
+            {
+              "node": 51,
+              "input": "b",
+              "data": {}
+            },
+            {
+              "node": 76,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        },
+        "deltaTime": {
+          "connections": []
+        },
+        "smoothDelta": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -705.9280989695392,
+        -761.4298356650586
+      ],
+      "name": "Time"
+    }
+  },
+  "parameters": [],
+  "UIState": {
+    "showMainPreview": false,
+    "showBlackBoard": false
+  },
+  "type": "ShaderGraph",
+  "version": "0.0.0",
+  "setting": {
+    "template": "unlit",
+    "precision": "single",
+    "allowMaterialOverride": false,
+    "surfaceType": "opaque",
+    "blendingMode": "alpha",
+    "renderFace": "front",
+    "depthWrite": "auto",
+    "depthTest": "l equal",
+    "alphaClipping": false,
+    "castShadows": true
+  }
+}

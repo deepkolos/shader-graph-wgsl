@@ -1,0 +1,46 @@
+.sg {
+  &-node {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    user-select: none;
+
+    @w: 3px;
+    @wHalf: @w * 0.5;
+    @borderW: 0.5px;
+
+    &::after {
+      content: ' ';
+      display: block;
+      width: calc(100% + @w);
+      height: calc(100% + @w);
+      position: absolute;
+      top: -@wHalf - @borderW;
+      left: -@wHalf - @borderW;
+      border: @borderW solid transparent;
+      border-radius: 5px;
+      z-index: -1;
+    }
+
+    &:hover::after {
+      border-color: #306782;
+    }
+
+    &.selected::after {
+      @borderW: 1px;
+      border-color: #268bbd;
+      border-width: @borderW;
+      top: -@wHalf - @borderW;
+      left: -@wHalf - @borderW;
+    }
+
+    &-control-can {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+  }
+}
+
+.rete-node-view {
+  will-change: transform;
+  &:hover {
+    z-index: 1;
+  }
+}

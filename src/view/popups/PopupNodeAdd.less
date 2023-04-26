@@ -1,0 +1,45 @@
+.sg-popup {
+  &-node-add {
+    background-color: #272727;
+    border: 1px solid #060606;
+    border-radius: 2px;
+
+    &-search {
+      display: flex;
+      align-items: center;
+      margin: 0 5px 5px 5px;
+      background-color: #454545;
+      border-radius: 5px;
+
+      &::before {
+        content: '🔍';
+        margin: 0 3px 0 5px;
+        flex: none;
+      }
+
+      &-input {
+        border: none;
+        display: block;
+        min-width: 0px;
+        flex: 1;
+        background-color: unset;
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+
+    &-tree {
+      padding-left: 10px;
+      background-color: #383838;
+      overflow-y: auto;
+      height: 220px;
+      min-width: 210px;
+    }
+  }
+
+  &-title {
+    color: white;
+  }
+}

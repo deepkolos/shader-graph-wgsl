@@ -1,0 +1,551 @@
+{
+  "id": "demo@0.1.0",
+  "nodes": {
+    "1": {
+      "id": 1,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 2,
+              "output": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "outputs": {},
+      "blocks": [
+        {
+          "id": 5,
+          "data": {
+            "baseColorValue": [
+              0,
+              0,
+              0
+            ],
+            "baseColorValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "baseColor": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "BaseColorBlock",
+          "contextId": 1
+        }
+      ],
+      "position": [
+        617.0943854949114,
+        13.276657103052232
+      ],
+      "name": "Fragment"
+    },
+    "2": {
+      "id": 2,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 1,
+              "input": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "id": 3,
+          "data": {
+            "positionValue": [
+              0,
+              0,
+              0
+            ],
+            "positionValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "position": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "PositionBlock",
+          "contextId": 2
+        },
+        {
+          "id": 4,
+          "data": {
+            "normalValue": [
+              0,
+              0,
+              0
+            ],
+            "normalValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "normal": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "NormalBlock",
+          "contextId": 2
+        }
+      ],
+      "position": [
+        618.8782752397799,
+        -302.274887349865
+      ],
+      "name": "Vertex"
+    },
+    "6": {
+      "id": 6,
+      "data": {
+        "inValue": 0,
+        "inValueType": "float",
+        "minValue": 0,
+        "minValueType": "float",
+        "maxValue": 1,
+        "maxValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 206,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "min": {
+          "connections": []
+        },
+        "max": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -388.6383852023319,
+        -450.84251121238435
+      ],
+      "name": "Clamp"
+    },
+    "13": {
+      "id": 13,
+      "data": {
+        "inValue": 0,
+        "inValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 206,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -84.32027274959657,
+        -446.0814340728341
+      ],
+      "name": "Fraction"
+    },
+    "26": {
+      "id": 26,
+      "data": {
+        "aValue": 0,
+        "aValueType": "float",
+        "bValue": "1",
+        "bValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 206,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        230.0173075274348,
+        -439.8685743125215
+      ],
+      "name": "Minimum"
+    },
+    "45": {
+      "id": 45,
+      "data": {
+        "aValue": 0,
+        "aValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 206,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -395.31101807645314,
+        -32.60693124946428
+      ],
+      "name": "Maximum"
+    },
+    "62": {
+      "id": 62,
+      "data": {
+        "inValue": 0,
+        "inValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 206,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -90.75204447772586,
+        -25.60306194987418
+      ],
+      "name": "OneMinus"
+    },
+    "93": {
+      "id": 93,
+      "data": {
+        "inValue": 0,
+        "inValueType": "float",
+        "inMinMaxValue": [
+          -1,
+          1
+        ],
+        "inMinMaxValueType": "vec2",
+        "outMinMaxValue": [
+          0,
+          1
+        ],
+        "outMinMaxValueType": "vec2",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 206,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "inMinMax": {
+          "connections": []
+        },
+        "outMinMax": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        277.90597316340666,
+        -29.096203876191524
+      ],
+      "name": "Remap"
+    },
+    "130": {
+      "id": 130,
+      "data": {
+        "seedValue": [
+          0,
+          0
+        ],
+        "seedValueType": "vec2",
+        "minValue": 0,
+        "minValueType": "float",
+        "maxValue": 1,
+        "maxValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "seed": {
+          "connections": [
+            {
+              "node": 206,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "min": {
+          "connections": []
+        },
+        "max": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -395.3909969810328,
+        364.6086254053175
+      ],
+      "name": "RandomRange"
+    },
+    "173": {
+      "id": 173,
+      "data": {
+        "inValue": 0,
+        "inValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 206,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -81.78189463875326,
+        370.8754894663112
+      ],
+      "name": "Saturate"
+    },
+    "206": {
+      "id": 206,
+      "data": {
+        "timeValue": 0,
+        "timeValueType": "float",
+        "sinTimeValue": 0,
+        "sinTimeValueType": "float",
+        "cosTimeValue": 0,
+        "cosTimeValueType": "float",
+        "deltaTimeValue": 0,
+        "deltaTimeValueType": "float",
+        "smoothDeltaValue": 0,
+        "smoothDeltaValueType": "float",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "time": {
+          "connections": []
+        },
+        "sinTime": {
+          "connections": [
+            {
+              "node": 6,
+              "input": "in",
+              "data": {}
+            },
+            {
+              "node": 13,
+              "input": "in",
+              "data": {}
+            },
+            {
+              "node": 26,
+              "input": "a",
+              "data": {}
+            },
+            {
+              "node": 45,
+              "input": "a",
+              "data": {}
+            },
+            {
+              "node": 62,
+              "input": "in",
+              "data": {}
+            },
+            {
+              "node": 93,
+              "input": "in",
+              "data": {}
+            },
+            {
+              "node": 130,
+              "input": "seed",
+              "data": {}
+            },
+            {
+              "node": 173,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        },
+        "cosTime": {
+          "connections": []
+        },
+        "deltaTime": {
+          "connections": []
+        },
+        "smoothDelta": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -934.4847909088829,
+        -431.77294609497517
+      ],
+      "name": "Time"
+    }
+  },
+  "parameters": [],
+  "UIState": {
+    "showMainPreview": false,
+    "showBlackBoard": false
+  },
+  "type": "ShaderGraph",
+  "version": "0.0.0",
+  "setting": {
+    "template": "unlit",
+    "precision": "single",
+    "allowMaterialOverride": false,
+    "surfaceType": "opaque",
+    "blendingMode": "alpha",
+    "renderFace": "front",
+    "depthWrite": "auto",
+    "depthTest": "l equal",
+    "alphaClipping": false,
+    "castShadows": true
+  }
+}

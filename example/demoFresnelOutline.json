@@ -1,0 +1,430 @@
+{
+  "id": "demo@0.1.0",
+  "nodes": {
+    "768": {
+      "id": 768,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 769,
+              "output": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "outputs": {},
+      "blocks": [
+        {
+          "id": 772,
+          "data": {
+            "baseColorValue": [
+              0,
+              0,
+              0
+            ],
+            "baseColorValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "baseColor": {
+              "connections": [
+                {
+                  "node": 12968,
+                  "output": "out",
+                  "data": {}
+                }
+              ]
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "BaseColorBlock",
+          "contextId": 768
+        }
+      ],
+      "position": [
+        550,
+        0
+      ],
+      "name": "Fragment"
+    },
+    "769": {
+      "id": 769,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 768,
+              "input": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "id": 770,
+          "data": {
+            "positionValue": [
+              0,
+              0,
+              0
+            ],
+            "positionValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "position": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "PositionBlock",
+          "contextId": 769
+        },
+        {
+          "id": 771,
+          "data": {
+            "normalValue": [
+              0,
+              0,
+              0
+            ],
+            "normalValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "normal": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "NormalBlock",
+          "contextId": 769
+        }
+      ],
+      "position": [
+        550,
+        -300
+      ],
+      "name": "Vertex"
+    },
+    "773": {
+      "id": 773,
+      "data": {
+        "normalValue": [
+          0,
+          0,
+          0
+        ],
+        "normalValueType": "vec3",
+        "viewDirValue": [
+          0,
+          0,
+          0
+        ],
+        "viewDirValueType": "vec3",
+        "powerValue": 2.01,
+        "powerValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "previewType": "3d",
+        "preview": true
+      },
+      "inputs": {
+        "normal": {
+          "connections": []
+        },
+        "viewDir": {
+          "connections": []
+        },
+        "power": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 853,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -286.0154637527115,
+        86.70753149175226
+      ],
+      "name": "FresnelEffect"
+    },
+    "850": {
+      "id": 850,
+      "data": {
+        "outValue": [
+          1,
+          1,
+          1
+        ],
+        "outValueType": "vec3",
+        "outValueName": "OutlineColor",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 853,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -278.08005059802247,
+        -96.51888134200055
+      ],
+      "name": "Parameter"
+    },
+    "853": {
+      "id": 853,
+      "data": {
+        "aValue": [
+          0,
+          0,
+          0
+        ],
+        "aValueType": "vec3",
+        "bValue": [
+          0,
+          0,
+          0
+        ],
+        "bValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true,
+        "previewType": "3d"
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 850,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 773,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 12968,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -18.31017469360691,
+        -75.65601857880148
+      ],
+      "name": "Multiply"
+    },
+    "2100": {
+      "id": 2100,
+      "data": {
+        "outValue": [
+          0.9490196078431372,
+          0.027450980392156862,
+          0.027450980392156862
+        ],
+        "outValueType": "vec3",
+        "outValueName": "BaseColor",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 12968,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        78.8560650923202,
+        -252.06347535421318
+      ],
+      "name": "Parameter"
+    },
+    "12968": {
+      "id": 12968,
+      "data": {
+        "aValue": [
+          0,
+          0,
+          0
+        ],
+        "aValueType": "vec3",
+        "bValue": [
+          0,
+          0,
+          0
+        ],
+        "bValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true,
+        "previewType": "3d"
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 2100,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 853,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 772,
+              "input": "baseColor",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        278.5492981750766,
+        -158.41865432863534
+      ],
+      "name": "Add"
+    }
+  },
+  "UIState": {
+    "showMainPreview": true,
+    "showBlackBoard": true,
+    "showInspector": true
+  },
+  "type": "ShaderGraph",
+  "version": "0.0.0",
+  "setting": {
+    "template": "unlit",
+    "precision": "single",
+    "allowMaterialOverride": false,
+    "surfaceType": "opaque",
+    "blendingMode": "alpha",
+    "renderFace": "front",
+    "depthWrite": "auto",
+    "depthTest": "l equal",
+    "alphaClipping": false,
+    "castShadows": true,
+    "clearCoat": false
+  },
+  "parameters": [
+    {
+      "name": "OutlineColor",
+      "type": "vec3",
+      "defalutValue": [
+        1,
+        1,
+        1
+      ],
+      "exposed": true,
+      "typeEdit": "color"
+    },
+    {
+      "name": "BaseColor",
+      "type": "vec3",
+      "defalutValue": [
+        0.9490196078431372,
+        0.027450980392156862,
+        0.027450980392156862
+      ],
+      "exposed": true,
+      "typeEdit": "color"
+    }
+  ]
+}

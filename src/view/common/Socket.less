@@ -1,0 +1,44 @@
+.sg-socket {
+  border: 1px solid white;
+  border-radius: 100%;
+  width: 10px;
+  height: 10px;
+  z-index: 2;
+  box-sizing: border-box;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.7);
+
+  &-can {
+    cursor: pointer;
+    padding: 8px 6px;
+  }
+
+  &-can:hover &,
+  &[data-connected='true'] & {
+    &-inner {
+      opacity: 1;
+    }
+  }
+
+  &[data-type='default'] {
+    cursor: unset;
+    border-color: rgba(0, 0, 0, 0.822) !important;
+  }
+
+  &[data-type='default'] &-inner {
+    opacity: 1 !important;
+  }
+
+  &-inner {
+    width: 5px;
+    height: 5px;
+    border-radius: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    opacity: 0;
+  }
+}

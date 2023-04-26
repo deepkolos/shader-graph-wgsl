@@ -1,0 +1,31 @@
+.sg-channelmixer {
+  &-channels {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &-btn {
+    flex: 1;
+    margin: 10px 2px;
+    border-radius: 5px;
+    background-color: #676767;
+    position: relative;
+
+    &::after {
+      content: ' ';
+      display: block;
+      border-radius: 5px;
+      width: 100%;
+      height: 10px;
+      background-color: #242424;
+      position: absolute;
+      z-index: -1;
+      left: 0;
+      bottom: -10px;
+    }
+
+    &[data-aria-selected='true'] {
+      background-color: #85aef4;
+    }
+  }
+}

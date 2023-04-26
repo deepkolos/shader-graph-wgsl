@@ -1,0 +1,331 @@
+{
+  "id": "demo@0.1.0",
+  "nodes": {
+    "1": {
+      "id": 1,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 2,
+              "output": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "outputs": {},
+      "blocks": [
+        {
+          "id": 5,
+          "data": {
+            "baseColorValue": [
+              0,
+              0,
+              0
+            ],
+            "baseColorValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "baseColor": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "BaseColorBlock",
+          "contextId": 1
+        }
+      ],
+      "position": [
+        550,
+        0
+      ],
+      "name": "Fragment"
+    },
+    "2": {
+      "id": 2,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 1,
+              "input": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "id": 3,
+          "data": {
+            "positionValue": [
+              0,
+              0,
+              0
+            ],
+            "positionValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "position": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "PositionBlock",
+          "contextId": 2
+        },
+        {
+          "id": 4,
+          "data": {
+            "normalValue": [
+              0,
+              0,
+              0
+            ],
+            "normalValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "normal": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "NormalBlock",
+          "contextId": 2
+        }
+      ],
+      "position": [
+        550,
+        -300
+      ],
+      "name": "Vertex"
+    },
+    "23": {
+      "id": 23,
+      "data": {
+        "outValueType": "texture2d",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -90.81688368350198,
+        -194.10717684799272
+      ],
+      "name": "Texture2DAsset"
+    },
+    "28": {
+      "id": 28,
+      "data": {
+        "rgbaValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rgbaValueType": "vec4",
+        "rValue": 0,
+        "rValueType": "float",
+        "gValue": 0,
+        "gValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "aValue": 0,
+        "aValueType": "float",
+        "textureValueType": "texture2d",
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "typeValue": "default",
+        "spaceValue": "object",
+        "expanded": true,
+        "samplerValueType": "sampler",
+        "typeValueType": "string",
+        "spaceValueType": "string"
+      },
+      "inputs": {
+        "texture": {
+          "connections": []
+        },
+        "uv": {
+          "connections": []
+        },
+        "sampler": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "rgba": {
+          "connections": []
+        },
+        "r": {
+          "connections": []
+        },
+        "g": {
+          "connections": []
+        },
+        "a": {
+          "connections": []
+        },
+        "b": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        177.24230159076333,
+        -113.01473811685185
+      ],
+      "name": "SampleTexture2D"
+    },
+    "35": {
+      "id": 35,
+      "data": {
+        "outValue": [
+          0,
+          0
+        ],
+        "outValueType": "vec2",
+        "channelValue": "UV0",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -96.26371661830736,
+        -24.76697096539609
+      ],
+      "name": "UV"
+    },
+    "85": {
+      "id": 85,
+      "data": {
+        "outValue": {
+          "filter": "point",
+          "warp": "clamp"
+        },
+        "outValueType": "sampler",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -134.65370069500904,
+        115.51180338441225
+      ],
+      "name": "SamplerState"
+    }
+  },
+  "UIState": {
+    "showMainPreview": true,
+    "showBlackBoard": true,
+    "showInspector": true
+  },
+  "type": "ShaderGraph",
+  "version": "0.0.0",
+  "setting": {
+    "template": "unlit",
+    "precision": "single",
+    "allowMaterialOverride": false,
+    "surfaceType": "opaque",
+    "blendingMode": "alpha",
+    "renderFace": "front",
+    "depthWrite": "auto",
+    "depthTest": "l equal",
+    "alphaClipping": true,
+    "castShadows": true,
+    "clearCoat": false
+  },
+  "parameters": [
+    {
+      "name": "u1",
+      "type": "float",
+      "defalutValue": 0,
+      "exposed": true
+    },
+    {
+      "name": "u2",
+      "type": "vec2",
+      "defalutValue": [
+        0,
+        0
+      ],
+      "exposed": true
+    },
+    {
+      "name": "u3",
+      "type": "vec3",
+      "defalutValue": [
+        0,
+        0,
+        0
+      ],
+      "exposed": true
+    },
+    {
+      "name": "u4",
+      "type": "vec4",
+      "defalutValue": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "exposed": true
+    },
+    {
+      "name": "map",
+      "type": "texture2d",
+      "exposed": true
+    }
+  ]
+}

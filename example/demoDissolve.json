@@ -1,0 +1,590 @@
+{
+  "id": "demo@0.1.0",
+  "nodes": {
+    "35": {
+      "id": 35,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 36,
+              "output": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "outputs": {},
+      "blocks": [
+        {
+          "id": 39,
+          "data": {
+            "baseColorValue": [
+              0,
+              0.8823529411764706,
+              1
+            ],
+            "baseColorValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "baseColor": {
+              "connections": [
+                {
+                  "node": 227,
+                  "output": "out",
+                  "data": {}
+                }
+              ]
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "BaseColorBlock",
+          "contextId": 35
+        },
+        {
+          "id": 50,
+          "data": {
+            "alphaValue": 1,
+            "alphaValueType": "float",
+            "expanded": true
+          },
+          "inputs": {
+            "alpha": {
+              "connections": [
+                {
+                  "node": 40,
+                  "output": "out",
+                  "data": {}
+                }
+              ]
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "AlphaBlock",
+          "contextId": 35
+        },
+        {
+          "id": 49,
+          "data": {
+            "alphaValue": 0.5,
+            "alphaValueType": "float",
+            "expanded": true
+          },
+          "inputs": {
+            "alpha": {
+              "connections": [
+                {
+                  "node": 352,
+                  "output": "out",
+                  "data": {}
+                }
+              ]
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "AlphaClipBlock",
+          "contextId": 35
+        }
+      ],
+      "position": [
+        550,
+        0
+      ],
+      "name": "Fragment"
+    },
+    "36": {
+      "id": 36,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 35,
+              "input": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "id": 37,
+          "data": {
+            "positionValue": [
+              0,
+              0,
+              0
+            ],
+            "positionValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "position": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "PositionBlock",
+          "contextId": 36
+        },
+        {
+          "id": 38,
+          "data": {
+            "normalValue": [
+              0,
+              0,
+              0
+            ],
+            "normalValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "normal": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "NormalBlock",
+          "contextId": 36
+        }
+      ],
+      "position": [
+        550,
+        -300
+      ],
+      "name": "Vertex"
+    },
+    "40": {
+      "id": 40,
+      "data": {
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "scaleValue": "30",
+        "scaleValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "uv": {
+          "connections": []
+        },
+        "scale": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 50,
+              "input": "alpha",
+              "data": {}
+            },
+            {
+              "node": 309,
+              "input": "edge",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -425.9091597874997,
+        -342.7299533033701
+      ],
+      "name": "SimpleNoise"
+    },
+    "99": {
+      "id": 99,
+      "data": {
+        "timeValue": 0,
+        "timeValueType": "float",
+        "sinTimeValue": 0,
+        "sinTimeValueType": "float",
+        "cosTimeValue": 0,
+        "cosTimeValueType": "float",
+        "deltaTimeValue": 0,
+        "deltaTimeValueType": "float",
+        "smoothDeltaValue": 0,
+        "smoothDeltaValueType": "float",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "time": {
+          "connections": []
+        },
+        "sinTime": {
+          "connections": [
+            {
+              "node": 352,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        },
+        "cosTime": {
+          "connections": []
+        },
+        "deltaTime": {
+          "connections": []
+        },
+        "smoothDelta": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -804.0895730318202,
+        112.57119745772364
+      ],
+      "name": "Time"
+    },
+    "227": {
+      "id": 227,
+      "data": {
+        "aValue": [
+          0,
+          0,
+          0
+        ],
+        "aValueType": "vec3",
+        "bValue": [
+          0,
+          0,
+          0
+        ],
+        "bValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 236,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 309,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 39,
+              "input": "baseColor",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        195.49393589101157,
+        -335.7442582178932
+      ],
+      "name": "Multiply"
+    },
+    "236": {
+      "id": 236,
+      "data": {
+        "outValue": [
+          0,
+          0.7490196078431373,
+          1
+        ],
+        "outValueType": "vec3",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 227,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -44.20919106494172,
+        -453.22926386824827
+      ],
+      "name": "Color"
+    },
+    "309": {
+      "id": 309,
+      "data": {
+        "edgeValue": 0,
+        "edgeValueType": "float",
+        "inValue": "0.5",
+        "inValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "edge": {
+          "connections": [
+            {
+              "node": 40,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "in": {
+          "connections": [
+            {
+              "node": 426,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 227,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -47.47030357504554,
+        -253.34772469983025
+      ],
+      "name": "Step"
+    },
+    "352": {
+      "id": 352,
+      "data": {
+        "inValue": 0,
+        "inValueType": "float",
+        "inMinMaxValue": [
+          -1,
+          1
+        ],
+        "inMinMaxValueType": "vec2",
+        "outMinMaxValue": [
+          0,
+          1
+        ],
+        "outMinMaxValueType": "vec2",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": false
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 99,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "inMinMax": {
+          "connections": []
+        },
+        "outMinMax": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 49,
+              "input": "alpha",
+              "data": {}
+            },
+            {
+              "node": 426,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -544.0402079338533,
+        145.74827600312508
+      ],
+      "name": "Remap"
+    },
+    "409": {
+      "id": 409,
+      "data": {
+        "xValue": "0.018",
+        "xValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true
+      },
+      "inputs": {
+        "x": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 426,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -457.99248155235125,
+        26.890046803199766
+      ],
+      "name": "Float"
+    },
+    "426": {
+      "id": 426,
+      "data": {
+        "aValue": 0,
+        "aValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 409,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 352,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 309,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -256.0956938434732,
+        21.774645405726076
+      ],
+      "name": "Add"
+    }
+  },
+  "UIState": {
+    "showMainPreview": true,
+    "showBlackBoard": false,
+    "showInspector": true
+  },
+  "type": "ShaderGraph",
+  "version": "0.0.0",
+  "setting": {
+    "template": "unlit",
+    "precision": "single",
+    "allowMaterialOverride": false,
+    "surfaceType": "opaque",
+    "blendingMode": "alpha",
+    "renderFace": "front",
+    "depthWrite": "auto",
+    "depthTest": "l equal",
+    "alphaClipping": true,
+    "castShadows": true
+  },
+  "parameters": []
+}

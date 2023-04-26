@@ -1,0 +1,535 @@
+{
+  "id": "demo@0.1.0",
+  "nodes": {
+    "1": {
+      "id": 1,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 2,
+              "output": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "outputs": {},
+      "blocks": [
+        {
+          "id": 5,
+          "data": {
+            "baseColorValue": [
+              0,
+              0,
+              0
+            ],
+            "baseColorValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "baseColor": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "BaseColorBlock",
+          "contextId": 1
+        }
+      ],
+      "position": [
+        550,
+        0
+      ],
+      "name": "Fragment"
+    },
+    "2": {
+      "id": 2,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 1,
+              "input": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "id": 3,
+          "data": {
+            "positionValue": [
+              0,
+              0,
+              0
+            ],
+            "positionValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "position": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "PositionBlock",
+          "contextId": 2
+        },
+        {
+          "id": 4,
+          "data": {
+            "normalValue": [
+              0,
+              0,
+              0
+            ],
+            "normalValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "normal": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "NormalBlock",
+          "contextId": 2
+        }
+      ],
+      "position": [
+        550,
+        -300
+      ],
+      "name": "Vertex"
+    },
+    "6": {
+      "id": 6,
+      "data": {
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "colorAValue": [
+          0,
+          0.98,
+          1
+        ],
+        "colorAValueType": "vec3",
+        "colorBValue": [
+          0.62,
+          0.58,
+          1
+        ],
+        "colorBValueType": "vec3",
+        "frequencyValue": [
+          "1",
+          "1"
+        ],
+        "frequencyValueType": "vec2",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true,
+        "previewType": "2d"
+      },
+      "inputs": {
+        "uv": {
+          "connections": []
+        },
+        "colorA": {
+          "connections": []
+        },
+        "colorB": {
+          "connections": []
+        },
+        "frequency": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -592.5388208665659,
+        -697.7442903407591
+      ],
+      "name": "Checkerboard"
+    },
+    "11": {
+      "id": 11,
+      "data": {
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "scaleValue": 10,
+        "scaleValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true,
+        "previewType": "2d"
+      },
+      "inputs": {
+        "uv": {
+          "connections": []
+        },
+        "scale": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        44.06708167755703,
+        -714.4961936690252
+      ],
+      "name": "GradientNoise"
+    },
+    "20": {
+      "id": 20,
+      "data": {
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "scaleValue": "50",
+        "scaleValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true,
+        "previewType": "2d"
+      },
+      "inputs": {
+        "uv": {
+          "connections": []
+        },
+        "scale": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -267.00673822498493,
+        -705.0952896314308
+      ],
+      "name": "SimpleNoise"
+    },
+    "33": {
+      "id": 33,
+      "data": {
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "angleOffsetValue": 2,
+        "angleOffsetValueType": "float",
+        "cellDensityValue": 5,
+        "cellDensityValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "cellsValue": 0,
+        "cellsValueType": "float",
+        "expanded": true,
+        "preview": true,
+        "previewType": "2d"
+      },
+      "inputs": {
+        "uv": {
+          "connections": []
+        },
+        "angleOffset": {
+          "connections": []
+        },
+        "cellDensity": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        },
+        "cells": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -603.053819277289,
+        -231.0002400760777
+      ],
+      "name": "Voronoi"
+    },
+    "50": {
+      "id": 50,
+      "data": {
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "widthValue": 0.5,
+        "widthValueType": "float",
+        "heightValue": 0.5,
+        "heightValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true,
+        "previewType": "2d"
+      },
+      "inputs": {
+        "uv": {
+          "connections": []
+        },
+        "width": {
+          "connections": []
+        },
+        "height": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -247.8075769583973,
+        -230.08596988174008
+      ],
+      "name": "Ellipse"
+    },
+    "71": {
+      "id": 71,
+      "data": {
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "sidesValue": 6,
+        "sidesValueType": "float",
+        "widthValue": 0.5,
+        "widthValueType": "float",
+        "heightValue": 0.5,
+        "heightValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true,
+        "previewType": "2d"
+      },
+      "inputs": {
+        "uv": {
+          "connections": []
+        },
+        "sides": {
+          "connections": []
+        },
+        "width": {
+          "connections": []
+        },
+        "height": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        62.90979964337601,
+        -222.74088547179397
+      ],
+      "name": "Polygon"
+    },
+    "96": {
+      "id": 96,
+      "data": {
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "widthValue": 0.5,
+        "widthValueType": "float",
+        "heightValue": 0.5,
+        "heightValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true,
+        "previewType": "2d"
+      },
+      "inputs": {
+        "uv": {
+          "connections": []
+        },
+        "width": {
+          "connections": []
+        },
+        "height": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -589.5268158658008,
+        159.28571234051012
+      ],
+      "name": "Rectangle"
+    },
+    "172": {
+      "id": 172,
+      "data": {
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "sidesValue": 6,
+        "sidesValueType": "float",
+        "roundnessValue": 0.3,
+        "roundnessValueType": "float",
+        "widthValue": 0.5,
+        "widthValueType": "float",
+        "heightValue": 0.5,
+        "heightValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true,
+        "previewType": "2d"
+      },
+      "inputs": {
+        "uv": {
+          "connections": []
+        },
+        "width": {
+          "connections": []
+        },
+        "height": {
+          "connections": []
+        },
+        "sides": {
+          "connections": []
+        },
+        "roundness": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -258.0549711071774,
+        145.3821680753864
+      ],
+      "name": "RoundedPolygon"
+    },
+    "205": {
+      "id": 205,
+      "data": {
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "widthValue": 0.5,
+        "widthValueType": "float",
+        "heightValue": 0.5,
+        "heightValueType": "float",
+        "radiusValue": 0.1,
+        "radiusValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true,
+        "previewType": "2d"
+      },
+      "inputs": {
+        "uv": {
+          "connections": []
+        },
+        "width": {
+          "connections": []
+        },
+        "height": {
+          "connections": []
+        },
+        "radius": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        56.17705748629731,
+        175.6429790020997
+      ],
+      "name": "RoundedRectangle"
+    }
+  },
+  "parameters": [],
+  "UIState": {
+    "showMainPreview": true,
+    "showBlackBoard": false,
+    "showInspector": false
+  },
+  "type": "ShaderGraph",
+  "version": "0.0.0",
+  "setting": {
+    "template": "unlit",
+    "precision": "single",
+    "allowMaterialOverride": false,
+    "surfaceType": "opaque",
+    "blendingMode": "alpha",
+    "renderFace": "front",
+    "depthWrite": "auto",
+    "depthTest": "l equal",
+    "alphaClipping": false,
+    "castShadows": true
+  }
+}

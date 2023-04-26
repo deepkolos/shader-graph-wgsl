@@ -1,0 +1,65 @@
+.sg {
+  &-node {
+    @borderStyle: 1px solid rgba(0, 0, 0, 0.5);
+    &-io-can {
+      display: flex;
+      width: 100%;
+      user-select: none;
+
+      &[data-gap-top='true'] {
+        border-top: @borderStyle;
+      }
+      &[data-gap-bottom='true'] {
+        border-bottom: @borderStyle;
+      }
+    }
+
+    &-io-gap {
+      width: 1px;
+      flex: none;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    @ioGapH: 4px;
+
+    &-input {
+      position: relative;
+      z-index: 0;
+      display: flex;
+      justify-content: left;
+      align-items: center;
+      padding: @ioGapH 10px @ioGapH 0;
+
+      &-can {
+        flex: 1;
+        background-color: rgba(255, 255, 255, 0.15);
+      }
+
+      &-control {
+        position: absolute;
+        left: 0;
+        transform: translateX(-100%);
+      }
+
+      &-title {
+        white-space: nowrap;
+      }
+    }
+
+    &-output {
+      display: flex;
+      justify-content: right;
+      align-items: center;
+      padding: @ioGapH 0px @ioGapH 10px;
+
+      &-can {
+        flex: 1;
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+
+      &-title {
+        white-space: nowrap;
+      }
+    }
+  }
+}

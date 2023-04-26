@@ -1,0 +1,628 @@
+{
+  "id": "demo@0.1.0",
+  "nodes": {
+    "1": {
+      "id": 1,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 2,
+              "output": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "outputs": {},
+      "blocks": [
+        {
+          "id": 5,
+          "data": {
+            "baseColorValue": [
+              0,
+              0,
+              0
+            ],
+            "baseColorValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "baseColor": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "BaseColorBlock",
+          "contextId": 1
+        }
+      ],
+      "position": [
+        550,
+        0
+      ],
+      "name": "Fragment"
+    },
+    "2": {
+      "id": 2,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 1,
+              "input": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "id": 3,
+          "data": {
+            "positionValue": [
+              0,
+              0,
+              0
+            ],
+            "positionValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "position": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "PositionBlock",
+          "contextId": 2
+        },
+        {
+          "id": 4,
+          "data": {
+            "normalValue": [
+              0,
+              0,
+              0
+            ],
+            "normalValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "normal": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "NormalBlock",
+          "contextId": 2
+        }
+      ],
+      "position": [
+        550,
+        -300
+      ],
+      "name": "Vertex"
+    },
+    "11": {
+      "id": 11,
+      "data": {
+        "xValue": 0,
+        "xValueType": "float",
+        "yValue": 0,
+        "yValueType": "float",
+        "outValue": [
+          0,
+          0
+        ],
+        "outValueType": "vec2",
+        "expanded": true
+      },
+      "inputs": {
+        "x": {
+          "connections": []
+        },
+        "y": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        58.29320722400368,
+        -441.01937760325995
+      ],
+      "name": "Vector 2"
+    },
+    "16": {
+      "id": 16,
+      "data": {
+        "xValue": 0.35,
+        "xValueType": "float",
+        "yValue": 0.4,
+        "yValueType": "float",
+        "zValue": 0.67,
+        "zValueType": "float",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true
+      },
+      "inputs": {
+        "x": {
+          "connections": []
+        },
+        "y": {
+          "connections": []
+        },
+        "z": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 45,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -384.22281895212615,
+        -305.4532311972638
+      ],
+      "name": "Vector 3"
+    },
+    "21": {
+      "id": 21,
+      "data": {
+        "xValue": 0,
+        "xValueType": "float",
+        "yValue": 0,
+        "yValueType": "float",
+        "zValue": 0,
+        "zValueType": "float",
+        "wValue": 0,
+        "wValueType": "float",
+        "outValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec4",
+        "expanded": true
+      },
+      "inputs": {
+        "x": {
+          "connections": []
+        },
+        "y": {
+          "connections": []
+        },
+        "z": {
+          "connections": []
+        },
+        "w": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        237.77141048460436,
+        -322.0772886519196
+      ],
+      "name": "Vector 4"
+    },
+    "26": {
+      "id": 26,
+      "data": {
+        "xValue": 0,
+        "xValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true
+      },
+      "inputs": {
+        "x": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -210.69508419547867,
+        -436.35013299105384
+      ],
+      "name": "Float"
+    },
+    "42": {
+      "id": 42,
+      "data": {
+        "outValue": [
+          "1",
+          0,
+          0,
+          0,
+          0,
+          "1",
+          0,
+          0,
+          0,
+          0,
+          "1",
+          0,
+          0,
+          0,
+          0,
+          "1"
+        ],
+        "outValueType": "mat4",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 45,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -379.8516823091555,
+        -5.456498565785623
+      ],
+      "name": "Matrix4x4"
+    },
+    "43": {
+      "id": 43,
+      "data": {
+        "outValue": [
+          "1",
+          0,
+          0,
+          0,
+          "1",
+          0,
+          0,
+          0,
+          "1"
+        ],
+        "outValueType": "mat3",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -116.07056367933112,
+        7.026790367456272
+      ],
+      "name": "Matrix3x3"
+    },
+    "44": {
+      "id": 44,
+      "data": {
+        "outValue": [
+          "1",
+          0,
+          0,
+          "1"
+        ],
+        "outValueType": "mat2",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        113.62961395754415,
+        12.31444701767808
+      ],
+      "name": "Matrix2x2"
+    },
+    "45": {
+      "id": 45,
+      "data": {
+        "aValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "aValueType": "vec4",
+        "bValue": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "bValueType": "mat4",
+        "outValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec4",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 16,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 42,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -103.116820772425,
+        -317.66367215765615
+      ],
+      "name": "Multiply"
+    },
+    "682": {
+      "id": 682,
+      "data": {
+        "outValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "outValueType": "mat2",
+        "outValueName": "Matrix 2",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -213.45354520709705,
+        -525.7563672174871
+      ],
+      "name": "Parameter"
+    },
+    "685": {
+      "id": 685,
+      "data": {
+        "outValue": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "outValueType": "mat3",
+        "outValueName": "Matrix 3",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -212.1732883549588,
+        -481.90783464462146
+      ],
+      "name": "Parameter"
+    },
+    "688": {
+      "id": 688,
+      "data": {
+        "outValue": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "outValueType": "mat4",
+        "outValueName": "Matrix 4",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -46.02347364654234,
+        -530.8706280163464
+      ],
+      "name": "Parameter"
+    }
+  },
+  "parameters": [
+    {
+      "name": "Matrix 2",
+      "type": "mat2",
+      "defalutValue": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "exposed": true
+    },
+    {
+      "name": "Matrix 3",
+      "type": "mat3",
+      "defalutValue": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "exposed": true
+    },
+    {
+      "name": "Matrix 4",
+      "type": "mat4",
+      "defalutValue": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "exposed": true
+    }
+  ],
+  "UIState": {
+    "showMainPreview": false,
+    "showBlackBoard": true,
+    "showInspector": false
+  },
+  "type": "ShaderGraph",
+  "version": "0.0.0",
+  "setting": {
+    "template": "unlit",
+    "precision": "single",
+    "allowMaterialOverride": false,
+    "surfaceType": "opaque",
+    "blendingMode": "alpha",
+    "renderFace": "front",
+    "depthWrite": "auto",
+    "depthTest": "l equal",
+    "alphaClipping": false,
+    "castShadows": true
+  }
+}

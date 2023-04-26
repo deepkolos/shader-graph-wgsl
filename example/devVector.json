@@ -1,0 +1,653 @@
+{
+  "id": "demo@0.1.0",
+  "nodes": {
+    "1": {
+      "id": 1,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 2,
+              "output": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "outputs": {},
+      "blocks": [
+        {
+          "id": 5,
+          "data": {
+            "baseColorValue": [
+              0,
+              0,
+              0
+            ],
+            "baseColorValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "baseColor": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "BaseColorBlock",
+          "contextId": 1
+        }
+      ],
+      "position": [
+        550,
+        0
+      ],
+      "name": "Fragment"
+    },
+    "2": {
+      "id": 2,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 1,
+              "input": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "id": 3,
+          "data": {
+            "positionValue": [
+              0,
+              0,
+              0
+            ],
+            "positionValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "position": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "PositionBlock",
+          "contextId": 2
+        },
+        {
+          "id": 4,
+          "data": {
+            "normalValue": [
+              0,
+              0,
+              0
+            ],
+            "normalValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "normal": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "NormalBlock",
+          "contextId": 2
+        }
+      ],
+      "position": [
+        550,
+        -300
+      ],
+      "name": "Vertex"
+    },
+    "6": {
+      "id": 6,
+      "data": {
+        "aValue": [
+          0,
+          0,
+          0
+        ],
+        "aValueType": "vec3",
+        "bValue": [
+          0,
+          0,
+          0
+        ],
+        "bValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 153,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 153,
+              "output": "cosTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -781.9263853811425,
+        -602.8311505004788
+      ],
+      "name": "CrossProduct"
+    },
+    "11": {
+      "id": 11,
+      "data": {
+        "aValue": 0,
+        "aValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 153,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 153,
+              "output": "cosTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -465.25779408204744,
+        -606.3870950100141
+      ],
+      "name": "Distance"
+    },
+    "20": {
+      "id": 20,
+      "data": {
+        "aValue": 0,
+        "aValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 153,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 153,
+              "output": "cosTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -176.0265771239702,
+        -610.3578561931145
+      ],
+      "name": "DotProduct"
+    },
+    "51": {
+      "id": 51,
+      "data": {
+        "normalValue": [
+          0,
+          0,
+          0
+        ],
+        "normalValueType": "vec3",
+        "viewDirValue": [
+          0,
+          0,
+          0
+        ],
+        "viewDirValueType": "vec3",
+        "powerValue": 1,
+        "powerValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true,
+        "previewType": "3d"
+      },
+      "inputs": {
+        "normal": {
+          "connections": []
+        },
+        "viewDir": {
+          "connections": []
+        },
+        "power": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -783.8080618043015,
+        -220.85083659921798
+      ],
+      "name": "FresnelEffect"
+    },
+    "68": {
+      "id": 68,
+      "data": {
+        "aValue": 0,
+        "aValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 153,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 153,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -456.3963641746493,
+        -226.49586586869475
+      ],
+      "name": "Projection"
+    },
+    "99": {
+      "id": 99,
+      "data": {
+        "inValue": [
+          0,
+          0,
+          0
+        ],
+        "inValueType": "vec3",
+        "axisValue": [
+          0,
+          0,
+          0
+        ],
+        "axisValueType": "vec3",
+        "rotateValue": 1,
+        "rotateValueType": "float",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "unitValue": "radians",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 153,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "axis": {
+          "connections": [
+            {
+              "node": 153,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "rotate": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -167.1708456788765,
+        -219.08308936935939
+      ],
+      "name": "RotateAboutAxis"
+    },
+    "124": {
+      "id": 124,
+      "data": {
+        "coordsValue": 0,
+        "coordsValueType": "float",
+        "centerValue": 0.5,
+        "centerValueType": "float",
+        "radiusValue": 0.1,
+        "radiusValueType": "float",
+        "hardnessValue": 0.8,
+        "hardnessValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "coords": {
+          "connections": [
+            {
+              "node": 153,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "center": {
+          "connections": []
+        },
+        "radius": {
+          "connections": []
+        },
+        "hardness": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -795.2850551290695,
+        195.43746702091937
+      ],
+      "name": "SphereMask"
+    },
+    "153": {
+      "id": 153,
+      "data": {
+        "timeValue": 0,
+        "timeValueType": "float",
+        "sinTimeValue": 0,
+        "sinTimeValueType": "float",
+        "cosTimeValue": 0,
+        "cosTimeValueType": "float",
+        "deltaTimeValue": 0,
+        "deltaTimeValueType": "float",
+        "smoothDeltaValue": 0,
+        "smoothDeltaValueType": "float",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "time": {
+          "connections": []
+        },
+        "sinTime": {
+          "connections": [
+            {
+              "node": 6,
+              "input": "a",
+              "data": {}
+            },
+            {
+              "node": 11,
+              "input": "a",
+              "data": {}
+            },
+            {
+              "node": 20,
+              "input": "a",
+              "data": {}
+            },
+            {
+              "node": 68,
+              "input": "a",
+              "data": {}
+            },
+            {
+              "node": 68,
+              "input": "b",
+              "data": {}
+            },
+            {
+              "node": 99,
+              "input": "in",
+              "data": {}
+            },
+            {
+              "node": 99,
+              "input": "axis",
+              "data": {}
+            },
+            {
+              "node": 124,
+              "input": "coords",
+              "data": {}
+            },
+            {
+              "node": 182,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        },
+        "cosTime": {
+          "connections": [
+            {
+              "node": 6,
+              "input": "b",
+              "data": {}
+            },
+            {
+              "node": 11,
+              "input": "b",
+              "data": {}
+            },
+            {
+              "node": 20,
+              "input": "b",
+              "data": {}
+            },
+            {
+              "node": 182,
+              "input": "normal",
+              "data": {}
+            }
+          ]
+        },
+        "deltaTime": {
+          "connections": []
+        },
+        "smoothDelta": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -1254.365383348444,
+        -605.1521062217901
+      ],
+      "name": "Time"
+    },
+    "182": {
+      "id": 182,
+      "data": {
+        "inValue": 0,
+        "inValueType": "float",
+        "normalValue": 0,
+        "normalValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 153,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "normal": {
+          "connections": [
+            {
+              "node": 153,
+              "output": "cosTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -442.80308383701754,
+        174.4786143526894
+      ],
+      "name": "Reflection"
+    }
+  },
+  "parameters": [],
+  "UIState": {
+    "showMainPreview": false,
+    "showBlackBoard": false,
+    "showInspector": false
+  },
+  "type": "ShaderGraph",
+  "version": "0.0.0",
+  "setting": {
+    "template": "unlit",
+    "precision": "single",
+    "allowMaterialOverride": false,
+    "surfaceType": "opaque",
+    "blendingMode": "alpha",
+    "renderFace": "front",
+    "depthWrite": "auto",
+    "depthTest": "l equal",
+    "alphaClipping": false,
+    "castShadows": true
+  }
+}

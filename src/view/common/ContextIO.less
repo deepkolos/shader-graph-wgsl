@@ -1,0 +1,45 @@
+.sg-context {
+  &-input {
+    margin: 0 10px;
+
+    &-can {
+      position: absolute;
+      top: -13px;
+      left: 0;
+      right: 0;
+      height: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    &-title {
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: 13px;
+      transform: translate(calc(100% + 5px), -100%);
+    }
+  }
+
+  &-output {
+    margin: 0 10px;
+
+    &-can {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 13px;
+      height: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    &-title {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      transform: translate(calc(100% + 5px), 100%);
+      font-size: 13px;
+    }
+  }
+}
