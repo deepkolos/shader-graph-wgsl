@@ -6,6 +6,8 @@ import copy from 'copy-to-clipboard';
 import { Select, ShaderGraphEditor } from '../src';
 import { Presets } from './presets';
 
+let toasted = false;
+
 const Preset: FC<{ editorRef: MutableRefObject<ShaderGraphEditor> }> = ({ editorRef }) => {
   const [preset, setPreset] = useState<string>();
 
@@ -27,10 +29,10 @@ function App() {
 
   return (
     <div className="App" style={{ width: '100%', height: '100%' }}>
-      <div style={{ width: '500px', position: 'absolute', top: 0, left: 0, zIndex: 1 }}>
-        <button className="btn" onClick={() => setVisible(false)}>
+      <div className="toolbar">
+        {/* <button className="btn" onClick={() => setVisible(false)}>
           Destroy
-        </button>
+        </button> */}
         <button className="btn" onClick={() => editorRef.current?.blackboardView.toggle()}>
           BlackBoard
         </button>
@@ -42,11 +44,17 @@ function App() {
         </button>
         <button
           className="btn"
-          onClick={() => copy(JSON.stringify(editorRef.current?.toJSON(), null, 2))}
+          onClick={() => {
+            copy(JSON.stringify(editorRef.current?.toJSON(), null, 2));
+            if (!toasted) {
+              alert('已复制, 可Console查看结果');
+              toasted = true;
+            }
+          }}
         >
           Export
         </button>
-        <button
+        {/* <button
           className="btn"
           onClick={() => {
             const editor = editorRef.current;
@@ -58,7 +66,7 @@ function App() {
           }}
         >
           Export & Import
-        </button>
+        </button> */}
         <button className="btn" onClick={() => printCompile(editorRef.current)}>
           Compile
         </button>
@@ -88,7 +96,7 @@ function App() {
         </button>
         <Preset editorRef={editorRef as any} />
       </div>
-      {visible && <div ref={ref => ref && setContainer(ref)} />}
+      {visible && <div className='sg-editor' ref={ref => ref && setContainer(ref)} />}
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, MutableRefObject } from 'react';
-// import AreaPlugin from 'rete-area-plugin';
+import AreaPlugin from 'rete-area-plugin';
 import { ShaderGraphEditor, AssetSimplePlugin, setResourceAdapter, PreviewCustomMeshPlugin } from '../src';
 import { Presets } from './presets';
 
@@ -21,7 +21,7 @@ export async function createEditor(container: HTMLElement) {
 
   editor.view.resize();
   editor.trigger('process');
-  // AreaPlugin.zoomAt(editor, editor.nodes);
+  AreaPlugin.zoomAt(editor, editor.nodes);
 
   // 测试序列化和反序列化
   // setTimeout(() => editor.fromJSON(editor.toJSON()), 500);

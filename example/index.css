@@ -7,6 +7,8 @@
   font-family: sans-serif;
   text-align: center;
   background-color: #242424;
+  display: flex;
+  flex-direction: column;
 }
 
 input[type='number']::-webkit-inner-spin-button,
@@ -50,4 +52,21 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+}
+
+.github-corner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  height: 80px;
+  z-index: 2;
+}
+
+.toolbar {
+  
+}
+
+.sg-editor {
+  flex: auto;
 }

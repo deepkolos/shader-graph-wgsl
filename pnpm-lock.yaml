@@ -10,6 +10,9 @@ dependencies:
   react-dom:
     specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
+  rete-area-plugin:
+    specifier: ^0.2.1
+    version: 0.2.1
   three:
     specifier: ^0.151.3
     version: 0.151.3
@@ -32,7 +35,7 @@ devDependencies:
     version: 3.1.0(vite@4.2.0)
   '@webgpu/types':
     specifier: latest
-    version: 0.1.28
+    version: 0.1.31
   less:
     specifier: ^4.1.3
     version: 4.1.3
@@ -560,8 +563,8 @@ packages:
       - supports-color
     dev: true
 
-  /@webgpu/types@0.1.28:
-    resolution: {integrity: sha512-+iuxedqdbpOGzbCVH/zo2Qfa+17glLxEp2q9qTKgIm5aUUrvw3AobDHGFOf27R6ZAQQ+MwEvdWEKDIuvwmtsCA==}
+  /@webgpu/types@0.1.31:
+    resolution: {integrity: sha512-ozP2mEPjnJvtE7Q8Fz0/FnW00gcM0ySV+hi/Q+ddLX/hQk4xoaRT1NtQQVSS3mbEUWkVC5pizEkwS40qe0GK+g==}
     dev: true
 
   /ansi-styles@3.2.1:
@@ -945,6 +948,10 @@ packages:
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
     dev: true
+
+  /rete-area-plugin@0.2.1:
+    resolution: {integrity: sha512-MOeQRmSC/gjkZIMo0fNuomzunRplALqd86V+jSzuhBYchCw0wshv2/iXu4xRxVZkw9r1HpZxlz9gLkbatCbXMw==}
+    dev: false
 
   /rollup@3.21.0:
     resolution: {integrity: sha512-ANPhVcyeHvYdQMUyCbczy33nbLzI7RzrBje4uvNiTDJGIMtlKoOStmympwr9OtS1LZxiDmE2wvxHyVhoLtf1KQ==}

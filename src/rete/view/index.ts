@@ -126,11 +126,11 @@ export class EditorView extends Emitter<EventsTypes> {
         if (!container.parentElement)
             throw new Error('Container doesn\'t have parent element');
 
-        const width = container.parentElement.clientWidth;
-        const height = container.parentElement.clientHeight;
+        // const width = container.parentElement.clientWidth;
+        // const height = container.parentElement.clientHeight;
 
-        container.style.width = width + 'px';
-        container.style.height = height + 'px';
+        // container.style.width = width + 'px';
+        // container.style.height = height + 'px';
     }
 
     click(e: Event) {
