@@ -27,6 +27,12 @@ function App() {
   const [visible, setVisible] = useState(true);
   const [setContainer, editorRef] = useRete();
 
+  useEffect(() => {
+    if ('gpu' in navigator === false) {
+      alert('请使用Chrome Beta 113以上版本, 且打开WebGPU');
+    }
+  }, []);
+
   return (
     <div className="App" style={{ width: '100%', height: '100%' }}>
       <div className="toolbar">
@@ -96,7 +102,7 @@ function App() {
         </button>
         <Preset editorRef={editorRef as any} />
       </div>
-      {visible && <div className='sg-editor' ref={ref => ref && setContainer(ref)} />}
+      {visible && <div className="sg-editor" ref={ref => ref && setContainer(ref)} />}
     </div>
   );
 }
