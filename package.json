@@ -6,8 +6,6 @@
   "module": "./src/index.ts",
   "types": "./src/index.ts",
   "files": [
-    "lib",
-    "es",
     "src",
     "README.md",
     "package.json"

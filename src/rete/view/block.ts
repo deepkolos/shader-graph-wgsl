@@ -18,8 +18,8 @@ export class BlockView extends Emitter<EventsTypes> {
 
   el: HTMLElement;
   contextView: NodeView;
-  disposeListener: () => void;
-  drag: Drag;
+  disposeListener!: () => void;
+  drag!: Drag;
 
   dragInfo?: { centerYs: number[]; siblings: Element[]; nextIndex: number };
 

@@ -70,7 +70,7 @@ export class ParameterRC extends RC {
   async builder(node: ReteParameterNode) {
     this.initNode(node);
 
-    const out = new Rete.Output('out', 'Out', ValueTypeSocketMap[node.getValueType('out')] || Sockets.dynamicVector);
+    const out = new Rete.Output('out', 'Out', ValueTypeSocketMap[node.getValueType('out') as ValueType] || Sockets.dynamicVector);
     node.addOutput(out);
   }
 

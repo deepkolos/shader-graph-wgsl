@@ -93,6 +93,7 @@ export class WebGPURenderer {
     if (!texture.userData.gpuTexture) {
       await img.decode();
       const bitmap = await createImageBitmap(img, {
+        // @ts-ignore
         imageOrientation: flipY ? 'flipY' : 'from-image',
       });
       const colorTexture = this.device.createTexture({
