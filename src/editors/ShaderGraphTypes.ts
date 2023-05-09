@@ -123,6 +123,7 @@ import {
   ReteBlendNode,
   ReteColorSpaceConversionNode,
   ReteSamplerStateNode,
+  RetePreviewNumberNode,
 } from '../components';
 import { NodeData } from '../rete/core/data';
 import { Rete, ParameterData, GraphData } from '../types';
@@ -265,6 +266,7 @@ export type SGNodes =
   | ReteCustomFunctionNode
   | ReteSubGraphNode
   | RetePreviewNode
+  | RetePreviewNumberNode
   // artistic/adjustment
   | ReteChannelMixerNode
   | ReteContrastNode

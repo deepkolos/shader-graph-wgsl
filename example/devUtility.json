@@ -156,7 +156,8 @@
         "fnInBValue": 0,
         "fnInBValueType": "float",
         "fnOutCValue": 0,
-        "fnOutCValueType": "float"
+        "fnOutCValueType": "float",
+        "fileValueType": "string"
       },
       "inputs": {
         "fnInA": {
@@ -332,16 +333,458 @@
         22.748870849609375
       ],
       "name": "Preview"
+    },
+    "750": {
+      "id": 750,
+      "data": {
+        "timeValue": 0,
+        "timeValueType": "float",
+        "sinTimeValue": 0,
+        "sinTimeValueType": "float",
+        "cosTimeValue": 0,
+        "cosTimeValueType": "float",
+        "deltaTimeValue": 0,
+        "deltaTimeValueType": "float",
+        "smoothDeltaValue": 0,
+        "smoothDeltaValueType": "float",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "time": {
+          "connections": []
+        },
+        "sinTime": {
+          "connections": [
+            {
+              "node": 763,
+              "input": "x",
+              "data": {}
+            },
+            {
+              "node": 763,
+              "input": "y",
+              "data": {}
+            },
+            {
+              "node": 821,
+              "input": "x",
+              "data": {}
+            },
+            {
+              "node": 821,
+              "input": "y",
+              "data": {}
+            },
+            {
+              "node": 821,
+              "input": "z",
+              "data": {}
+            },
+            {
+              "node": 903,
+              "input": "x",
+              "data": {}
+            },
+            {
+              "node": 903,
+              "input": "y",
+              "data": {}
+            },
+            {
+              "node": 903,
+              "input": "z",
+              "data": {}
+            },
+            {
+              "node": 903,
+              "input": "w",
+              "data": {}
+            },
+            {
+              "node": 1045,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        },
+        "cosTime": {
+          "connections": []
+        },
+        "deltaTime": {
+          "connections": []
+        },
+        "smoothDelta": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -581.2052086694084,
+        480.4971887456085
+      ],
+      "name": "Time"
+    },
+    "763": {
+      "id": 763,
+      "data": {
+        "xValue": 0,
+        "xValueType": "float",
+        "yValue": 0,
+        "yValueType": "float",
+        "outValue": [
+          0,
+          0
+        ],
+        "outValueType": "vec2",
+        "expanded": true
+      },
+      "inputs": {
+        "x": {
+          "connections": [
+            {
+              "node": 750,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "y": {
+          "connections": [
+            {
+              "node": 750,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 1075,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -367.7604369437249,
+        496.7783257419737
+      ],
+      "name": "Vector 2"
+    },
+    "821": {
+      "id": 821,
+      "data": {
+        "xValue": 0,
+        "xValueType": "float",
+        "yValue": 0,
+        "yValueType": "float",
+        "zValue": 0,
+        "zValueType": "float",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true
+      },
+      "inputs": {
+        "x": {
+          "connections": [
+            {
+              "node": 750,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "y": {
+          "connections": [
+            {
+              "node": 750,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "z": {
+          "connections": [
+            {
+              "node": 750,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 1058,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -369.43730475264096,
+        652.0227161425531
+      ],
+      "name": "Vector 3"
+    },
+    "903": {
+      "id": 903,
+      "data": {
+        "xValue": 0,
+        "xValueType": "float",
+        "yValue": 0,
+        "yValueType": "float",
+        "zValue": 0,
+        "zValueType": "float",
+        "wValue": 0,
+        "wValueType": "float",
+        "outValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec4",
+        "expanded": true
+      },
+      "inputs": {
+        "x": {
+          "connections": [
+            {
+              "node": 750,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "y": {
+          "connections": [
+            {
+              "node": 750,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "z": {
+          "connections": [
+            {
+              "node": 750,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "w": {
+          "connections": [
+            {
+              "node": 750,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 1096,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -372.50585389986776,
+        834.0549502923745
+      ],
+      "name": "Vector 4"
+    },
+    "1045": {
+      "id": 1045,
+      "data": {
+        "inValue": 0,
+        "inValueType": "float",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 750,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -159.6761973362796,
+        487.4441178479643
+      ],
+      "name": "PreviewNumber"
+    },
+    "1058": {
+      "id": 1058,
+      "data": {
+        "inValue": [
+          0,
+          0,
+          0
+        ],
+        "inValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 821,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -168.65094655502608,
+        779.123174310678
+      ],
+      "name": "PreviewNumber"
+    },
+    "1075": {
+      "id": 1075,
+      "data": {
+        "inValue": [
+          0,
+          0
+        ],
+        "inValueType": "vec2",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 763,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        106.50408467957541,
+        494.1024735650081
+      ],
+      "name": "PreviewNumber"
+    },
+    "1096": {
+      "id": 1096,
+      "data": {
+        "inValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "inValueType": "vec4",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 903,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        97.03232370793228,
+        784.6221472305494
+      ],
+      "name": "PreviewNumber"
     }
   },
-  "parameters": [],
   "UIState": {
-    "showMainPreview": true,
-    "showBlackBoard": true,
-    "showInspector": true
+    "showMainPreview": false,
+    "showBlackBoard": false,
+    "showInspector": false
   },
   "type": "ShaderGraph",
-  "version": "0.0.0",
+  "version": "",
   "setting": {
     "template": "unlit",
     "precision": "single",
@@ -352,6 +795,8 @@
     "depthWrite": "auto",
     "depthTest": "l equal",
     "alphaClipping": false,
-    "castShadows": true
-  }
+    "castShadows": true,
+    "clearCoat": false
+  },
+  "parameters": []
 }

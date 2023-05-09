@@ -113,7 +113,7 @@ import {
   SimpleNoiseRC,
   VoronoiRC,
 } from './procedural';
-import { CustomFunctionRC, PreviewRC, SubGraphRC } from './utility';
+import { CustomFunctionRC, PreviewNumberRC, PreviewRC, SubGraphRC } from './utility';
 
 export const initShaderGraphComponents = () => [
   new Vec2RC(),
@@ -238,4 +238,5 @@ export const initShaderGraphComponents = () => [
   new BlendRC(),
   new ColorSpaceConversionRC(),
   new SamplerStateRC(),
+  new PreviewNumberRC(),
 ];

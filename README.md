@@ -11,11 +11,15 @@
   <img width="380" alt="dissolve" src="./screenshots/dissolve.png">
   <img width="380" alt="procedural" src="./screenshots/procedural.png">
   <img width="380" alt="subgraph" src="./screenshots/subgraph.png"> 
+  <img width="380" alt="subgraph" src="./screenshots/previewNumber.png"> 
 </div>
 
 ## TODO
 
 - Lit template
+- https://www.bilibili.com/video/BV1GB4y1y7FT
+- PreviewNumber ✅
+- FlowMap
 
 # License
 
