@@ -58,7 +58,7 @@ export class NodeEditor extends Context<EventsTypes> {
         } else {
             this.nodes.splice(this.nodes.indexOf(node), 1);
         }
-        this.view.removeNode(node);
+        this.view.removeNode(node, !this.silent);
 
         this.trigger('noderemoved', node);
     }
@@ -139,12 +139,12 @@ export class NodeEditor extends Context<EventsTypes> {
     }
 
     beforeImport(json: Data) {
-        const checking = Validator.validate(this.id, json);
+        // const checking = Validator.validate(this.id, json);
 
-        if (!checking.success) {
-            this.trigger('warn', checking.msg);
-            return false;
-        }
+        // if (!checking.success) {
+        //     this.trigger('warn', checking.msg);
+        //     return false;
+        // }
 
         this.silent = true;
         this.clear();

@@ -54,4 +54,11 @@ export class ConnectionView extends Emitter<EventsTypes> {
             updateColor,
         });
     }
+
+    dispose() {
+        this.trigger('disposeconnection', {
+            el: this.el,
+            connection: this.connection,
+        });
+    }
 }

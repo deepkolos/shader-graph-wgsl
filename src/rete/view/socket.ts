@@ -28,5 +28,9 @@ export class SocketView extends Emitter<EventsTypes> {
     const { x, y } = getOffset(el, nodeViewEl);
 
     return [position[0] + x + el.offsetWidth / 2, position[1] + y + el.offsetHeight / 2];
-}
+  }
+
+  dispose() {
+    this.trigger('disposesocket', { el: this.el });
+  }
 }

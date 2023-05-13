@@ -7,6 +7,7 @@ import { Select, ShaderGraphEditor } from '../src';
 import { Presets } from './presets';
 
 let toasted = false;
+const showTestToolBar = location.search.includes('test=true');
 
 const Preset: FC<{ editorRef: MutableRefObject<ShaderGraphEditor> }> = ({ editorRef }) => {
   const [preset, setPreset] = useState<string>();
@@ -23,22 +24,12 @@ const Preset: FC<{ editorRef: MutableRefObject<ShaderGraphEditor> }> = ({ editor
   return <Select value={preset} options={Object.keys(Presets)} onChange={onChange} />;
 };
 
-function App() {
-  const [visible, setVisible] = useState(true);
+const GraphEditor: FC<{}> = () => {
   const [setContainer, editorRef] = useRete();
-
-  useEffect(() => {
-    if ('gpu' in navigator === false) {
-      alert('请使用Chrome Beta 113以上版本, 且打开WebGPU');
-    }
-  }, []);
 
   return (
     <div className="App" style={{ width: '100%', height: '100%' }}>
       <div className="toolbar">
-        {/* <button className="btn" onClick={() => setVisible(false)}>
-          Destroy
-        </button> */}
         <button className="btn" onClick={() => editorRef.current?.blackboardView.toggle()}>
           BlackBoard
         </button>
@@ -60,19 +51,6 @@ function App() {
         >
           Export
         </button>
-        {/* <button
-          className="btn"
-          onClick={() => {
-            const editor = editorRef.current;
-            if (editor) {
-              const json = editor.toJSON();
-              editor.clear();
-              setTimeout(() => editor.fromJSON(json), 500);
-            }
-          }}
-        >
-          Export & Import
-        </button> */}
         <button className="btn" onClick={() => printCompile(editorRef.current)}>
           Compile
         </button>
@@ -102,7 +80,33 @@ function App() {
         </button>
         <Preset editorRef={editorRef as any} />
       </div>
-      {visible && <div className="sg-editor" ref={ref => ref && setContainer(ref)} />}
+      <div className="sg-editor" ref={ref => ref && setContainer(ref)} />
+    </div>
+  );
+};
+
+function App() {
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    if ('gpu' in navigator === false) {
+      alert('请使用Chrome Beta 113以上版本, 且打开WebGPU');
+    }
+  }, []);
+
+  return (
+    <div className="App" style={{ width: '100%', height: '100%' }}>
+      {visible && <GraphEditor />}
+      {showTestToolBar && (
+        <div className="test-toolbar">
+          <button className="btn" onClick={() => setVisible(false)}>
+            Hide Editor
+          </button>
+          <button className="btn" onClick={() => setVisible(true)}>
+            Show Editor
+          </button>
+        </div>
+      )}
     </div>
   );
 }

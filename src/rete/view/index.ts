@@ -6,9 +6,8 @@ import { Emitter } from '../core/emitter';
 import { EventsTypes } from '../events';
 import { Node } from '../node';
 import { NodeView } from './node';
-import { listenWindow } from './utils';
+import { listen, listenWindow } from './utils';
 import { BlockView } from './block';
-
 export class EditorView extends Emitter<EventsTypes> {
 
     container: HTMLElement;
@@ -16,6 +15,7 @@ export class EditorView extends Emitter<EventsTypes> {
     nodes = new Map<Node, NodeView>();
     connections = new Map<Connection, ConnectionView>();
     area: Area;
+    areaRoot: HTMLDivElement;
 
     // eslint-disable-next-line max-statements
     constructor(container: HTMLElement, components: Map<string, Component>, emitter: Emitter<EventsTypes>) {
@@ -23,13 +23,22 @@ export class EditorView extends Emitter<EventsTypes> {
 
         this.container = container;
         this.components = components;
+        this.areaRoot = document.createElement('div');
+        this.areaRoot.classList.add('rete-area-root');
+        this.areaRoot.style.width = '100%';
+        this.areaRoot.style.height = '100%';
+        this.areaRoot.style.overflow = 'hidden';
+        this.areaRoot.style.position = 'absolute';
+        this.areaRoot.style.top = '0';
+        this.areaRoot.style.left = '0';
+        container.append(this.areaRoot);
 
         this.container.style.overflow = 'hidden';
 
-        this.container.addEventListener('click', this.click.bind(this));
-        this.container.addEventListener('contextmenu', e => this.trigger('contextmenu', { e, view: this }));
+        emitter.on('destroy', this.dispose)
         emitter.on('destroy', listenWindow('resize', this.resize.bind(this)));
-        emitter.on('destroy', () => this.nodes.forEach(view => view.destroy()));
+        emitter.on('destroy', listen(this.container, 'click', this.click))
+        emitter.on('destroy', listen(this.container, 'contextmenu', e => this.trigger('contextmenu', { e, view: this })))
 
         this.on('nodetranslated', this.updateConnections.bind(this));
         this.on('rendersocket', ({ input, output }) => {
@@ -41,8 +50,8 @@ export class EditorView extends Emitter<EventsTypes> {
             relatedConnections.forEach(([_, view]) => requestAnimationFrame(() => view.update()))
         })
 
-        this.area = new Area(container, this);
-        this.container.appendChild(this.area.el);
+        this.area = new Area(this.areaRoot, this);
+        this.areaRoot.appendChild(this.area.el);
     }
 
     addNode(node: Node) {
@@ -56,14 +65,14 @@ export class EditorView extends Emitter<EventsTypes> {
         this.area.appendChild(nodeView.el);
     }
 
-    removeNode(node: Node) {
+    removeNode(node: Node, update = true) {
         if (node.contextNode) {
             const nodeView = this.nodes.get(node.contextNode);
             if (nodeView) {
                 const blockView = nodeView.blocks.get(node);
                 nodeView.blocks.delete(node);
-                blockView?.destroy();
-                node.contextNode.update();
+                blockView?.dispose();
+                if (update) node.contextNode.update();
             }
         } else {
             const nodeView = this.nodes.get(node);
@@ -71,7 +80,7 @@ export class EditorView extends Emitter<EventsTypes> {
             this.nodes.delete(node);
             if (nodeView) {
                 this.area.removeChild(nodeView.el);
-                nodeView.destroy();
+                nodeView.dispose();
             }
         }
     }
@@ -121,10 +130,10 @@ export class EditorView extends Emitter<EventsTypes> {
     }
 
     resize() {
-        const { container } = this;
+        // const { container } = this;
 
-        if (!container.parentElement)
-            throw new Error('Container doesn\'t have parent element');
+        // if (!container.parentElement)
+        //     throw new Error('Container doesn\'t have parent element');
 
         // const width = container.parentElement.clientWidth;
         // const height = container.parentElement.clientHeight;
@@ -133,10 +142,18 @@ export class EditorView extends Emitter<EventsTypes> {
         // container.style.height = height + 'px';
     }
 
-    click(e: Event) {
+    click = (e: Event) => {
         const container = this.container;
 
         if (container !== e.target) return;
         if (!this.trigger('click', { e, container })) return;
+    }
+
+    dispose = () => {
+        this.nodes.forEach(view => view.dispose());
+        this.connections.forEach(view => view.dispose());
+        this.nodes.clear();
+        this.connections.clear();
+        (this as any).area = undefined;
     }
 }

@@ -1,4 +1,4 @@
-import { listenWindow } from './utils';
+import { listen, listenWindow } from './utils';
 
 export class Drag {
 
@@ -16,15 +16,15 @@ export class Drag {
         this.el = el;
 
         this.el.style.touchAction = 'none';
-        this.el.addEventListener('pointerdown', this.down.bind(this));
 
-        const destroyMove = listenWindow('pointermove', this.move.bind(this));
-        const destroyUp = listenWindow('pointerup', this.up.bind(this));
+        const disposePointerDown = listen(this.el, 'pointerdown', this.down);
+        const destroyMove = listenWindow('pointermove', this.move);
+        const destroyUp = listenWindow('pointerup', this.up);
 
-        this.destroy = () => { destroyMove(); destroyUp(); }
+        this.destroy = () => { destroyMove(); destroyUp(); disposePointerDown(); }
     }
 
-    down(e: PointerEvent) {
+    down = (e: PointerEvent) => {
         if ((e.pointerType === 'mouse') && (e.button !== 0)) return;
         e.stopPropagation();
         this.pointerStart = [e.pageX, e.pageY]
@@ -32,7 +32,7 @@ export class Drag {
         this.onStart(e);
     }
 
-    move(e: PointerEvent) {
+    move = (e: PointerEvent) => {
         if (!this.pointerStart) return;
         e.preventDefault();
 
@@ -45,7 +45,7 @@ export class Drag {
         this.onTranslate(delta[0] / zoom, delta[1] / zoom, e);
     }
 
-    up(e: PointerEvent) {
+    up = (e: PointerEvent) => {
         if (!this.pointerStart) return;
 
         this.pointerStart = null;

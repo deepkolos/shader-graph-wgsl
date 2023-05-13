@@ -1,8 +1,8 @@
-import { MathUtils, PerspectiveCamera, RawShaderMaterial } from 'three';
+import { PerspectiveCamera, RawShaderMaterial } from 'three';
 import { ReteNode } from '../../types';
 import { MaterialTemplates } from '../../templates';
 import { SGCompilation } from '../../compilers';
-import { WebGPUMaterial } from '../../materials';
+import { WebGPUMaterial, disposeMaterial } from '../../materials';
 
 export class PreviewClient {
   enable: boolean = false;
@@ -42,7 +42,7 @@ export class PreviewClient {
   }
 
   dispose() {
-    this.material.dispose();
+    disposeMaterial(this.material);
   }
 }
 

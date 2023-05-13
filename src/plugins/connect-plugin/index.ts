@@ -5,6 +5,7 @@ import { Flow, FlowParams } from './flow';
 import './events';
 import './index.less';
 import { Plugin } from '../../rete/core/plugin';
+import { listen, listenWindow } from '../../rete/view/utils';
 
 function install(editor: NodeEditor) {
   editor.bind('connectionpath');
@@ -23,7 +24,8 @@ function install(editor: NodeEditor) {
     selectedPaths.forEach(el => el.classList.remove('selected'));
   };
 
-  editor.view.area.el.addEventListener(
+  const disposeClick = listen(
+    editor.view.area.el,
     'click',
     e => {
       const path = e.target as HTMLElement;
@@ -36,7 +38,9 @@ function install(editor: NodeEditor) {
     },
     true,
   );
-  editor.view.area.el.addEventListener(
+
+  const disposeContextMenu = listen(
+    editor.view.area.el,
     'contextmenu',
     e => {
       const path = e.target as HTMLElement;
@@ -82,10 +86,15 @@ function install(editor: NodeEditor) {
     socketsParams.set(el, { input, output });
 
     el.removeEventListener('pointerdown', pointerDown);
-    el.addEventListener('pointerdown', pointerDown);
+    // el.addEventListener('pointerdown', pointerDown);
   });
 
-  window.addEventListener('pointerup', pointerUp);
+  editor.on('disposesocket', ({ el }) => {
+    socketsParams.delete(el);
+    el.removeEventListener('pointerdown', pointerDown);
+  });
+
+  const disposePointerUp = listenWindow('pointerup', pointerUp);
 
   editor.on('renderconnection', ({ el, connection, points }) => {
     const d = renderPathData(editor, points, connection);
@@ -99,14 +108,29 @@ function install(editor: NodeEditor) {
     updateConnection({ el, d, updateColor, connection, points });
   });
 
+  editor.on('disposeconnection', ({ el, connection }) => {
+    const path = (el as any)._path;
+    delete (el as any)._path;
+    delete (el as any)._stop1;
+    delete (el as any)._stop2;
+    delete (el as any)._gradient;
+    delete (el as any)._connection;
+    delete (path as any)._connection;
+    el.removeEventListener('pointerdown', pointerDown);
+  });
+
   editor.on('destroy', () => {
-    window.removeEventListener('pointerup', pointerUp);
+    disposeClick();
+    disposeContextMenu();
+    disposePointerUp();
   });
 }
 
-export const ConnectionPlugin: Plugin = {
-  name: 'ConnectionPlugin',
-  install,
-};
+class ConnectionPluginClass implements Plugin {
+  name = 'ConnectionPlugin';
+  install = install;
+}
+
+export const ConnectionPlugin = new ConnectionPluginClass();
 
 export { defaultNodePath } from './utils';

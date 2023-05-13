@@ -12,4 +12,10 @@ export class ControlView extends Emitter<EventsTypes> {
     const { el, control } = this;
     this.trigger('rendercontrol', { el, control });
   }
+
+  dispose() {
+    const { el, control } = this;
+    this.trigger('disposenode', { el });
+    (control as any).update = undefined;
+  }
 }

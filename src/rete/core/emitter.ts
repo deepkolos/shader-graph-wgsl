@@ -46,4 +46,11 @@ export class Emitter<EventTypes> {
     exist(name: string) {
         return Array.isArray(this.events[name]);
     }
+
+    removeEvents() {
+        Object.keys(this.events).forEach(key => {
+            this.events[key].length = 0;
+            delete this.events[key];
+        });
+    }
 }

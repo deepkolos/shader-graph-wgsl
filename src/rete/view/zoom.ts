@@ -1,4 +1,4 @@
-import { listenWindow } from './utils';
+import { listen, listenWindow } from './utils';
 
 export class Zoom {
 
@@ -15,22 +15,23 @@ export class Zoom {
         this.intensity = intensity;
         this.onzoom = onzoom;
 
-        container.addEventListener('wheel', this.wheel.bind(this));
-        container.addEventListener('pointerdown', this.down.bind(this));
-        // container.addEventListener('dblclick', this.dblclick.bind(this));
+        const disposables = [
+            listenWindow('pointermove', this.move),
+            listenWindow('pointerup', this.end),
+            listenWindow('pointercancel', this.end),
+            listen(container, 'wheel', this.wheel),
+            listen(container, 'pointerdown', this.down),
+            // listen(container, 'dblclick', this.dblclick),
+        ];
 
-        const destroyMove = listenWindow('pointermove', this.move.bind(this));
-        const destroyUp = listenWindow('pointerup', this.end.bind(this));
-        const destroyCancel = listenWindow('pointercancel', this.end.bind(this));
-
-        this.destroy = () => { destroyMove(); destroyUp(); destroyCancel(); }
+        this.destroy = () => { disposables.forEach(i => i()); disposables.length = 0; }
     }
 
     get translating() { // is translating while zoom (works on multitouch)
         return this.pointers.length >= 2;
     }
 
-    wheel(e: WheelEvent) {
+    wheel = (e: WheelEvent) => {
         e.preventDefault();
 
         const rect = this.el.getBoundingClientRect();
@@ -56,11 +57,11 @@ export class Zoom {
         };
     }
 
-    down(e: PointerEvent) {
+    down = (e: PointerEvent) => {
         this.pointers.push(e);
     }
 
-    move(e: PointerEvent) {
+    move = (e: PointerEvent) => {
         this.pointers = this.pointers.map(p => p.pointerId === e.pointerId ? e : p)
         if (!this.translating) return;
 
@@ -79,12 +80,12 @@ export class Zoom {
         this.previous = { cx, cy, distance };
     }
 
-    end(e: PointerEvent) {
+    end = (e: PointerEvent) => {
         this.previous = null;
         this.pointers = this.pointers.filter(p => p.pointerId !== e.pointerId)
     }
 
-    dblclick(e: MouseEvent) {
+    dblclick = (e: MouseEvent) => {
         if ((e.target as HTMLElement) !== this.el.parentNode) return;
         e.preventDefault();
 

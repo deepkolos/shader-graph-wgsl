@@ -8,18 +8,9 @@ import {
   ValueTypeNameMap,
   ValueTypeNameReverseMap,
   VectorTypes,
-  VectorValueType,
 } from '../../types';
 import React, { FC, MouseEventHandler, useContext, useEffect, useRef, useState } from 'react';
-import {
-  ContextMenu,
-  InputAsset,
-  InputColor,
-  Moveable,
-  moveableContext,
-  Popup,
-  InputVector,
-} from '../common';
+import { ContextMenu, InputAsset, InputColor, Moveable, moveableContext, Popup, InputVector } from '../common';
 import { PopupView } from '.';
 import { listenWindow } from '../../rete/view/utils';
 
@@ -71,12 +62,7 @@ const ParameterItem: FC<ParameterItemProps> = ({ editor, view, item }) => {
           if (mouse[0] > x && mouse[0] < x + w && mouse[1] > y && mouse[1] < y + h) return;
         }
         const com = editor.getComponent(view.parameterComponetnName);
-        const node = await com.createNode({
-          outValue: defalutValue,
-          outValueType: type,
-          outValueName: name,
-          exposed,
-        });
+        const node = await com.createNode({ outValue: defalutValue, outValueType: type, outValueName: name, exposed });
         const [gx, gy] = editor.view.area.convertToGraphSpace([e.clientX, e.clientY]);
         node.position[0] = gx;
         node.position[1] = gy;
@@ -96,15 +82,10 @@ const ParameterItem: FC<ParameterItemProps> = ({ editor, view, item }) => {
           { name: '删除', onclick: close(() => view.delParameter(name)) },
         ],
         [{ name: '克隆', onclick: close(() => view.cloneParamter(name)) }],
-      ]}
-    >
+      ]}>
       <div className="sg-parameter-item-can">
         <div className="sg-parameter-item-head">
-          <div
-            className="sg-parameter-item-btn-expand"
-            data-aria-expanded={expand}
-            onClick={() => setExpand(!expand)}
-          >
+          <div className="sg-parameter-item-btn-expand" data-aria-expanded={expand} onClick={() => setExpand(!expand)}>
             ▶︎
           </div>
           {edit ? (
@@ -122,15 +103,8 @@ const ParameterItem: FC<ParameterItemProps> = ({ editor, view, item }) => {
             />
           ) : (
             <>
-              <div
-                className="sg-parameter-item"
-                onPointerDownCapture={onPointerDown}
-                onDoubleClick={() => setEdit(true)}
-              >
-                <div
-                  className="sg-parameter-item-exposed"
-                  style={{ display: exposed ? 'block' : 'none' }}
-                />
+              <div className="sg-parameter-item" onPointerDownCapture={onPointerDown} onDoubleClick={() => setEdit(true)}>
+                <div className="sg-parameter-item-exposed" style={{ display: exposed ? 'block' : 'none' }} />
                 <div className="sg-parameter-item-name">{name}</div>
               </div>
               <div className="sg-parameter-item-type">{ValueTypeNameMap[type]}</div>
@@ -143,26 +117,15 @@ const ParameterItem: FC<ParameterItemProps> = ({ editor, view, item }) => {
             <div className="sg-parameter-item-setting">
               <div className="sg-parameter-item-setting-label">Exposed</div>
               {/* @ts-ignore */}
-              <input
-                type="checkbox"
-                checked={exposed}
-                onChange={() => view.setParameter(name, { exposed: !exposed })}
-              />
+              <input type="checkbox" checked={exposed} onChange={() => view.setParameter(name, { exposed: !exposed })} />
             </div>
             <div className="sg-parameter-item-setting">
               <div className="sg-parameter-item-setting-label">Value</div>
               {VectorTypes.includes(item.type) &&
                 (item.typeEdit === 'color' ? (
-                  <InputColor
-                    value={defalutValue}
-                    onChange={v => view.setParameter(name, { defalutValue: v })}
-                  />
+                  <InputColor value={defalutValue} onChange={v => view.setParameter(name, { defalutValue: v })} />
                 ) : (
-                  <InputVector
-                    value={defalutValue}
-                    valueType={type}
-                    onChange={v => view.setParameter(name, { defalutValue: v })}
-                  />
+                  <InputVector value={defalutValue} valueType={type} onChange={v => view.setParameter(name, { defalutValue: v })} />
                 ))}
               {item.type === ValueType.texture2d && (
                 <InputAsset
@@ -217,7 +180,7 @@ export const BlackBoard: FC<BlackBoardProps> = ({ visiable, view, editor, subtit
   };
 
   return (
-    <Popup view={view} visiable={visiable} mask={false} keepAlive>
+    <Popup view={view} visiable={visiable} mask={false} keepAlive root={editor.view.container}>
       <Moveable containerEl={editor.view.container} gap={20}>
         <div className="sg-blackboard">
           <div className="sg-blackboard-head">
@@ -228,8 +191,7 @@ export const BlackBoard: FC<BlackBoardProps> = ({ visiable, view, editor, subtit
                 clickable
                 visiable={showMenu}
                 items={[menuList.map(name => ({ name, onclick: onItemClick }))]}
-                onVisiableChange={setMenuShow}
-              >
+                onVisiableChange={setMenuShow}>
                 <div className="sg-blackboard-btn-add">+</div>
               </ContextMenu>
             </div>
@@ -264,13 +226,7 @@ export class BlackBoardView extends PopupView<BlackBoardProps> {
   }
 
   toJSON(): Array<ParameterData> {
-    return this.data.map(i => ({
-      name: i.name,
-      type: i.type,
-      defalutValue: i.defalutValue,
-      exposed: i.exposed,
-      typeEdit: i.typeEdit,
-    }));
+    return this.data.map(i => ({ name: i.name, type: i.type, defalutValue: i.defalutValue, exposed: i.exposed, typeEdit: i.typeEdit }));
   }
 
   addParamter(type: ValueType, editing = false, typeEdit?: ValueTypeEdit, customName?: string) {
@@ -278,15 +234,7 @@ export class BlackBoardView extends PopupView<BlackBoardProps> {
     let name = customName || ValueTypeNameMap[type];
     if (nextIndex) name += `(${nextIndex})`;
 
-    this.data.push({
-      name,
-      type,
-      exposed: true,
-      // @ts-ignore
-      defalutValue: ValueTypeCtor[type]?.(),
-      editing,
-      typeEdit,
-    });
+    this.data.push({ name, type, exposed: true, defalutValue: ValueTypeCtor[type]?.(), editing, typeEdit });
     this.update();
   }
 
@@ -335,13 +283,7 @@ export class BlackBoardView extends PopupView<BlackBoardProps> {
     const item = this.data.find(i => i.name === name);
 
     if (item) {
-      this.data.push({
-        ...item,
-        name: `${item.name} copy`,
-        // @ts-ignore
-        defalutValue: ValueTypeCtor[item.type]?.(),
-        editing: true,
-      });
+      this.data.push({ ...item, name: `${item.name} copy`, defalutValue: ValueTypeCtor[item.type]?.(), editing: true });
       this.update();
     }
   }

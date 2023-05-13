@@ -76,7 +76,7 @@ export const Inspector: FC<InspectorProps> = ({ editor, view, setting, graphSett
   }, []);
 
   return (
-    <Popup view={view} mask={false} keepAlive>
+    <Popup view={view} mask={false} keepAlive root={editor.view.container}>
       <Moveable x={Infinity} y={0} gap={20} containerEl={editor.view.container}>
         <div className="sg-inspector sg-blackboard">
           <div className="sg-blackboard-head">
@@ -88,14 +88,7 @@ export const Inspector: FC<InspectorProps> = ({ editor, view, setting, graphSett
               tabs={[
                 {
                   name: 'Node Setting',
-                  content: (
-                    <Settings
-                      editor={editor}
-                      setting={nodeSetting}
-                      valueCfgs={nodeValueCfgs}
-                      onChange={onNodeSettingChange}
-                    />
-                  ),
+                  content: <Settings editor={editor} setting={nodeSetting} valueCfgs={nodeValueCfgs} onChange={onNodeSettingChange} />,
                 },
                 {
                   name: 'Graph Setting',

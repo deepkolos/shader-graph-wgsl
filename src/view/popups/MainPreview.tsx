@@ -1,5 +1,5 @@
 import './MainPreview.less';
-import React, { FC, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { FC, useContext, useEffect, useRef, useState } from 'react';
 import { Rete } from '../../types';
 import { ContextMenu, Moveable, moveableContext, Popup } from '../common';
 import { PopupView, PopupViewProps } from '.';
@@ -27,8 +27,12 @@ export const MainPreview: FC<MainPreviewProps> = ({ editor, view }) => {
     setShow(false);
   };
 
-  useLayoutEffect(() => {
-    editor.trigger('previewclientcreate', { canvas: canvasRef.current, type: '3d', enable: view.showing });
+  useEffect(() => {
+    editor.trigger('previewclientcreate', {
+      canvas: canvasRef.current,
+      type: '3d',
+      enable: view.showing,
+    });
     return () => {
       editor.trigger('previewclientremove', { canvas: canvasRef.current });
     };
@@ -39,7 +43,11 @@ export const MainPreview: FC<MainPreviewProps> = ({ editor, view }) => {
       view={view}
       mask={false}
       keepAlive
-      onShowChange={show => editor.trigger('previewclientupdate', { canvas: canvasRef.current, enable: show })}>
+      root={editor.view.container}
+      onShowChange={show =>
+        editor.trigger('previewclientupdate', { canvas: canvasRef.current, enable: show })
+      }
+    >
       <Moveable x={Infinity} y={Infinity} gap={20} containerEl={editor.view.container}>
         <div className="sg-main-preview">
           <MainPreviewTitle />
@@ -48,7 +56,8 @@ export const MainPreview: FC<MainPreviewProps> = ({ editor, view }) => {
             className="sg-main-preview-canvas-can"
             visiable={show}
             onVisiableChange={setShow}
-            items={[MenuItems.map(name => ({ name, onclick: onMenuClick }))]}>
+            items={[MenuItems.map(name => ({ name, onclick: onMenuClick }))]}
+          >
             <canvas
               onPointerDown={stopPropagation}
               onPointerMove={stopPropagation}

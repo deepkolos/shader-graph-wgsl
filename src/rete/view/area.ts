@@ -2,7 +2,7 @@ import { Drag } from './drag';
 import { Emitter } from '../core/emitter';
 import { EventsTypes } from '../events';
 import { Zoom } from './zoom';
-import { getOffset } from './utils';
+import { getOffset, listen } from './utils';
 
 export interface Transform { k: number; x: number; y: number }
 export interface Mouse { x: number; y: number }
@@ -27,15 +27,15 @@ export class Area extends Emitter<EventsTypes> {
         this.container = container;
         el.style.transformOrigin = '0 0';
 
-        this._zoom = new Zoom(container, el, 0.1, this.onZoom.bind(this));
-        this._drag = new Drag(container, this.onTranslate.bind(this), this.onStart.bind(this));
+        this._zoom = new Zoom(container, el, 0.1, this.onZoom);
+        this._drag = new Drag(container, this.onTranslate, this.onStart);
 
         emitter.on('destroy', () => {
             this._zoom.destroy();
             this._drag.destroy();
+            (this as any)._drag = undefined;
         });
-
-        this.container.addEventListener('pointermove', this.pointermove.bind(this));
+        emitter.on('destroy', listen(container, 'pointermove', this.pointermove))
 
         this.update();
     }
@@ -46,7 +46,7 @@ export class Area extends Emitter<EventsTypes> {
         this.el.style.transform = `translate(${t.x}px, ${t.y}px) scale(${t.k})`;
     }
 
-    pointermove(e: PointerEvent) {
+    pointermove = (e: PointerEvent) => {
         const { clientX, clientY } = e;
         const rect = this.el.getBoundingClientRect();
         const x = clientX - rect.left;
@@ -57,16 +57,16 @@ export class Area extends Emitter<EventsTypes> {
         this.trigger('mousemove', { ...this.mouse }); // TODO rename on `pointermove`
     }
 
-    onStart() {
+    onStart = () => {
         this._startPosition = { ...this.transform };
     }
 
-    onTranslate(dx: number, dy: number) {
+    onTranslate = (dx: number, dy: number) => {
         if (this._zoom.translating) return; // lock translation while zoom on multitouch
         if (this._startPosition) this.translate(this._startPosition.x + dx, this._startPosition.y + dy);
     }
 
-    onZoom(delta: number, ox: number, oy: number, source: ZoomSource) {
+    onZoom = (delta: number, ox: number, oy: number, source: ZoomSource) => {
         this.zoom(this.transform.k * (1 + delta), ox, oy, source);
 
         this.update();

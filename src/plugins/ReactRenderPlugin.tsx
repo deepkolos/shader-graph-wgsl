@@ -10,7 +10,7 @@ declare module '../rete/core/events' {
     rendercustom: {
       render: string;
       component: any;
-      view: { props: any; el: HTMLElement; update: () => void | Promise<void> };
+      view: { props: any; el: HTMLElement; update: (cb?: () => void) => void | Promise<void> };
       callback?: () => void;
     };
   }
@@ -21,7 +21,7 @@ const Wrapper: FC<{ cb: () => void; children: React.ReactNode }> = ({ cb, childr
   return <>{children}</>;
 };
 
-function install(editor: NodeEditor, { createRoot }: { createRoot: typeof ICreateRoot }) {
+function install(editor: NodeEditor, { createRoot }: { createRoot?: typeof ICreateRoot }) {
   editor.bind('rendercustom');
 
   const roots = new Map<HTMLElement, Root>();
@@ -32,30 +32,53 @@ function install(editor: NodeEditor, { createRoot }: { createRoot: typeof ICreat
       }
     : ReactDOM.render;
 
-  editor.on('rendernode', ({ el, node, component, bindSocket, bindControl, bindBlock, callback, view }) => {
-    if (component.render && component.render !== 'react') return;
-    const Component = component.component;
+  editor.on(
+    'rendernode',
+    ({ el, node, component, bindSocket, bindControl, bindBlock, callback, view }) => {
+      if (component.render && component.render !== 'react') return;
+      const Component = component.component;
 
-    let eventCBTriggered = false;
+      node.update = (cb?: () => void) =>
+        render(
+          <Wrapper cb={() => cb?.()}>
+            <Component
+              view={view}
+              node={node}
+              editor={editor}
+              bindSocket={bindSocket}
+              bindControl={bindControl}
+              bindBlock={bindBlock}
+            />
+          </Wrapper>,
+          el,
+        );
+      node.update(callback);
+    },
+  );
 
-    node.update = (cb?: () => void) =>
-      render(
-        <Wrapper
-          cb={() => {
-            if (!eventCBTriggered) {
-              callback?.();
-              eventCBTriggered = true;
-            }
-            cb?.();
-          }}>
-          <Component view={view} node={node} editor={editor} bindSocket={bindSocket} bindControl={bindControl} bindBlock={bindBlock} />
-        </Wrapper>,
-        el,
-      );
-    node.update();
+  editor.on('disposenode', ({ el }) => {
+    // React FiberNode 双缓冲 需要额外2次渲染才能删除
+    // https://juejin.cn/post/7118259566868955167#heading-34
+    render(<></>, el);
+    setTimeout(() => {
+      render(<></>, el);
+      setTimeout(() => {
+        render(<></>, el);
+        // 避免 sync unmount warning 但是如果只调用下面部分会导致props依然持有
+        setTimeout(() => {
+          el.remove?.();
+          if (createRoot) {
+            roots.get(el)?.unmount();
+            roots.delete(el);
+          } else {
+            ReactDOM.unmountComponentAtNode(el);
+          }
+        });
+      }, 28);
+    }, 28);
   });
 
-  editor.on('rendercontrol', ({ el, control }) => {
+  editor.on('rendercontrol', ({ el, control, callback }) => {
     if (control.render && control.render !== 'react') return;
     const Component = control.component;
 
@@ -66,30 +89,21 @@ function install(editor: NodeEditor, { createRoot }: { createRoot: typeof ICreat
         </Wrapper>,
         el,
       );
-    control.update();
+    control.update(callback);
   });
 
   editor.on('rendercustom', ({ render: renderer, component, view, callback }) => {
     if (renderer !== 'react') return;
 
-    let eventCBTriggered = false;
-
     const Component = component;
     view.update = (cb?: () => void) =>
       render(
-        <Wrapper
-          cb={() => {
-            if (!eventCBTriggered) {
-              callback?.();
-              eventCBTriggered = true;
-            }
-            cb?.();
-          }}>
+        <Wrapper cb={() => cb?.()}>
           <Component {...view.props} />
         </Wrapper>,
         view.el,
       );
-    view.update();
+    view.update(callback);
   });
 
   editor.on(['connectioncreated', 'connectionremoved'], connection => {

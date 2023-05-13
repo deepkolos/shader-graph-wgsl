@@ -1,6 +1,11 @@
 import { useState, useEffect, useRef, MutableRefObject } from 'react';
 import AreaPlugin from 'rete-area-plugin';
-import { ShaderGraphEditor, AssetSimplePlugin, setResourceAdapter, PreviewCustomMeshPlugin } from '../src';
+import {
+  ShaderGraphEditor,
+  AssetSimplePlugin,
+  setResourceAdapter,
+  PreviewCustomMeshPlugin,
+} from '../src';
 import { Presets } from './presets';
 
 setResourceAdapter(asset => asset?.id);
@@ -34,7 +39,10 @@ export async function createEditor(container: HTMLElement) {
   return editor;
 }
 
-export function useRete(): [ReturnType<typeof useState<HTMLElement>>['1'], MutableRefObject<ShaderGraphEditor | undefined>] {
+export function useRete(): [
+  ReturnType<typeof useState<HTMLElement>>['1'],
+  MutableRefObject<ShaderGraphEditor | undefined>,
+] {
   const [container, setContainer] = useState<HTMLElement>();
   const editorRef = useRef<ShaderGraphEditor>();
 
@@ -47,9 +55,7 @@ export function useRete(): [ReturnType<typeof useState<HTMLElement>>['1'], Mutab
   }, [container]);
 
   useEffect(() => {
-    return () => {
-      editorRef.current?.destroy();
-    };
+    return () => editorRef.current?.dispose();
   }, []);
 
   return [setContainer, editorRef];

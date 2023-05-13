@@ -1,9 +1,9 @@
 import './Moveable.less';
 import React, { FC, useRef, useEffect } from 'react';
 import { DefaultProps } from './types';
-import { listen, listenWindow } from '../../rete/view/utils';
+import { getOffset, listen, listenWindow } from '../../rete/view/utils';
 
-type Rect = [x: number, y: number, w: number, h: number];
+type Rect = [x: number, y: number, w: number, h: number, px: number, py: number];
 
 interface MoveableContext {
   startEl?: HTMLElement;
@@ -29,25 +29,29 @@ export const Moveable: FC<MoveableProps> = ({ gap = 0, children, x = 0, y = 0, c
     let canRectCache: Rect | undefined;
     const getCanRect = () => {
       if (canRectCache) return canRectCache;
-      let canRect: Rect = [0, 0, innerWidth, innerHeight];
+      let canRect: Rect = [0, 0, innerWidth, innerHeight, 0, 0];
       if (containerEl) {
         const { x, y, width, height } = containerEl.getBoundingClientRect();
-        canRect = [x, y, width, height];
+        const { x: offsetLeft, y: offsetTop } = getOffset(el.parentElement!, document.body, 100);
+        canRect = [x, y, width, height, offsetLeft, offsetTop];
       }
+      canRectCache = canRect;
       return canRect;
     };
     const move = () => {
       const { x, y, w, h } = moveState;
-      const [cx, cy, cw, ch] = getCanRect();
-      moveState.x = Math.max(gap + cx, Math.min(cx + cw - w - gap, x));
-      moveState.y = Math.max(gap + cy, Math.min(cy + ch - h - gap, y));
+      const [cx, cy, cw, ch, px, py] = getCanRect();
+      moveState.x = Math.max(gap + cx, Math.min(cx + cw - w - gap, x + px)) - px;
+      moveState.y = Math.max(gap + cy, Math.min(cy + ch - h - gap, y + py)) - py;
       el.style.transform = `translate(${moveState.x}px, ${moveState.y}px)`;
     };
 
     const resizeObserver = new ResizeObserver(entries => {
       const { width, height } = entries[0].contentRect;
+      if (height === 0 && width === 0) return;
       moveState.w = width;
       moveState.h = height;
+      canRectCache = undefined;
       move();
     });
 

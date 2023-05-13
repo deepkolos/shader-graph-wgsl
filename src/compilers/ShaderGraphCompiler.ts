@@ -637,6 +637,12 @@ ${code}`;
   async superCompile(graphData: ShaderGraphData) {
     return super.compile(graphData);
   }
+
+  dispose() {
+    (this as any).graphData = undefined;
+    const { todo, done, ready, changed, nodesCompilation, components } = this;
+    [todo, done, ready, ...changed, nodesCompilation, components].forEach(i => i.clear());
+  }
 }
 
 const stringifyFloat = (num: number): string => {

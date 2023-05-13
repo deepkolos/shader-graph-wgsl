@@ -69,4 +69,11 @@ body {
 
 .sg-editor {
   flex: auto;
+  position: relative;
+  text-align: left;
+}
+
+.test-toolbar {
+  position: absolute;
+  bottom: 0;
 }

@@ -39,5 +39,5 @@ export class Control {
     this.getNode().setValue(prefix, data);
   }
 
-  update = () => {};
+  update = (cb?: () => void) => {};
 }

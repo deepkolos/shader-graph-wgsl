@@ -231,5 +231,23 @@ export class ShaderGraphEditor extends Rete.NodeEditor {
 
   dispose() {
     this.disposables.forEach(i => i());
+    this.disposables.length = 0;
+    this.blackboardView.dispose();
+    this.mainPreviewView.dispose();
+    this.inspectorView.dispose();
+    this.compiler.dispose();
+    this.plugins.clear();
+    delete (this as any).blackboardView;
+    delete (this as any).mainPreviewView;
+    delete (this as any).inspectorView;
+    delete (this as any).compiler;
+    this.components.forEach(com => (com as any).editor = undefined)
+    this.components.clear();
+    this.nodes.forEach(node => node.dispose());
+    this.nodes.length = 0;
+    this.view.dispose();
+    this.destroy();
+    // 等 useEffect dispose fn 执行完
+    setTimeout(() => this.removeEvents(), 100);
   }
 }

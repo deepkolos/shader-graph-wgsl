@@ -16,6 +16,7 @@ export const ContextMenu: FC<ContextMenuProps> = ({ disabled, visiable, onVisiab
   const onContextMenu = (e: any) => {
     if (disabled) return;
     e.preventDefault();
+    e.stopPropagation();
     setPosition([e.clientX, e.clientY]);
     onVisiableChange(true);
   };
@@ -25,7 +26,7 @@ export const ContextMenu: FC<ContextMenuProps> = ({ disabled, visiable, onVisiab
   };
 
   return (
-    <div className={className} onPointerDownCapture={onPointerDown} onContextMenu={onContextMenu} onClick={clickable ? onContextMenu : undefined}>
+    <div className={className} onPointerDownCapture={onPointerDown} onContextMenuCapture={onContextMenu} onClick={clickable ? onContextMenu : undefined}>
       {children}
       <Popup visiable={visiable} onShowChange={onVisiableChange}>
         <MenuList x={position[0]} y={position[1]} items={items}></MenuList>

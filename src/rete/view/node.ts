@@ -8,7 +8,7 @@ import { IO } from '../io';
 import { Node } from '../node';
 import { SocketView } from './socket';
 import { BlockView } from './block';
-import { rebind } from './utils';
+import { listen, rebind } from './utils';
 
 export class NodeView extends Emitter<EventsTypes> {
   node: Node;
@@ -22,6 +22,7 @@ export class NodeView extends Emitter<EventsTypes> {
   protected _startPosition: number[] = [];
   protected _drag: Drag;
   resizeObserver: ResizeObserver;
+  disposeContextMenu: () => void;
 
   constructor(node: Node, component: Component, emitter: Emitter<EventsTypes>, components: Map<string, Component>) {
     super(emitter);
@@ -32,12 +33,13 @@ export class NodeView extends Emitter<EventsTypes> {
     this.el = document.createElement('div');
     this.el.style.position = 'absolute';
     this.el.classList.add('rete-node-view');
-    this.el.addEventListener('contextmenu', e => this.trigger('contextmenu', { e, node: this.node }));
 
     this._drag = new Drag(this.el, this.onTranslate, this.onSelect.bind(this), () => {
       this.trigger('nodedraged', node);
       this.trigger('nodedragged', node);
     });
+
+    this.disposeContextMenu = listen(this.el, 'contextmenu', e => this.trigger('contextmenu', { e, node: this.node }));
 
     this.trigger('rendernode', {
       el: this.el,
@@ -148,10 +150,18 @@ export class NodeView extends Emitter<EventsTypes> {
     this.el.style.transform = `translate(${x}px, ${y}px)`;
   }
 
-  remove() {}
-
-  destroy() {
+  dispose() {
     this._drag.destroy();
+    (this as any)._drag = undefined;
     this.resizeObserver.unobserve(this.el);
+    (this.node as any).update = undefined;
+    this.trigger('disposenode', { el: this.el });
+    this.sockets.forEach(view => view.dispose());
+    this.blocks.forEach(view => view.dispose());
+    this.controls.forEach(view => view.dispose());
+    this.sockets.clear();
+    this.blocks.clear();
+    this.controls.clear();
+    this.disposeContextMenu();
   }
 }

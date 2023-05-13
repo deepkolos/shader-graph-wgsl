@@ -6,9 +6,9 @@ export function listenWindow<K extends keyof WindowEventMap>(event: K, handler: 
   };
 }
 
-export function listen<K extends keyof HTMLElementEventMap>(el: HTMLElement, event: K, handler: (e: HTMLElementEventMap[K]) => void) {
-  el.addEventListener(event, handler);
-  return () => el.removeEventListener<K>(event, handler);
+export function listen<K extends keyof HTMLElementEventMap>(el: HTMLElement, event: K, handler: (e: HTMLElementEventMap[K]) => void, options?: boolean) {
+  el.addEventListener(event, handler, options);
+  return () => el.removeEventListener<K>(event, handler, options);
 }
 
 export function rebind<K, V extends { el: HTMLElement; destroy?: () => void; onRebind?: (el?: HTMLElement) => void }>(

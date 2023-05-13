@@ -66,5 +66,9 @@ export const PreviewPlugin: Plugin = {
     editor.on('previewsettingupdate', ({ geometry }) => {
       server.updateGeometry3D(geometry);
     });
+
+    editor.on('destroy', () => {
+      server.dispose();
+    });
   },
 };

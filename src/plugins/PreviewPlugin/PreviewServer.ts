@@ -22,7 +22,7 @@ import { getClientSize, PreviewClient } from './PreviewClient';
 import { ShaderGraphEditor } from '../../editors';
 import { Rete } from '../../types';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { WebGPUMaterial, WebGPURenderer } from '../../materials';
+import { GPUGeometry, WebGPUMaterial, WebGPURenderer, disposeGeometry } from '../../materials';
 
 const I_Model = new Matrix4();
 const IT_ModelView = new Matrix4();
@@ -30,11 +30,6 @@ const IT_Model = new Matrix4();
 const cameraWS = new Vector3();
 
 const scaleFactor = 1 / 15;
-const camera2D = new OrthographicCamera();
-const camera3D = new PerspectiveCamera(45, 1, 1, 1000);
-let control: OrbitControls;
-camera2D.position.z = 3.1;
-camera3D.position.z = -3.1;
 
 export class PreviewServer {
   clock: Clock;
@@ -52,11 +47,15 @@ export class PreviewServer {
     Sprite: new PlaneGeometry(25 * scaleFactor, 25 * scaleFactor),
   } as const;
   mesh: Mesh<BufferGeometry, RawShaderMaterial>;
+  camera2D = new OrthographicCamera();
+  camera3D = new PerspectiveCamera(45, 1, 1, 1000);
+  control!: OrbitControls;
 
   geometry3D: BufferGeometry;
   geometry2D: PlaneGeometry;
   renderer: WebGPURenderer;
   mainMaterial: WebGPUMaterial;
+  disposed = false;
 
   constructor(public editor: ShaderGraphEditor) {
     this.canvas = document.createElement('canvas');
@@ -76,8 +75,10 @@ export class PreviewServer {
     const ambientLight = new AmbientLight('#ffffff', 0);
     const dirLight = new DirectionalLight('#ffffff', 1);
     dirLight.position.set(-50, 50, 50);
-    camera3D.add(ambientLight, dirLight);
-    this.scene.add(camera2D, camera3D);
+    this.camera2D.position.z = 3.1;
+    this.camera3D.position.z = -3.1;
+    this.camera3D.add(ambientLight, dirLight);
+    this.scene.add(this.camera2D, this.camera3D);
 
     this.renderer.init().then(this.render);
   }
@@ -96,6 +97,7 @@ export class PreviewServer {
 
   render = async () => {
     await this.checkNodeChange();
+    if (this.disposed) return;
     const deltaTime = this.clock.getDelta();
     this.mainMaterial.sg.update(deltaTime);
     this.clients.forEach(this.renderClient);
@@ -167,8 +169,8 @@ export class PreviewServer {
     if (client.enable) {
       this.mesh.material = client.node ? client.material : this.mainMaterial;
       this.mesh.geometry = client.type === '2d' ? this.geometry2D : this.geometry3D;
-      const camera = client.type === '2d' ? camera2D : camera3D;
-      client.updateCamera(camera3D);
+      const camera = client.type === '2d' ? this.camera2D : this.camera3D;
+      client.updateCamera(this.camera3D);
       this.updateMaterialUnifroms(camera);
       this.syncCanvasSize(client.canvas);
       this.renderer.render(this.scene, camera, client.ctx);
@@ -186,7 +188,7 @@ export class PreviewServer {
     if (this.clients.has(client.canvas)) this.remove(client.canvas);
     this.clients.set(client.canvas, client);
     (client.node ? this.nodeClients : this.mainClients).add(client);
-    if (!client.node) control = control || new OrbitControls(camera3D, client.canvas);
+    if (!client.node) this.control = this.control || new OrbitControls(this.camera3D, client.canvas);
   }
 
   remove(canvas: HTMLCanvasElement) {
@@ -202,5 +204,17 @@ export class PreviewServer {
   removeNode(node: Rete.Node) {
     const client = [...this.nodeClients].find(i => i.node === node);
     if (client) this.remove(client.canvas);
+  }
+
+  async dispose() {
+    this.disposed = true;
+    await this.renderer.dispose();
+    Object.values(this.geometries).forEach(disposeGeometry);
+    disposeGeometry(this.mesh.geometry);
+    this.control?.dispose();
+    this.clients.forEach(i => i.dispose());
+    this.clients.clear();
+    this.nodeClients.clear();
+    this.mainClients.clear();
   }
 }

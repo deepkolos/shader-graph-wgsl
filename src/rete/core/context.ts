@@ -13,8 +13,8 @@ export class Context<EventsTypes> extends Emitter<EventsTypes & DefaultEvents> {
     constructor(id: string, events: Events) {
         super(events);
 
-        if (!Validator.isValidId(id))
-            throw new Error('ID should be valid to name@0.1.0 format');  
+        // if (!Validator.isValidId(id))
+        //     throw new Error('ID should be valid to name@0.1.0 format');  
         
         this.id = id;
         this.plugins = new Map();

@@ -13,10 +13,10 @@ export class IO {
     socket: Socket;
 
     constructor(key: string, name: string, socket: Socket, multiConns: boolean) {
-      this.node = null;
+	    this.node = null;
         this.multipleConnections = multiConns;
         this.connections = [];
-     
+	   
         this.key = key;
         this.name = name;
         this.socket = socket;

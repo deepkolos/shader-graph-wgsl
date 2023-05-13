@@ -16,9 +16,10 @@ export interface PopupProps extends DefaultProps {
   view?: { _setPopupShow: (show: boolean) => void };
   onShowChange?: (show: boolean) => void;
   keepAlive?: boolean;
+  root?: HTMLElement;
 }
 
-export const Popup: FC<PopupProps> = ({ visiable = false, children, view, onShowChange, mask = true, keepAlive = false }) => {
+export const Popup: FC<PopupProps> = ({ visiable = false, children, view, onShowChange, mask = true, keepAlive = false, root = document.body }) => {
   const [show, setShow] = useState(visiable);
   const canRef = useRef<HTMLElement>();
   const popupState = useRef<PopupContext>({});
@@ -56,7 +57,7 @@ export const Popup: FC<PopupProps> = ({ visiable = false, children, view, onShow
             {children}
             <popupContext.Provider value={popupState.current}></popupContext.Provider>
           </div>,
-          document.body,
+          root,
         )}
       {keepAlive &&
         ReactDOM.createPortal(
@@ -65,7 +66,7 @@ export const Popup: FC<PopupProps> = ({ visiable = false, children, view, onShow
             {children}
             <popupContext.Provider value={popupState.current}></popupContext.Provider>
           </div>,
-          document.body,
+          root,
         )}
     </>
   );

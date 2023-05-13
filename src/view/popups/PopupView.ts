@@ -1,4 +1,4 @@
-import { Rete } from "../../types";
+import { Rete } from '../../types';
 
 export interface PopupViewProps {
   editor: Rete.NodeEditor;
@@ -41,4 +41,11 @@ export class PopupView<Props extends PopupViewProps> {
   _setPopupShow(show: boolean) {}
   // replace in react render plugin
   update() {}
+
+  dispose() {
+    (this as any).props = {};
+    (this as any)._setPopupShow = undefined;
+    (this as any).update = undefined;
+    this.editor.trigger('disposenode', { el: this.el });
+  }
 }

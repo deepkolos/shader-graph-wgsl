@@ -34,18 +34,21 @@ export class BlockView extends Emitter<EventsTypes> {
   }
 
   onRebind(el = this.el) {
-    this.destroy();
-    this.el = el;
-    this.drag = new Drag(el, this.onTranslate, this.onSelect, this.onDragEnd);
-    this.disposeListener = listen(this.el, 'contextmenu', e => this.trigger('contextmenu', { e, node: this.node }));
-    this.trigger('rendernode', {
-      el: this.el,
-      node: this.node,
-      view: this,
-      component: this.component.data,
-      bindSocket: this.bindSocket,
-      bindControl: this.bindControl,
-    });
+    if (el !== this.el) {
+      this.drag?.destroy();
+      this.disposeListener?.();
+      this.el = el;
+      this.drag = new Drag(el, this.onTranslate, this.onSelect, this.onDragEnd);
+      this.disposeListener = listen(this.el, 'contextmenu', e => this.trigger('contextmenu', { e, node: this.node }));
+      this.trigger('rendernode', {
+        el: this.el,
+        node: this.node,
+        view: this,
+        component: this.component.data,
+        bindSocket: this.bindSocket,
+        bindControl: this.bindControl,
+      });
+    }
   }
 
   clearSockets() {
@@ -130,10 +133,15 @@ export class BlockView extends Emitter<EventsTypes> {
     this.dragInfo = undefined;
   };
 
-  remove() {}
-
-  destroy() {
+  dispose = () => {
     this.drag?.destroy();
     this.disposeListener?.();
-  }
+    (this as any).contextView = undefined;
+    (this.node as any).update = undefined;
+    this.trigger('disposenode', { el: this.el });
+    this.sockets.forEach(view => view.dispose());
+    this.controls.forEach(view => view.dispose());
+    this.sockets.clear();
+    this.controls.clear();
+  };
 }

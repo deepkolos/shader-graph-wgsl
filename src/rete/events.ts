@@ -33,10 +33,13 @@ export class EditorEvents extends Events {
             nodeselect: [],
             nodeselected: [],
             rendernode: [],
+            disposenode: [],
             rendersocket: [],
+            disposesocket: [],
             rendercontrol: [],
             renderconnection: [],
             updateconnection: [],
+            disposeconnection: [],
             keydown: [],
             keyup: [],
             translate: [],
@@ -90,15 +93,18 @@ export interface EventsTypes extends DefaultEventsTypes {
         bindBlock?: Function;
         callback?: () => void;
     };
+    disposenode: { el: HTMLElement; };
     rendersocket: {
         el: HTMLElement;
         input?: Input;
         output?: Output;
         socket: Socket;
     };
+    disposesocket: { el: HTMLElement; };
     rendercontrol: {
         el: HTMLElement;
         control: Control;
+        callback?: () => void;
     };
     renderconnection: {
         el: HTMLElement;
@@ -110,6 +116,10 @@ export interface EventsTypes extends DefaultEventsTypes {
         connection: Connection;
         points: number[];
         updateColor?: boolean;
+    };
+    disposeconnection: {
+        el: HTMLElement;
+        connection: Connection;
     };
     keydown: KeyboardEvent;
     keyup: KeyboardEvent;

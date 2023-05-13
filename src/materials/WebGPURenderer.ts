@@ -1,5 +1,6 @@
 import {
   BufferAttribute,
+  BufferGeometry,
   Camera,
   Color,
   InterleavedBuffer,
@@ -14,7 +15,6 @@ import {
 } from 'three';
 import { WebGPUMaterial } from './WebGPUMaterial';
 import { wgsl } from './StructBuffer';
-import { MaybePromise } from '../types';
 
 declare global {
   interface GPUCanvasContext {
@@ -28,7 +28,7 @@ declare module 'three' {
   }
 }
 
-interface GPUMaterial {
+export interface GPUMaterial {
   pipeline?: GPURenderPipeline;
   pipelineNeedsUpdate?: boolean;
   bindGroup: GPUBindGroup;
@@ -37,7 +37,7 @@ interface GPUMaterial {
   version: number;
 }
 
-interface GPUGeometry {
+export interface GPUGeometry {
   position?: GPUBuffer;
   uv?: GPUBuffer;
   normal?: GPUBuffer;
@@ -430,6 +430,13 @@ export class WebGPURenderer {
     this.queue.submit([commandEncoder.finish()]);
     this.lastSubmit = this.queue.onSubmittedWorkDone();
   }
+
+  async dispose() {
+    await this.lastSubmit;
+    this.depthTextures.forEach(textrue => textrue.destroy());
+    this.depthTextures.clear();
+    this.device.destroy();
+  }
 }
 
 const align = (len: number, alignment: number = 4) => {
@@ -478,3 +485,16 @@ Matrix4.prototype.makeOrthographic = function ( left, right, top, bottom, near, 
 	return this;
 
 };
+
+export function disposeGeometry(geometry: BufferGeometry) {
+  const gpuGeometry = geometry.userData as GPUGeometry;
+  gpuGeometry.index?.destroy();
+  gpuGeometry.normal?.destroy();
+  gpuGeometry.position?.destroy();
+  gpuGeometry.uv?.destroy();
+}
+
+export function disposeMaterial(material: WebGPUMaterial) {
+  const gpuMaterial = material.userData as GPUMaterial;
+  gpuMaterial.uniform?.destroy();
+}

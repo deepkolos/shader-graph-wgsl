@@ -116,20 +116,11 @@ export class Node {
     }
 
     getValue(prefix: string): any {
-        const [prefix_, subKey] = prefix.split('.');
-        if (subKey) {
-            return (this.data[prefix_ + 'Value'] as any)?.[subKey];
-        }
-        return this.data[prefix_ + 'Value'];
+        return this.data[prefix + 'Value'];
     }
 
     setValue(prefix: string, value: any) {
-        const [prefix_, subKey] = prefix.split('.');
-        if (subKey && this.data[prefix_ + 'Value']) {
-            (this.data[prefix_ + 'Value'] as any)[subKey] = value;
-        } else {
-            this.data[prefix_ + 'Value'] = value;
-        }
+        this.data[prefix + 'Value'] = value;
         this.dataChanged = true;
     }
 
@@ -211,5 +202,14 @@ export class Node {
         Node.latestId = Math.max(node.id, Node.latestId);
 
         return node;
+    }
+
+    dispose() {
+        (this as any).update = undefined;
+        (this as any).contextNode = undefined;
+        this.blocks.forEach(blk => ((blk as any).update = undefined));
+        this.controls.forEach(ctl => ((ctl as any).update = undefined));
+        this.inputs.forEach(io => ((io as any).update = undefined));
+        this.outputs.forEach(io => ((io as any).update = undefined));
     }
 }
