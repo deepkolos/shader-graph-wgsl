@@ -17,11 +17,17 @@
 
 ## TODO
 
-- 完善 Lit template
 - 增加 视频内 Demo https://www.bilibili.com/video/BV1GB4y1y7FT
 - 增加 PreviewNumber 节点 ✅
 - 增加 FlowMap Demo ✅
 - 修复内存泄漏 ✅
+- 完善 Lit template
+- 编辑操作
+  - 缩放限制
+  - minimap
+  - 全貌
+  - 自动对齐
+  - 多选
 
 # License
 
