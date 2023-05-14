@@ -53,9 +53,9 @@ export class RandomRangeRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteRandomRangeNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'rand');
-    const seedVar = compiler.getInputVarCoverted(node, 'seed');
-    const minVar = compiler.getInputVarCoverted(node, 'min');
-    const maxVar = compiler.getInputVarCoverted(node, 'max');
+    const seedVar = compiler.getInputVarConverted(node, 'seed');
+    const minVar = compiler.getInputVarConverted(node, 'min');
+    const maxVar = compiler.getInputVarConverted(node, 'max');
     const fnVarName = initRandContext(compiler);
 
     return {

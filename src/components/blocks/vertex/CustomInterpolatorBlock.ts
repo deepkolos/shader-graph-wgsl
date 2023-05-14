@@ -77,7 +77,7 @@ export class CustomInterpolatorBlock extends RCBlock {
       node.data.varyingValueName,
       varName => `${varName}: vec4<f32>`,
     );
-    const inVar = compiler.getInputVarCoverted(node, 'varying');
+    const inVar = compiler.getInputVarConverted(node, 'varying');
     return {
       outputs: { varying: varyingVar },
       code: `${varyingVar.replace('v.', '(*v).')} = ${inVar};`,

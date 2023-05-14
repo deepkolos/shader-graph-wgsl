@@ -42,7 +42,7 @@ export class SignRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteSignNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'sign');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = sign(${inVar});`,

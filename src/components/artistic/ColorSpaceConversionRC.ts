@@ -64,7 +64,7 @@ export class ColorSpaceConversionRC extends RC {
     node: SGNodeData<ReteColorSpaceConversionNode>,
   ): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'contrast');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     const from = node.data.fromValue;
     const to = node.data.toValue;
 
@@ -139,7 +139,7 @@ fn ${varName}(In: vec3<f32>) -> vec3<f32> {
 }`;
     }
 
-    const fnVar = compiler.setContext('defineFns', node, from + '_' + to, codeFn!);
+    const fnVar = compiler.setContext('defines', node, from + '_' + to, codeFn!);
 
     return {
       outputs: { out: outVar },

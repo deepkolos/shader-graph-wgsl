@@ -58,10 +58,10 @@ export class SphereMaskRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteSphereMaskNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'sphere_mask');
-    const coordsVar = compiler.getInputVarCoverted(node, 'coords');
-    const centerVar = compiler.getInputVarCoverted(node, 'center');
-    const radiusVar = compiler.getInputVarCoverted(node, 'radius');
-    const hardnessVar = compiler.getInputVarCoverted(node, 'hardness');
+    const coordsVar = compiler.getInputVarConverted(node, 'coords');
+    const centerVar = compiler.getInputVarConverted(node, 'center');
+    const radiusVar = compiler.getInputVarConverted(node, 'radius');
+    const hardnessVar = compiler.getInputVarConverted(node, 'hardness');
 
     return {
       outputs: { out: outVar },

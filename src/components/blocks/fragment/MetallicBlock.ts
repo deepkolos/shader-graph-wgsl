@@ -39,7 +39,7 @@ export class MetallicBlock extends RCBlock {
   }
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteMetallicBlock>): SGNodeOutput {
-    const inVar = compiler.getInputVarCoverted(node, 'metallic');
+    const inVar = compiler.getInputVarConverted(node, 'metallic');
     return { outputs: {}, code: inVar ? `metallic = ${inVar};` : '' };
   }
 }

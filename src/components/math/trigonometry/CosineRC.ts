@@ -42,7 +42,7 @@ export class CosineRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteCosineNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'cos');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = cos(${inVar});`,

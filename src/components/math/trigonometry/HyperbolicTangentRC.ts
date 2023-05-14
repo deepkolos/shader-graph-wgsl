@@ -43,7 +43,7 @@ export class HyperbolicTangentRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteHyperbolicTangentNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'tanh');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = tanh(${inVar});`,

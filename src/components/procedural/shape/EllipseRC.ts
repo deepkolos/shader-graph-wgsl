@@ -51,9 +51,9 @@ export class EllipseRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteEllipseNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'ellipse');
-    const widthVar = compiler.getInputVarCoverted(node, 'width');
-    const heightVar = compiler.getInputVarCoverted(node, 'height');
-    let uvVar = compiler.getInputVarCoverted(node, 'uv', false);
+    const widthVar = compiler.getInputVarConverted(node, 'width');
+    const heightVar = compiler.getInputVarConverted(node, 'height');
+    let uvVar = compiler.getInputVarConverted(node, 'uv', false);
     if (!uvVar) uvVar = UVRC.initUVContext(compiler);
 
     const codeFn = (varName: string) => /* wgsl */ `
@@ -61,7 +61,7 @@ fn ${varName}(UV: vec2<f32>, Width: f32, Height: f32) -> f32 {
   let d = length((UV * 2.0 - 1.) / vec2<f32>(Width, Height));
   return clamp((1.0 - d) / fwidth(d), 0.0, 1.0);
 }`;
-    const fnVar = compiler.setContext('defineFns', node, 'fn', codeFn);
+    const fnVar = compiler.setContext('defines', node, 'fn', codeFn);
 
     return {
       outputs: { out: outVar },

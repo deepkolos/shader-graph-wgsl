@@ -39,7 +39,7 @@ export class CoatMaskBlock extends RCBlock {
   }
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteCoatMaskBlock>): SGNodeOutput {
-    const inVar = compiler.getInputVarCoverted(node, 'CoatMask');
+    const inVar = compiler.getInputVarConverted(node, 'CoatMask');
     return { outputs: {}, code: inVar ? `coatMask = ${inVar};` : '' };
   }
 }

@@ -186,23 +186,25 @@ export class WebGPURenderer {
         const bindingEntries: GPUBindGroupEntry[] = [];
         const uniformUsed = Object.values(material.sg.uniformMap).map(i => i.name);
         await Promise.all(
-          Object.keys(material.uniforms).map(async key => {
-            const uniform = material.uniforms[key];
-            const bindingCfg = material.sg.bindingMap[key.replace('sg_', '')];
-            if (uniform.type === 'texture2d_f32') {
-              if (!bindingCfg) return;
-              const binding = bindingCfg.index;
-              bindingLayoutEntries.push({
-                binding,
-                visibility: GPUShaderStage.VERTEX | GPUShaderStage.FRAGMENT,
-                texture: {},
-              });
-              const texture = await this.createTexture(uniform.value);
-              bindingEntries.push({ binding, resource: texture.createView() });
-            } else if (uniformUsed.includes(key)) {
-              uniformStruct[key] = uniform.type;
-            }
-          }),
+          Object.keys(material.uniforms)
+            .sort()
+            .map(async key => {
+              const uniform = material.uniforms[key];
+              const bindingCfg = material.sg.bindingMap[key.replace('sg_', '')];
+              if (uniform.type === 'texture2d_f32') {
+                if (!bindingCfg) return;
+                const binding = bindingCfg.index;
+                bindingLayoutEntries.push({
+                  binding,
+                  visibility: GPUShaderStage.VERTEX | GPUShaderStage.FRAGMENT,
+                  texture: {},
+                });
+                const texture = await this.createTexture(uniform.value);
+                bindingEntries.push({ binding, resource: texture.createView() });
+              } else if (uniformUsed.includes(key)) {
+                uniformStruct[key] = uniform.type;
+              }
+            }),
         );
 
         Object.keys(material.sg.bindingMap).forEach(key => {
@@ -497,4 +499,14 @@ export function disposeGeometry(geometry: BufferGeometry) {
 export function disposeMaterial(material: WebGPUMaterial) {
   const gpuMaterial = material.userData as GPUMaterial;
   gpuMaterial.uniform?.destroy();
+}
+
+export function disposeTexture(texture: Texture) {
+  if (texture.image) {
+    if (texture.image?.src) texture.image.src = '';
+    texture.image = null;
+  }
+  if (texture.mipmaps?.length) texture.mipmaps.length = 0;
+
+  (texture.userData.gpuTexture as GPUTexture | undefined)?.destroy();
 }

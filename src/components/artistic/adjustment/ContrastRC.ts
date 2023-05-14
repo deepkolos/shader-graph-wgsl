@@ -46,7 +46,7 @@ export class ContrastRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteContrastNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'contrast');
-    const [contrastVar, inVar] = compiler.getInputVarCovertedArray(node, ['contrast', 'in']);
+    const [contrastVar, inVar] = compiler.getInputVarConvertedArray(node, ['contrast', 'in']);
     // pow(0.5, 2.2) = 0.217637640824031
     return {
       outputs: { out: outVar },

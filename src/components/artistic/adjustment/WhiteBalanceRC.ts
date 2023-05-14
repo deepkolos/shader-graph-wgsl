@@ -52,7 +52,7 @@ export class WhiteBalanceRC extends RC {
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteWhiteBalanceNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'hue');
     const typeClass = compiler.getTypeClass(node.data.outValueType);
-    const [tempVar, tintVar, inVar] = compiler.getInputVarCovertedArray(node, ['temperature', 'tint', 'in']);
+    const [tempVar, tintVar, inVar] = compiler.getInputVarConvertedArray(node, ['temperature', 'tint', 'in']);
 
     const codeFn = (varName: string) => /* wgsl */ `
 fn ${varName}(In: vec3<f32>, Temperature: f32, Tint: f32) -> vec3<f32> {
@@ -98,7 +98,7 @@ fn ${varName}(In: vec3<f32>, Temperature: f32, Tint: f32) -> vec3<f32> {
     lms *= balance;
     return LMS_2_LIN_MAT * lms;
 }`;
-    const fnVar = compiler.setContext('defineFns', node, 'fn', codeFn);
+    const fnVar = compiler.setContext('defines', node, 'fn', codeFn);
 
     return {
       outputs: { out: outVar },

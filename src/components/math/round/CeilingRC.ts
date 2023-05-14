@@ -42,7 +42,7 @@ export class CeilingRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteCeilingNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'ceil');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = ceil(${inVar});`,

@@ -42,7 +42,7 @@ export class SaturateRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteSaturateNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'saturate');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = clamp(${inVar}, 0.0, 1.0);`,

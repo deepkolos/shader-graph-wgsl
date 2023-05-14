@@ -36,5 +36,9 @@ export const PreviewCustomMeshPlugin: Plugin = {
       };
       input.click();
     });
+
+    editor.on('destroy', () => {
+      document.body.removeChild(input);
+    });
   },
 };

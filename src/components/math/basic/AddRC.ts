@@ -47,8 +47,8 @@ export class AddRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteAddNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'add');
-    const aVar = compiler.getInputVarCoverted(node, 'a');
-    const bVar = compiler.getInputVarCoverted(node, 'b');
+    const aVar = compiler.getInputVarConverted(node, 'a');
+    const bVar = compiler.getInputVarConverted(node, 'b');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = ${aVar} + ${bVar};`,

@@ -82,6 +82,9 @@ export class ShaderGraphCompiler extends GraphCompiler {
   }
 
   setParameter(node: SGNodeData<ReteParameterNode>) {
+    if (node.data.outValueType === ValueType.texture2d) {
+      return this.compileValue(node.data.outValue, node.data.outValueType);
+    }
     return this.setContext(
       'uniforms',
       node,
@@ -112,16 +115,14 @@ export class ShaderGraphCompiler extends GraphCompiler {
   }
 
   setContext(type: ContextKeys, node: NodeName, key: string, item: ContextItem): string;
-  setContext(type: ContextKeys | 'defineFns', node: NodeName, key: string, codeFn: CodeFn): string;
+  setContext(type: ContextKeys, node: NodeName, key: string, codeFn: CodeFn): string;
   setContext(
-    type: ContextKeys | 'defineFns',
+    type: ContextKeys,
     node: NodeName,
     key: string,
     itemOrCode: ContextItem | CodeFn,
   ): string {
     const contextKey = this.getContextKey(node, key);
-    const isDefineFns = type === 'defineFns';
-    if (isDefineFns) type = 'defines';
 
     if (!this.context[type as ContextKeys][contextKey]) {
       if (typeof itemOrCode === 'function') {
@@ -241,13 +242,13 @@ export class ShaderGraphCompiler extends GraphCompiler {
     return node.data[inputKey + 'ValueType'];
   }
 
-  getInputVarCoverted(node: SGNodeData<SGNodes>, inputKey: string): string;
-  getInputVarCoverted(
+  getInputVarConverted(node: SGNodeData<SGNodes>, inputKey: string): string;
+  getInputVarConverted(
     node: SGNodeData<SGNodes>,
     inputKey: string,
     fallback: false,
   ): string | undefined;
-  getInputVarCoverted(node: SGNodeData<SGNodes>, inputKey: string, fallback = true) {
+  getInputVarConverted(node: SGNodeData<SGNodes>, inputKey: string, fallback = true) {
     const inType = this.getInputType(node, inputKey);
     if (fallback) {
       return this.typeConvert(
@@ -261,8 +262,8 @@ export class ShaderGraphCompiler extends GraphCompiler {
     }
   }
 
-  getInputVarCovertedArray(node: SGNodeData<SGNodes>, keys: string[]) {
-    return keys.map(key => this.getInputVarCoverted(node, key));
+  getInputVarConvertedArray(node: SGNodeData<SGNodes>, keys: string[]) {
+    return keys.map(key => this.getInputVarConverted(node, key));
   }
 
   getInputVar(node: SGNodeData<SGNodes>, inputKey: string): string;
@@ -279,7 +280,7 @@ export class ShaderGraphCompiler extends GraphCompiler {
   getTypeClass(type: ValueType) {
     // prettier-ignore
     switch (type) {
-      case ValueType.texture2d: return 'texture2d<f32>';
+      case ValueType.texture2d: return 'texture_2d<f32>';
       case ValueType.float: return 'f32';
       case ValueType.vec2: return 'vec2<f32>';
       case ValueType.vec3: return 'vec3<f32>';
@@ -341,7 +342,7 @@ export class ShaderGraphCompiler extends GraphCompiler {
           key,
           (varName, i) => `@group(0) @binding(${i}) var ${varName}: sampler;`,
         );
-        this.setResource('sampler', node, key, value);
+        this.setResource('sampler', node, key, sampler);
         return outVar;
       }
       default:
@@ -353,18 +354,21 @@ export class ShaderGraphCompiler extends GraphCompiler {
     return this.compileValue(node.data[key + 'Value'], node.data[key + 'ValueType']);
   }
 
-  compileHeadCode(body: string, exclude: string[]) {
+  compileHeadCode(body: string, scope: 'vert' | 'frag') {
+    const exclude = scope === 'frag' ? ['attributes'] : [];
     let headCode = '';
     const defineCode: string = Object.values<ContextItem>(this.context.defines)
       .filter(i => body.includes(i.varName))
-      .map(i => i.code)
+      .map(i => this.doVarMap(i.code, scope))
       .join('\n');
     const testCode = body + defineCode;
 
     HeadContextItems.filter(i => !exclude.includes(i)).forEach(key => {
       let code = '';
       // to js object order
-      const items = Object.values<ContextItem>(this.context[key]);
+      const items = Object.keys(this.context[key])
+        .sort()
+        .map(i => this.context[key][i]);
       if (key === 'uniforms') {
         code = [
           'struct Uniform {',
@@ -385,7 +389,7 @@ export class ShaderGraphCompiler extends GraphCompiler {
       } else {
         code = items
           .filter(i => testCode.includes(i.varName))
-          .map(i => i.code)
+          .map(i => this.doVarMap(i.code, scope))
           .join('\n');
       }
       if (code)
@@ -528,11 +532,12 @@ ${code}`;
       const bodyCode = SGTemplates.unlit.frag(
         this.prependFragSharedCode(`*baseColor = ${varName}.xyz;`),
       );
-      const headCode = this.compileHeadCode(bodyCode, ['attributes']);
+      const headCode = this.compileHeadCode(bodyCode, 'frag');
       fragCode = headCode + '\n' + bodyCode;
       vertBody += this.getAutoVaryingsCode(fragCode);
       vertBody = this.prependVertSharedCode(vertBody);
-      vertCode = SG_VERT + this.compileHeadCode(vertBody, []) + SGTemplates.unlit.vert(vertBody);
+      vertCode =
+        SG_VERT + this.compileHeadCode(vertBody, 'vert') + SGTemplates.unlit.vert(vertBody);
     } else {
       const baseColorData = await ctx.getNodeData<ReteBaseColorBlock>(ctx.baseColorBlock);
       const output = [...node.outputs.keys()][0];
@@ -547,10 +552,11 @@ ${code}`;
       delete graphData.nodes[baseColorData.id];
 
       const fragBody = this.prependFragSharedCode(fragOut.code + '\n  ' + colorOut.code);
-      fragCode = this.compileHeadCode(fragBody, ['attributes']) + SGTemplates.unlit.frag(fragBody);
+      fragCode = this.compileHeadCode(fragBody, 'frag') + SGTemplates.unlit.frag(fragBody);
       vertBody += this.getAutoVaryingsCode(fragCode);
       vertBody = this.prependVertSharedCode(vertBody);
-      vertCode = SG_VERT + this.compileHeadCode(vertBody, []) + SGTemplates.unlit.vert(vertBody);
+      vertCode =
+        SG_VERT + this.compileHeadCode(vertBody, 'vert') + SGTemplates.unlit.vert(vertBody);
     }
 
     return { ...this.compilation, fragCode, vertCode };
@@ -574,10 +580,10 @@ ${code}`;
     if (!tpl) throw new Error('template unsupported ' + tempalte);
 
     const fragBody = tpl.frag(this.prependFragSharedCode(this.getCode(frag.id)));
-    const fragHeadCode = this.compileHeadCode(fragBody, ['attributes']);
+    const fragHeadCode = this.compileHeadCode(fragBody, 'frag');
     let vertBody = this.getCode(vert.id) + this.getAutoVaryingsCode(fragHeadCode + fragBody);
     vertBody = tpl.vert(this.prependVertSharedCode(vertBody));
-    const vertHeadCode = this.compileHeadCode(vertBody, []);
+    const vertHeadCode = this.compileHeadCode(vertBody, 'vert');
 
     const compilation: SGCompilation = {
       setting: (this.graphData as ShaderGraphData).setting,
@@ -605,15 +611,15 @@ ${code}`;
     if (!output) throw new Error('GraphData missing Output Node');
 
     const fragBody = this.prependFragSharedCode(this.linkBlocks([output]));
-    const fragHead = this.compileHeadCode(fragBody, ['attributes']);
+    const fragHead = this.compileHeadCode(fragBody, 'frag');
     const fragCode = fragHead + SGTemplates.unlit.frag(fragBody);
     const vertBody = this.prependVertSharedCode(this.getAutoVaryingsCode(fragCode));
-    const vertHead = SG_VERT + this.compileHeadCode(vertBody, []);
+    const vertHead = SG_VERT + this.compileHeadCode(vertBody, 'vert');
     const vertCode = vertHead + SGTemplates.unlit.vert(vertBody);
 
     const compilation: SGCompilation = {
       setting: this.graphData.setting,
-      parameters: [],
+      parameters: this.graphData.parameters,
       resource: this.resource,
       vertCode,
       fragCode,
@@ -625,11 +631,8 @@ ${code}`;
   }
 
   // 可能有点绕
-  async compileSubGraph(
-    subGraphData: ShaderGraphData,
-    inputKeyVarMap: { [k: string]: string },
-  ): Promise<SubGraphCompiler> {
-    const subGraphCompiler = new SubGraphCompiler(this, inputKeyVarMap);
+  async compileSubGraph(subGraphData: ShaderGraphData): Promise<SubGraphCompiler> {
+    const subGraphCompiler = new SubGraphCompiler(this);
     await subGraphCompiler.superCompile(subGraphData);
     return subGraphCompiler;
   }
@@ -652,10 +655,7 @@ const stringifyFloat = (num: number): string => {
 };
 
 export class SubGraphCompiler extends ShaderGraphCompiler {
-  constructor(
-    public sgCompiler: ShaderGraphCompiler,
-    public inputKeyVarMap: { [k: string]: string },
-  ) {
+  constructor(public sgCompiler: ShaderGraphCompiler) {
     super();
     this.components = this.sgCompiler.components;
     this.context = this.sgCompiler.context;
@@ -664,18 +664,11 @@ export class SubGraphCompiler extends ShaderGraphCompiler {
     this.subGraphProvider = this.sgCompiler.subGraphProvider;
   }
 
-  get nextVarId() {
-    return this.sgCompiler.nextVarId;
-  }
-
   setParameter(node: SGNodeData<ReteParameterNode>): string {
-    return this.inputKeyVarMap['fnIn' + removeWhiteSpace(node.data.outValueName)];
+    return 'fnIn' + removeWhiteSpace(node.data.outValueName); // 见 SubGraphRC
   }
 
-  compileSubGraph(
-    subGraphData: ShaderGraphData,
-    inputKeyVarMap: { [k: string]: string },
-  ): Promise<SubGraphCompiler> {
-    return this.sgCompiler.compileSubGraph(subGraphData, inputKeyVarMap);
+  compileSubGraph(subGraphData: ShaderGraphData): Promise<SubGraphCompiler> {
+    return this.sgCompiler.compileSubGraph(subGraphData);
   }
 }

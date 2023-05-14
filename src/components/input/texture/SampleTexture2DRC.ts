@@ -81,7 +81,7 @@ export class SampleTexture2DRC extends RC {
     const outVar = compiler.getOutVarName(node, 'rgba', 'texColor');
     const textureVar = compiler.getInputVar(node, 'texture');
     const samplerVar = textureVar ? compiler.getInputVar(node, 'sampler') : '';
-    let uvVar = compiler.getInputVarCoverted(node, 'uv', false);
+    let uvVar = compiler.getInputVarConverted(node, 'uv', false);
 
     if (!uvVar) uvVar = UVRC.initUVContext(compiler);
 

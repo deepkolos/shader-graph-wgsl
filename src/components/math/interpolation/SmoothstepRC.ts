@@ -52,9 +52,9 @@ export class SmoothstepRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteSmoothstepNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'smoothstep');
-    const edge1Var = compiler.getInputVarCoverted(node, 'edge1');
-    const edge2Var = compiler.getInputVarCoverted(node, 'edge2');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const edge1Var = compiler.getInputVarConverted(node, 'edge1');
+    const edge2Var = compiler.getInputVarConverted(node, 'edge2');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = smoothstep(${edge1Var}, ${edge2Var}, ${inVar});`,

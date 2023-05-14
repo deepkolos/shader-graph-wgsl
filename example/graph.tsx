@@ -15,10 +15,13 @@ export async function createEditor(container: HTMLElement) {
   editor.use(AssetSimplePlugin);
   editor.use(PreviewCustomMeshPlugin);
   editor.setSubGraphProvider({
-    getList: () => [
-      { id: 'devSubGraph', label: 'devSubGraph' },
-      { id: 'devSubGraphNested', label: 'devSubGraphNested' },
-    ],
+    getList: () =>
+      Object.keys(Presets)
+        .map(name => {
+          const cfg = Presets[name];
+          if (cfg.type === 'SubGraph') return { id: name, label: name };
+        })
+        .filter(i => Boolean(i)),
     getGraphData: asset => Presets[asset!.id],
   });
 

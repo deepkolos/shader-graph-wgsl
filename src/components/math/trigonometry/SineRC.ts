@@ -42,7 +42,7 @@ export class SineRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteSineNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'sin');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = sin(${inVar});`,

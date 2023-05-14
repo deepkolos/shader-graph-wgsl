@@ -43,7 +43,7 @@ export class SquareWaveRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteSquareWaveNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = 1.0 - 2.0 * round(fract(${inVar}));`,

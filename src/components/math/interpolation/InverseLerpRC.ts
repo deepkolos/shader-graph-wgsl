@@ -52,9 +52,9 @@ export class InverseLerpRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteInverseLerpNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'ilerp');
-    const aVar = compiler.getInputVarCoverted(node, 'a');
-    const bVar = compiler.getInputVarCoverted(node, 'b');
-    const tVar = compiler.getInputVarCoverted(node, 't');
+    const aVar = compiler.getInputVarConverted(node, 'a');
+    const bVar = compiler.getInputVarConverted(node, 'b');
+    const tVar = compiler.getInputVarConverted(node, 't');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = (${tVar} - ${aVar}) / (${bVar} - ${aVar});`,

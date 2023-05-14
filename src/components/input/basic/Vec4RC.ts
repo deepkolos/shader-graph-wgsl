@@ -59,10 +59,10 @@ export class Vec4RC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteVec4Node>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'v4');
-    const xVar = compiler.getInputVarCoverted(node, 'x');
-    const yVar = compiler.getInputVarCoverted(node, 'y');
-    const zVar = compiler.getInputVarCoverted(node, 'z');
-    const wVar = compiler.getInputVarCoverted(node, 'w');
+    const xVar = compiler.getInputVarConverted(node, 'x');
+    const yVar = compiler.getInputVarConverted(node, 'y');
+    const zVar = compiler.getInputVarConverted(node, 'z');
+    const wVar = compiler.getInputVarConverted(node, 'w');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = ${compiler.compileValue([xVar, yVar, zVar, wVar], node.data.outValueType)};`,

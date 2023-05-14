@@ -42,7 +42,7 @@ export class FloorRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteFloorNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'floor');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = floor(${inVar});`,

@@ -42,7 +42,7 @@ export class ExponentialRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteExponentialNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'exp');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = exp(${inVar});`,

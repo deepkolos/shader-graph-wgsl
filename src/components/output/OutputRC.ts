@@ -42,7 +42,8 @@ export class OutputRC extends RC {
     const inputList: ListIOItemValue[] = [];
     Object.keys(node.data).forEach(key => {
       const name = key.replace('Value', '').replace('fnIn', '').replace('fnOut', '');
-      if (key.startsWith('fnIn') && key.endsWith('Value')) inputList.push({ name, type: node.data[`fnIn${name}ValueType`] });
+      if (key.startsWith('fnIn') && key.endsWith('Value'))
+        inputList.push({ name, type: node.data[`fnIn${name}ValueType`] });
     });
 
     NodeIOSettingFns.onInputChange(node, inputList, this.editor!);
@@ -58,7 +59,14 @@ export class OutputRC extends RC {
       if (key.startsWith('fnIn') && key.endsWith('Value')) inputs.push(prefix);
     });
 
-    const inVars = inputs.map(key => compiler.getInputVarCoverted(node, key));
-    return { outputs: {}, code: `*baseColor = ${inVars[0] ? `vec3<f32>(${inVars[0]})` : 'vec3<f32>(0)'};` };
+    const inVars = inputs.map(key => compiler.getInputVarConverted(node, key));
+    return {
+      outputs: {},
+      code: `*baseColor = ${
+        inVars[0]
+          ? compiler.typeConvert(inVars[0], node.data[inputs[0] + 'ValueType'], ValueType.vec3)
+          : 'vec3<f32>(0)'
+      };`,
+    };
   }
 }

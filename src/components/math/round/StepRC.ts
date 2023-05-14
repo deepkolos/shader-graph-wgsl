@@ -47,8 +47,8 @@ export class StepRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteStepNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'step');
-    const edgeVar = compiler.getInputVarCoverted(node, 'edge');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const edgeVar = compiler.getInputVarConverted(node, 'edge');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = step(${edgeVar}, ${inVar});`,

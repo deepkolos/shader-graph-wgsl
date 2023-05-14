@@ -44,6 +44,7 @@ export class ParameterRC extends RC {
         node.data.outValueName = outValueName;
         node.data.outValueType = outValueType;
         node.data.exposed = exposed;
+        node.dataChanged = true;
         node.update();
       });
     });

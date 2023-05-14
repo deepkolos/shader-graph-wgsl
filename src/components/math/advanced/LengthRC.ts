@@ -42,7 +42,7 @@ export class LengthRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteLengthNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'len');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = length(${inVar});`,

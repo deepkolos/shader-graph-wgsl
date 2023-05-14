@@ -52,7 +52,7 @@ export class ChannelMixerRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteChannelMixerNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'channelMixer');
-    const [rVar, gVar, bVar, inVar] = compiler.getInputVarCovertedArray(node, ['r', 'g', 'b', 'in']);
+    const [rVar, gVar, bVar, inVar] = compiler.getInputVarConvertedArray(node, ['r', 'g', 'b', 'in']);
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = vec3<f32>(dot(${inVar}, ${rVar}), dot(${inVar}, ${gVar}), dot(${inVar}, ${bVar}));`,

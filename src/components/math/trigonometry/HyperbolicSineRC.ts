@@ -43,7 +43,7 @@ export class HyperbolicSineRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteHyperbolicSineNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'sinh');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = sinh(${inVar});`,

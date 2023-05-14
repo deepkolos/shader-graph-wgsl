@@ -42,7 +42,7 @@ export class TangentRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteTangentNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'tan');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = tan(${inVar});`,

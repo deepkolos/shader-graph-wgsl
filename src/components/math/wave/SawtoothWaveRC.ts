@@ -43,7 +43,7 @@ export class SawtoothWaveRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteSawtoothWaveNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = 2.0 * (${inVar} - floor(0.5 + ${inVar}));`,

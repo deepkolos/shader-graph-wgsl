@@ -39,7 +39,7 @@ export class EmissionBlock extends RCBlock {
   }
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteEmissionBlock>): SGNodeOutput {
-    const inVar = compiler.getInputVarCoverted(node, 'emission');
+    const inVar = compiler.getInputVarConverted(node, 'emission');
     return { outputs: {}, code: inVar ? `emission = ${inVar};` : '' };
   }
 }

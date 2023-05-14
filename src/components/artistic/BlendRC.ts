@@ -80,7 +80,7 @@ export class BlendRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteBlendNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'blend');
-    const [opacityVar, blendVar, baseVar] = compiler.getInputVarCovertedArray(node, ['opacity', 'blend', 'base']);
+    const [opacityVar, blendVar, baseVar] = compiler.getInputVarConvertedArray(node, ['opacity', 'blend', 'base']);
     const mode = node.data.modeValue;
 
     let mixMidVar = '';

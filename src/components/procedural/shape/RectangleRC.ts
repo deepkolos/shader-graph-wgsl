@@ -51,9 +51,9 @@ export class RectangleRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteRectangleNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'rect');
-    const widthVar = compiler.getInputVarCoverted(node, 'width');
-    const heightVar = compiler.getInputVarCoverted(node, 'height');
-    let uvVar = compiler.getInputVarCoverted(node, 'uv', false);
+    const widthVar = compiler.getInputVarConverted(node, 'width');
+    const heightVar = compiler.getInputVarConverted(node, 'height');
+    let uvVar = compiler.getInputVarConverted(node, 'uv', false);
     if (!uvVar) uvVar = UVRC.initUVContext(compiler);
 
     const codeFn = (varName: string) => /* wgsl */ `
@@ -62,7 +62,7 @@ fn ${varName}(UV: vec2<f32>, Width: f32, Height: f32) -> f32 {
   d = 1.0 - d / fwidth(d);
   return clamp(min(d.x, d.y), 0.0, 1.0);
 }`;
-    const fnVar = compiler.setContext('defineFns', node, 'fn', codeFn);
+    const fnVar = compiler.setContext('defines', node, 'fn', codeFn);
 
     return {
       outputs: { out: outVar },

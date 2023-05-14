@@ -59,7 +59,7 @@ export class ReplaceColorRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteReplaceColorNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'replaceColor');
-    const [fuzzVar, toVar, fromVar, rangeVar, inVar] = compiler.getInputVarCovertedArray(node, ['fuzziness', 'to', 'from', 'range', 'in']);
+    const [fuzzVar, toVar, fromVar, rangeVar, inVar] = compiler.getInputVarConvertedArray(node, ['fuzziness', 'to', 'from', 'range', 'in']);
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = mix(${toVar}, ${inVar}, clamp((distance(${fromVar}, ${inVar}) - ${rangeVar}) / max(${fuzzVar}, 1e-5f), 0., 1.));`,

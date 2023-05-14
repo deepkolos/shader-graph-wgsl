@@ -1,29 +1,32 @@
-import devCompile from './devCompile.json';
-import devVarying from './devVarying.json';
-import devTexture2D from './devTexture2D.json';
-import devTrigonometry from './devTrigonometry.json';
-import devAdvanced from './devAdvanced.json';
-import devBasic from './devBasic.json';
-import devDDXY from './devDDXY.json';
-import devInterpolation from './devInterpolation.json';
-import devRange from './devRange.json';
-import devDynamicVector from './devDynamicVector.json';
-import devRound from './devRound.json';
-import devVector from './devVector.json';
-import devWave from './devWave.json';
-import devGeometry from './devGeometry.json';
-import devChannel from './devChannel.json';
-import devProcedural from './devProcedural.json';
-import devDynamicVecMat from './devDynamicVecMat.json';
-import devUtility from './devUtility.json';
-import devLit from './devLit.json';
-import devSubGraph from './devSubGraph.json';
-import devSubGraphNested from './devSubGraphNested.json';
-import devSubGraphUsage from './devSubGraphUsage.json';
-import devArtistic from './devArtistic.json';
-import demoGradient from './demoGradient.json';
-import demoDissolve from './demoDissolve.json';
-import demoFresnelOutline from './demoFresnelOutline.json';
+import devCompile from './dev/devCompile.json';
+import devVarying from './dev/devVarying.json';
+import devTexture2D from './dev/devTexture2D.json';
+import devTrigonometry from './dev/devTrigonometry.json';
+import devAdvanced from './dev/devAdvanced.json';
+import devBasic from './dev/devBasic.json';
+import devDDXY from './dev/devDDXY.json';
+import devInterpolation from './dev/devInterpolation.json';
+import devRange from './dev/devRange.json';
+import devDynamicVector from './dev/devDynamicVector.json';
+import devRound from './dev/devRound.json';
+import devVector from './dev/devVector.json';
+import devWave from './dev/devWave.json';
+import devGeometry from './dev/devGeometry.json';
+import devChannel from './dev/devChannel.json';
+import devProcedural from './dev/devProcedural.json';
+import devDynamicVecMat from './dev/devDynamicVecMat.json';
+import devUtility from './dev/devUtility.json';
+import devLit from './dev/devLit.json';
+import devSubGraph from './dev/devSubGraph.json';
+import devSubGraphNested from './dev/devSubGraphNested.json';
+import devSubGraphUsage from './dev/devSubGraphUsage.json';
+import devArtistic from './dev/devArtistic.json';
+import demoGradient from './demo/demoGradient.json';
+import demoDissolve from './demo/demoDissolve.json';
+import demoFresnelOutline from './demo/demoFresnelOutline.json';
+import demoConstantBiasScaleSubGraph from './demo/demoConstantBiasScaleSubGraph.json';
+import demoFlowMapSubGraph from './demo/demoFlowMapSubGraph.json';
+import demoFlowMap from './demo/demoFlowMap.json';
 
 export const Presets = {
   devCompile,
@@ -52,4 +55,7 @@ export const Presets = {
   demoGradient,
   demoDissolve,
   demoFresnelOutline,
+  demoConstantBiasScaleSubGraph,
+  demoFlowMapSubGraph,
+  demoFlowMap,
 };

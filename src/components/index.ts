@@ -7,3 +7,4 @@ export * from './channel';
 export * from './procedural';
 export * from './utility';
 export * from './artistic';
+export * from './uv';

@@ -43,7 +43,7 @@ export class FloatRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteFloatNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'f');
-    const inVar = compiler.getInputVarCoverted(node, 'x');
+    const inVar = compiler.getInputVarConverted(node, 'x');
     return {
       outputs: { out: outVar },
       code: `let ${outVar}: f32 = ${inVar};`,

@@ -60,10 +60,10 @@ export class CombineRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteCombineNode>): SGNodeOutput {
     const inputs: { [k: string]: string } = {
-      r: compiler.getInputVarCoverted(node, 'r'),
-      g: compiler.getInputVarCoverted(node, 'g'),
-      b: compiler.getInputVarCoverted(node, 'b'),
-      a: compiler.getInputVarCoverted(node, 'a'),
+      r: compiler.getInputVarConverted(node, 'r'),
+      g: compiler.getInputVarConverted(node, 'g'),
+      b: compiler.getInputVarConverted(node, 'b'),
+      a: compiler.getInputVarConverted(node, 'a'),
     };
     const outputs: { [k: string]: string } = { rgba: '', rgb: '', rg: '' };
     const codes: string[] = [];

@@ -39,7 +39,7 @@ export class AOBlock extends RCBlock {
   }
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteAOBlock>): SGNodeOutput {
-    const inVar = compiler.getInputVarCoverted(node, 'ao');
+    const inVar = compiler.getInputVarConverted(node, 'ao');
     return { outputs: {}, code: inVar ? `ao = ${inVar};` : '' };
   }
 }

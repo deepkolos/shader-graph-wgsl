@@ -47,8 +47,8 @@ export class PosterizeRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<RetePosterizeNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'posterize');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
-    const stepsVar = compiler.getInputVarCoverted(node, 'steps');
+    const inVar = compiler.getInputVarConverted(node, 'in');
+    const stepsVar = compiler.getInputVarConverted(node, 'steps');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = floor(${inVar} / (1.0 / ${stepsVar})) * (1.0 / ${stepsVar});`,

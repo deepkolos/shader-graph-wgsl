@@ -42,7 +42,7 @@ export class DDXRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteDDXNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'ddx');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = dpdx(${inVar});`,

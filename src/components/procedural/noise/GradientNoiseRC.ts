@@ -46,8 +46,8 @@ export class GradientNoiseRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteGradientNoiseNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'gradient_noise');
-    const scaleVar = compiler.getInputVarCoverted(node, 'scale');
-    let uvVar = compiler.getInputVarCoverted(node, 'uv', false);
+    const scaleVar = compiler.getInputVarConverted(node, 'scale');
+    let uvVar = compiler.getInputVarConverted(node, 'uv', false);
 
     if (!uvVar) uvVar = UVRC.initUVContext(compiler);
 
@@ -69,7 +69,7 @@ fn ${varName}(p: vec2<f32>) -> f32 {
   fp = fp * fp * fp * (fp * (fp * 6. - 15.) + 10.);
   return mix(mix(d00, d01, fp.y), mix(d10, d11, fp.y), fp.x);
 }`;
-    const fnVar = compiler.setContext('defineFns', node, 'fn', codeFn);
+    const fnVar = compiler.setContext('defines', node, 'fn', codeFn);
 
     return {
       outputs: { out: outVar },

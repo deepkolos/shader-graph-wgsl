@@ -47,8 +47,8 @@ export class PowerRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<RetePowerNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'pow');
-    const aVar = compiler.getInputVarCoverted(node, 'a');
-    const bVar = compiler.getInputVarCoverted(node, 'b');
+    const aVar = compiler.getInputVarConverted(node, 'a');
+    const bVar = compiler.getInputVarConverted(node, 'b');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = pow(${aVar}, ${bVar});`,

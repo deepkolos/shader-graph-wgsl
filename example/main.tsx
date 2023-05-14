@@ -18,7 +18,9 @@ const Preset: FC<{ editorRef: MutableRefObject<ShaderGraphEditor> }> = ({ editor
   };
 
   useEffect(() => {
-    setTimeout(() => onChange('demoFresnelOutline'), 200);
+    // setTimeout(() => onChange('demoFlowMapSubGraph'), 200);
+    setTimeout(() => onChange('demoFlowMap'), 200);
+    // setTimeout(() => onChange('devTexture2D'), 200);
   }, []);
 
   return <Select value={preset} options={Object.keys(Presets)} onChange={onChange} />;

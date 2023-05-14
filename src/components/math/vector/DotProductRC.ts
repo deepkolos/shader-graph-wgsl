@@ -48,8 +48,8 @@ export class DotProductRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteDotProductNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'dot');
-    const aVar = compiler.getInputVarCoverted(node, 'a');
-    const bVar = compiler.getInputVarCoverted(node, 'b');
+    const aVar = compiler.getInputVarConverted(node, 'a');
+    const bVar = compiler.getInputVarConverted(node, 'b');
     if (node.data.aValueType === ValueType.float) {
       return {
         outputs: { out: outVar },

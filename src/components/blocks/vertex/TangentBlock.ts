@@ -39,7 +39,7 @@ export class TangentBlock extends RCBlock {
   }
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteTangentBlock>): SGNodeOutput {
-    const inVar = compiler.getInputVarCoverted(node, 'tangent', false);
+    const inVar = compiler.getInputVarConverted(node, 'tangent', false);
     return { outputs: {}, code: inVar ? `tangentOS = ${inVar};` : '' };
   }
 }

@@ -55,16 +55,16 @@ export class FresnelEffectRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteFresnelEffectNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'fresnel');
-    let normalVar = compiler.getInputVarCoverted(node, 'normal', false);
-    let viewDirVar = compiler.getInputVarCoverted(node, 'viewDir', false);
-    const powerVar = compiler.getInputVarCoverted(node, 'power');
+    let normalVar = compiler.getInputVarConverted(node, 'normal', false);
+    let viewDirVar = compiler.getInputVarConverted(node, 'viewDir', false);
+    const powerVar = compiler.getInputVarConverted(node, 'power');
     const typeClass = compiler.getTypeClass(node.data.outValueType);
 
     const codeFn = (varName: string) => /* wgsl */ `
 fn ${varName}(normal: vec3<f32>, viewDir: vec3<f32>, power: f32) -> ${typeClass} {
   return pow( (1.0 - clamp(dot(normalize(normal), normalize(viewDir)), 0.0, 1.0) ), power);
 }`;
-    const fnVarName = compiler.setContext('defineFns', node, node.data.outValueType, codeFn);
+    const fnVarName = compiler.setContext('defines', node, node.data.outValueType, codeFn);
 
     if (!normalVar) normalVar = NormalRC.initNormalContext(compiler, 'world');
     if (!viewDirVar) viewDirVar = ViewDirectionRC.initViewDirectionContext(compiler, 'world');

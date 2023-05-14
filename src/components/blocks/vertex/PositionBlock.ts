@@ -39,7 +39,7 @@ export class PositionBlock extends RCBlock {
   }
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<SGNodes>): SGNodeOutput {
-    const inVar = compiler.getInputVarCoverted(node, 'position', false);
+    const inVar = compiler.getInputVarConverted(node, 'position', false);
     return { outputs: {}, code: inVar ? `*positionOS = ${inVar};` : '' };
   }
 }

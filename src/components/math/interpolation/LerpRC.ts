@@ -52,9 +52,9 @@ export class LerpRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteLerpNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'lerp');
-    const aVar = compiler.getInputVarCoverted(node, 'a');
-    const bVar = compiler.getInputVarCoverted(node, 'b');
-    const tVar = compiler.getInputVarCoverted(node, 't');
+    const aVar = compiler.getInputVarConverted(node, 'a');
+    const bVar = compiler.getInputVarConverted(node, 'b');
+    const tVar = compiler.getInputVarConverted(node, 't');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = mix(${aVar}, ${bVar}, ${tVar});`,

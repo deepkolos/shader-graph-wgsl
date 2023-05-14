@@ -1,8 +1,8 @@
 {
   "id": "demo@0.1.0",
   "nodes": {
-    "1": {
-      "id": 1,
+    "4511": {
+      "id": 4511,
       "data": {
         "vertValue": 0,
         "vertValueType": "vertex",
@@ -12,7 +12,7 @@
         "vert": {
           "connections": [
             {
-              "node": 2,
+              "node": 4512,
               "output": "vert",
               "data": {
                 "fixed": true
@@ -24,7 +24,7 @@
       "outputs": {},
       "blocks": [
         {
-          "id": 5,
+          "id": 4515,
           "data": {
             "baseColorValue": [
               0,
@@ -36,7 +36,13 @@
           },
           "inputs": {
             "baseColor": {
-              "connections": []
+              "connections": [
+                {
+                  "node": 4516,
+                  "output": "fnOutOut",
+                  "data": {}
+                }
+              ]
             }
           },
           "outputs": {},
@@ -46,7 +52,7 @@
             0
           ],
           "name": "BaseColorBlock",
-          "contextId": 1
+          "contextId": 4511
         }
       ],
       "position": [
@@ -55,8 +61,8 @@
       ],
       "name": "Fragment"
     },
-    "2": {
-      "id": 2,
+    "4512": {
+      "id": 4512,
       "data": {
         "vertValue": 0,
         "vertValueType": "vertex",
@@ -67,7 +73,7 @@
         "vert": {
           "connections": [
             {
-              "node": 1,
+              "node": 4511,
               "input": "vert",
               "data": {
                 "fixed": true
@@ -78,7 +84,7 @@
       },
       "blocks": [
         {
-          "id": 3,
+          "id": 4513,
           "data": {
             "positionValue": [
               0,
@@ -100,10 +106,10 @@
             0
           ],
           "name": "PositionBlock",
-          "contextId": 2
+          "contextId": 4512
         },
         {
-          "id": 4,
+          "id": 4514,
           "data": {
             "normalValue": [
               0,
@@ -125,7 +131,7 @@
             0
           ],
           "name": "NormalBlock",
-          "contextId": 2
+          "contextId": 4512
         }
       ],
       "position": [
@@ -134,135 +140,74 @@
       ],
       "name": "Vertex"
     },
-    "23": {
-      "id": 23,
+    "4516": {
+      "id": 4516,
       "data": {
-        "outValueType": "texture2d",
-        "expanded": true
-      },
-      "inputs": {},
-      "outputs": {
-        "out": {
-          "connections": []
-        }
-      },
-      "blocks": [],
-      "position": [
-        -90.81688368350198,
-        -194.10717684799272
-      ],
-      "name": "Texture2DAsset"
-    },
-    "28": {
-      "id": 28,
-      "data": {
-        "rgbaValue": [
+        "assetValue": {
+          "id": "demoFlowMapSubGraph",
+          "label": "demoFlowMapSubGraph"
+        },
+        "assetValueType": "subgraph",
+        "expanded": true,
+        "preview": true,
+        "fnInTilingValue": "1",
+        "fnInTilingValueType": "float",
+        "fnInFlowMapValue": {
+          "id": "flowmap.png",
+          "label": "flowmap.png"
+        },
+        "fnInFlowMapValueType": "texture2d",
+        "fnInSpeedValue": "0.28",
+        "fnInSpeedValueType": "float",
+        "fnInStrengthValue": "0.1",
+        "fnInStrengthValueType": "float",
+        "fnInMainTextureValue": {
+          "id": "https://avatars.githubusercontent.com/u/12824616?v=4",
+          "label": "deepkolos"
+        },
+        "fnInMainTextureValueType": "texture2d",
+        "fnOutOutValue": [
           0,
           0,
           0,
           0
         ],
-        "rgbaValueType": "vec4",
-        "rValue": 0,
-        "rValueType": "float",
-        "gValue": 0,
-        "gValueType": "float",
-        "bValue": 0,
-        "bValueType": "float",
-        "aValue": 0,
-        "aValueType": "float",
-        "textureValueType": "texture2d",
-        "uvValue": "UV0",
-        "uvValueType": "vec2",
-        "typeValue": "default",
-        "spaceValue": "object",
-        "expanded": true,
-        "samplerValueType": "sampler",
-        "typeValueType": "string",
-        "spaceValueType": "string"
+        "fnOutOutValueType": "vec4"
       },
       "inputs": {
-        "texture": {
+        "fnInTiling": {
           "connections": []
         },
-        "uv": {
+        "fnInFlowMap": {
           "connections": []
         },
-        "sampler": {
+        "fnInSpeed": {
+          "connections": []
+        },
+        "fnInStrength": {
+          "connections": []
+        },
+        "fnInMainTexture": {
           "connections": []
         }
       },
       "outputs": {
-        "rgba": {
-          "connections": []
-        },
-        "r": {
-          "connections": []
-        },
-        "g": {
-          "connections": []
-        },
-        "a": {
-          "connections": []
-        },
-        "b": {
-          "connections": []
+        "fnOutOut": {
+          "connections": [
+            {
+              "node": 4515,
+              "input": "baseColor",
+              "data": {}
+            }
+          ]
         }
       },
       "blocks": [],
       "position": [
-        177.24230159076333,
-        -113.01473811685185
+        -68.17709669299188,
+        -120.59571724068996
       ],
-      "name": "SampleTexture2D"
-    },
-    "35": {
-      "id": 35,
-      "data": {
-        "outValue": [
-          0,
-          0
-        ],
-        "outValueType": "vec2",
-        "channelValue": "UV0",
-        "exposed": true,
-        "expanded": true
-      },
-      "inputs": {},
-      "outputs": {
-        "out": {
-          "connections": []
-        }
-      },
-      "blocks": [],
-      "position": [
-        -96.26371661830736,
-        -24.76697096539609
-      ],
-      "name": "UV"
-    },
-    "85": {
-      "id": 85,
-      "data": {
-        "outValue": {
-          "filter": "point",
-          "warp": "clamp"
-        },
-        "outValueType": "sampler",
-        "expanded": true
-      },
-      "inputs": {},
-      "outputs": {
-        "out": {
-          "connections": []
-        }
-      },
-      "blocks": [],
-      "position": [
-        -134.65370069500904,
-        115.51180338441225
-      ],
-      "name": "SamplerState"
+      "name": "SubGraph"
     }
   },
   "UIState": {
@@ -281,51 +226,9 @@
     "renderFace": "front",
     "depthWrite": "auto",
     "depthTest": "l equal",
-    "alphaClipping": true,
+    "alphaClipping": false,
     "castShadows": true,
     "clearCoat": false
   },
-  "parameters": [
-    {
-      "name": "u1",
-      "type": "float",
-      "defalutValue": 0,
-      "exposed": true
-    },
-    {
-      "name": "u2",
-      "type": "vec2",
-      "defalutValue": [
-        0,
-        0
-      ],
-      "exposed": true
-    },
-    {
-      "name": "u3",
-      "type": "vec3",
-      "defalutValue": [
-        0,
-        0,
-        0
-      ],
-      "exposed": true
-    },
-    {
-      "name": "u4",
-      "type": "vec4",
-      "defalutValue": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "exposed": true
-    },
-    {
-      "name": "map",
-      "type": "texture2d",
-      "exposed": true
-    }
-  ]
+  "parameters": []
 }

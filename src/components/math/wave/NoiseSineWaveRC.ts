@@ -48,8 +48,8 @@ export class NoiseSineWaveRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteNoiseSineWaveNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
-    const minMaxVar = compiler.getInputVarCoverted(node, 'minMax');
+    const inVar = compiler.getInputVarConverted(node, 'in');
+    const minMaxVar = compiler.getInputVarConverted(node, 'minMax');
     const typeClass = compiler.getTypeClass(node.data.outValueType);
 
     const codeFn = (varName: string) => /* wgsl */ `

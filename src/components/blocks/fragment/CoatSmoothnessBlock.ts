@@ -39,7 +39,7 @@ export class CoatSmoothnessBlock extends RCBlock {
   }
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteCoatSmoothnessBlock>): SGNodeOutput {
-    const inVar = compiler.getInputVarCoverted(node, 'Coatsmoothness');
+    const inVar = compiler.getInputVarConverted(node, 'Coatsmoothness');
     return { outputs: {}, code: inVar ? `coatSmoothness = ${inVar};` : '' };
   }
 }

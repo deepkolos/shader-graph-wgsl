@@ -42,7 +42,7 @@ export class AbsoluteRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteAbsoluteNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'abs');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = abs(${inVar});`,

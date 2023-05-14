@@ -43,7 +43,7 @@ export class TriangleWaveRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteTriangleWaveNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = 2.0 * abs( 2.0 * (${inVar} - floor(0.5 + ${inVar})) ) - 1.0;`,

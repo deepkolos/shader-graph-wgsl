@@ -39,7 +39,7 @@ export class NormalTangentSpaceBlock extends RCBlock {
   }
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteNormalTSBlock>): SGNodeOutput {
-    const inVar = compiler.getInputVarCoverted(node, 'normal');
+    const inVar = compiler.getInputVarConverted(node, 'normal');
     return { outputs: {}, code: inVar ? `normalTS = ${inVar};` : '' };
   }
 }

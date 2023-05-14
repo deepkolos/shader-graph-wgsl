@@ -86,7 +86,7 @@ function install(editor: NodeEditor) {
     socketsParams.set(el, { input, output });
 
     el.removeEventListener('pointerdown', pointerDown);
-    // el.addEventListener('pointerdown', pointerDown);
+    el.addEventListener('pointerdown', pointerDown);
   });
 
   editor.on('disposesocket', ({ el }) => {

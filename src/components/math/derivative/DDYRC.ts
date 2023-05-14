@@ -42,7 +42,7 @@ export class DDYRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteDDYNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'ddy');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = dpdy(${inVar});`,

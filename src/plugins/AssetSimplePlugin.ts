@@ -28,5 +28,9 @@ export const AssetSimplePlugin: Plugin = {
       };
       input.click();
     });
+
+    editor.on('destroy', () => {
+      document.body.removeChild(input);
+    });
   },
 };

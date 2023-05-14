@@ -26,6 +26,8 @@ import { Texture, RawShaderMaterial, DepthModes, Matrix4, Vector3 } from 'three'
 import type { Resource, BindingMap, SGCompilation, UniformMap } from '../compilers';
 import { MaterialTemplates } from '../templates';
 import { ResourceAdapter } from './ResourceAdapter';
+import type { AssetValue, MaybePromise, ValueType } from '../types';
+import { disposeTexture } from './WebGPURenderer';
 
 export interface TemplateStore {
   [template: string]: {
@@ -85,6 +87,10 @@ type SetParams = {
 };
 
 export class SGController {
+  static textureLoader = new TextureLoader();
+  static textureCache: Map<string, MaybePromise<Texture>> = new Map();
+  static textureInUsed = new Set<string>();
+
   time = 0;
   allowMaterialOverride = true;
   castShadows: boolean = false;
@@ -96,7 +102,7 @@ export class SGController {
 
   async init(compilation: SGCompilation, Templates: TemplateStore = MaterialTemplates) {
     const { material } = this;
-    // TODO 销毁之前所创建的resource资源
+    const { loadTexture } = SGController;
     const vertCode = Templates[compilation.setting?.template || 'unlit']?.vert?.(
       compilation.vertCode,
     );
@@ -110,22 +116,18 @@ export class SGController {
     this.bindingMap = compilation.bindingMap;
     this.resource = compilation.resource;
 
-    const textureLoader = new TextureLoader();
-    const parseParameterValue = (name: string) => {
+    const parseParameterValue = async (name: string) => {
       const parameter = compilation.parameters.find(i => i.name === name);
       if (parameter) {
-        if (parameter.type === 'texture2d') {
-          const assetUrl = ResourceAdapter(parameter.defalutValue);
-          if (assetUrl) return textureLoader.load(assetUrl);
-        }
+        if (parameter.type === 'texture2d') return loadTexture(parameter.defalutValue);
         return parameter.defalutValue;
       }
     };
 
-    Object.keys(compilation.uniformMap).forEach(contextKey => {
+    const uniformPromises = Object.keys(compilation.uniformMap).map(async contextKey => {
       const [nodeName, name] = contextKey.split('_');
       let value = undefined;
-      if (nodeName === 'Parameter') value = parseParameterValue(name);
+      if (nodeName === 'Parameter') value = await parseParameterValue(name);
       else if (nodeName === 'Time') value = 0;
       // else if (nodeName === 'TexelSize') value = new Vector2();
       else if (nodeName === 'TransformationMatrix') value = new Matrix4();
@@ -138,20 +140,14 @@ export class SGController {
     });
 
     // init resource
-    await Promise.all(
-      Object.keys(compilation.resource.texture).map(async contextKey => {
-        const asset = compilation.resource.texture[contextKey];
-        const assetUrl = ResourceAdapter(asset);
+    const resourcePromises = Object.keys(compilation.resource.texture).map(async contextKey => {
+      const asset = compilation.resource.texture[contextKey];
+      if (!material.uniforms[contextKey])
+        material.uniforms[contextKey] = { value: undefined, type: 'texture2d_f32' };
+      material.uniforms[contextKey].value = await loadTexture(asset);
+    });
 
-        if (assetUrl) {
-          // TODO 纹理复用
-          material.uniforms[contextKey] = { value: undefined, type: 'texture2d_f32' };
-          material.uniforms[contextKey].value = assetUrl
-            ? await textureLoader.loadAsync(assetUrl)
-            : undefined;
-        }
-      }),
-    );
+    await Promise.all([...resourcePromises, ...uniformPromises]);
 
     // 设置渲染参数
     const setting = compilation.setting;
@@ -231,5 +227,38 @@ export class SGController {
     this.set('Time', 'cosTime', Math.cos(this.time));
     this.set('Time', 'deltaTime', deltaTime);
     this.set('Time', 'smoothDelta', deltaTime);
+  }
+
+  static loadTexture(asset: AssetValue) {
+    const { textureLoader, textureInUsed, textureCache } = SGController;
+    const assetUrl = ResourceAdapter(asset);
+
+    if (asset && asset.id && assetUrl) {
+      textureInUsed.add(asset.id);
+      const cache = textureCache.get(asset.id);
+      if (cache) return cache;
+
+      const promise = textureLoader.loadAsync(assetUrl);
+      textureCache.set(asset.id, promise);
+      promise
+        .then(texture => textureCache.set(asset.id, texture))
+        .catch(error => {
+          textureCache.delete(asset.id);
+          console.error(error);
+          console.error('load texture error: ' + assetUrl);
+        });
+      return promise;
+    }
+  }
+
+  static disposeUnusedTexture() {
+    const { textureInUsed, textureCache } = SGController;
+    textureCache.forEach(async (texturePromise, key) => {
+      if (!textureInUsed.has(key)) {
+        const texture = await texturePromise;
+        disposeTexture(texture);
+        textureCache.delete(key);
+      }
+    });
   }
 }

@@ -56,10 +56,10 @@ export class RoundedRectangleRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteRoundedRectangleNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'roundrect');
-    const widthVar = compiler.getInputVarCoverted(node, 'width');
-    const heightVar = compiler.getInputVarCoverted(node, 'height');
-    const radiusVar = compiler.getInputVarCoverted(node, 'radius');
-    let uvVar = compiler.getInputVarCoverted(node, 'uv', false);
+    const widthVar = compiler.getInputVarConverted(node, 'width');
+    const heightVar = compiler.getInputVarConverted(node, 'height');
+    const radiusVar = compiler.getInputVarConverted(node, 'radius');
+    let uvVar = compiler.getInputVarConverted(node, 'uv', false);
     if (!uvVar) uvVar = UVRC.initUVContext(compiler);
 
     const codeFn = (varName: string) => /* wgsl */ `
@@ -69,7 +69,7 @@ fn ${varName}(UV: vec2<f32>, Width: f32, Height: f32, Radius_: f32) -> f32 {
   let d = length(max(uv, vec2<f32>(0.0))) / Radius;
   return clamp((1. - d) / fwidth(d), 0.0, 1.0);
 }`;
-    const fnVar = compiler.setContext('defineFns', node, 'fn', codeFn);
+    const fnVar = compiler.setContext('defines', node, 'fn', codeFn);
 
     return {
       outputs: { out: outVar },

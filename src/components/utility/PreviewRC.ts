@@ -42,6 +42,6 @@ export class PreviewRC extends RC {
   }
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<RetePreviewNode>): SGNodeOutput {
-    return { outputs: { out: compiler.getInputVarCoverted(node, 'in') }, code: `` };
+    return { outputs: { out: compiler.getInputVarConverted(node, 'in') }, code: `` };
   }
 }

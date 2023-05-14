@@ -42,7 +42,7 @@ export class ArctangentRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteArctangentNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'atan');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = atan(${inVar});`,

@@ -56,9 +56,9 @@ export class RotateAboutAxisRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteRotateAboutAxisNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'rotate');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
-    const axisVar = compiler.getInputVarCoverted(node, 'axis');
-    const rotateVar = compiler.getInputVarCoverted(node, 'rotate');
+    const inVar = compiler.getInputVarConverted(node, 'in');
+    const axisVar = compiler.getInputVarConverted(node, 'axis');
+    const rotateVar = compiler.getInputVarConverted(node, 'rotate');
     const typeClass = compiler.getTypeClass(node.data.outValueType);
 
     const isDeg = node.data.unitValue === 'degrees';
@@ -77,7 +77,7 @@ fn ${varName}(in_: vec3<f32>, axis_: vec3<f32>, ${isDeg ? 'rotate_deg' : 'rotate
   );
   return rot_mat * in_;
 }`;
-    const fnVarName = compiler.setContext('defineFns', node, `${node.data.unitValue}_${node.data.outValueType}`, codeFn);
+    const fnVarName = compiler.setContext('defines', node, `${node.data.unitValue}_${node.data.outValueType}`, codeFn);
 
     return {
       outputs: { out: outVar },

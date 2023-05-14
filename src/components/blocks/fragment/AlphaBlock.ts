@@ -39,7 +39,7 @@ export class AlphaBlock extends RCBlock {
   }
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteAlphaBlock>): SGNodeOutput {
-    const inVar = compiler.getInputVarCoverted(node, 'alpha');
+    const inVar = compiler.getInputVarConverted(node, 'alpha');
     return { outputs: {}, code: `*alpha = ${inVar};` };
   }
 }

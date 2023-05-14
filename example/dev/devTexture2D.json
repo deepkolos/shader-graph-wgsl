@@ -1,0 +1,673 @@
+{
+  "id": "demo@0.1.0",
+  "nodes": {
+    "1": {
+      "id": 1,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 2,
+              "output": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "outputs": {},
+      "blocks": [
+        {
+          "id": 5,
+          "data": {
+            "baseColorValue": [
+              0,
+              0,
+              0
+            ],
+            "baseColorValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "baseColor": {
+              "connections": [
+                {
+                  "node": 28,
+                  "output": "rgba",
+                  "data": {}
+                }
+              ]
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "BaseColorBlock",
+          "contextId": 1
+        }
+      ],
+      "position": [
+        550,
+        0
+      ],
+      "name": "Fragment"
+    },
+    "2": {
+      "id": 2,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 1,
+              "input": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "id": 3,
+          "data": {
+            "positionValue": [
+              0,
+              0,
+              0
+            ],
+            "positionValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "position": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "PositionBlock",
+          "contextId": 2
+        },
+        {
+          "id": 4,
+          "data": {
+            "normalValue": [
+              0,
+              0,
+              0
+            ],
+            "normalValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "normal": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "NormalBlock",
+          "contextId": 2
+        }
+      ],
+      "position": [
+        550,
+        -300
+      ],
+      "name": "Vertex"
+    },
+    "23": {
+      "id": 23,
+      "data": {
+        "outValue": {
+          "id": "https://avatars.githubusercontent.com/u/12824616?v=4",
+          "label": "deepkolos"
+        },
+        "outValueType": "texture2d",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -90.81688368350198,
+        -194.10717684799272
+      ],
+      "name": "Texture2DAsset"
+    },
+    "28": {
+      "id": 28,
+      "data": {
+        "rgbaValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rgbaValueType": "vec4",
+        "rValue": 0,
+        "rValueType": "float",
+        "gValue": 0,
+        "gValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "aValue": 0,
+        "aValueType": "float",
+        "textureValueType": "texture2d",
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "typeValue": "default",
+        "spaceValue": "object",
+        "expanded": true,
+        "samplerValueType": "sampler",
+        "typeValueType": "string",
+        "spaceValueType": "string",
+        "preview": true
+      },
+      "inputs": {
+        "texture": {
+          "connections": [
+            {
+              "node": 4560,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "uv": {
+          "connections": []
+        },
+        "sampler": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "rgba": {
+          "connections": [
+            {
+              "node": 5,
+              "input": "baseColor",
+              "data": {}
+            }
+          ]
+        },
+        "r": {
+          "connections": []
+        },
+        "g": {
+          "connections": []
+        },
+        "a": {
+          "connections": []
+        },
+        "b": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        177.24230159076333,
+        -113.01473811685185
+      ],
+      "name": "SampleTexture2D"
+    },
+    "35": {
+      "id": 35,
+      "data": {
+        "outValue": [
+          0,
+          0
+        ],
+        "outValueType": "vec2",
+        "channelValue": "UV0",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -96.26371661830736,
+        -24.76697096539609
+      ],
+      "name": "UV"
+    },
+    "85": {
+      "id": 85,
+      "data": {
+        "outValue": {
+          "filter": "point",
+          "warp": "clamp"
+        },
+        "outValueType": "sampler",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -134.65370069500904,
+        115.51180338441225
+      ],
+      "name": "SamplerState"
+    },
+    "4560": {
+      "id": 4560,
+      "data": {
+        "outValue": {
+          "id": "https://avatars.githubusercontent.com/u/12824616?v=4",
+          "label": "deepkolos"
+        },
+        "outValueType": "texture2d",
+        "outValueName": "map",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 28,
+              "input": "texture",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -12.706135192574877,
+        -252.7066853924353
+      ],
+      "name": "Parameter"
+    },
+    "4573": {
+      "id": 4573,
+      "data": {
+        "inValue": 0,
+        "inValueType": "float",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 4586,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -92.564697265625,
+        389.2692108154297
+      ],
+      "name": "PreviewNumber"
+    },
+    "4586": {
+      "id": 4586,
+      "data": {
+        "outValue": "0.11",
+        "outValueType": "float",
+        "outValueName": "u1",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 4573,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -234.53595434466226,
+        429.7092218728836
+      ],
+      "name": "Parameter"
+    },
+    "4749": {
+      "id": 4749,
+      "data": {
+        "outValue": [
+          "0.21",
+          "0.22"
+        ],
+        "outValueType": "vec2",
+        "outValueName": "u2",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 4756,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -238.2927417213307,
+        471.38203863631173
+      ],
+      "name": "Parameter"
+    },
+    "4756": {
+      "id": 4756,
+      "data": {
+        "inValue": [
+          0,
+          0
+        ],
+        "inValueType": "vec2",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 4749,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        114.29638882109863,
+        387.84449767590036
+      ],
+      "name": "PreviewNumber"
+    },
+    "4789": {
+      "id": 4789,
+      "data": {
+        "inValue": [
+          0,
+          0,
+          0
+        ],
+        "inValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 4810,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        316.8612840261548,
+        388.4223735616341
+      ],
+      "name": "PreviewNumber"
+    },
+    "4810": {
+      "id": 4810,
+      "data": {
+        "outValue": [
+          "0.31",
+          "0.32",
+          "0.33"
+        ],
+        "outValueType": "vec3",
+        "outValueName": "u3",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 4789,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -238.41648869712012,
+        523.1194500298642
+      ],
+      "name": "Parameter"
+    },
+    "4841": {
+      "id": 4841,
+      "data": {
+        "outValue": [
+          "0.41",
+          "0.42",
+          "0.43",
+          "0.44"
+        ],
+        "outValueType": "vec4",
+        "outValueName": "u4",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 4852,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -240.3139354549116,
+        567.9815428954691
+      ],
+      "name": "Parameter"
+    },
+    "4852": {
+      "id": 4852,
+      "data": {
+        "inValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "inValueType": "vec4",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 4841,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        522.6053466796875,
+        388.26820373535156
+      ],
+      "name": "PreviewNumber"
+    }
+  },
+  "UIState": {
+    "showMainPreview": true,
+    "showBlackBoard": true,
+    "showInspector": true
+  },
+  "type": "ShaderGraph",
+  "version": "0.0.0",
+  "setting": {
+    "template": "unlit",
+    "precision": "single",
+    "allowMaterialOverride": false,
+    "surfaceType": "opaque",
+    "blendingMode": "alpha",
+    "renderFace": "front",
+    "depthWrite": "auto",
+    "depthTest": "l equal",
+    "alphaClipping": true,
+    "castShadows": true,
+    "clearCoat": false
+  },
+  "parameters": [
+    {
+      "name": "u1",
+      "type": "float",
+      "defalutValue": "0.11",
+      "exposed": true
+    },
+    {
+      "name": "u2",
+      "type": "vec2",
+      "defalutValue": [
+        "0.21",
+        "0.22"
+      ],
+      "exposed": true
+    },
+    {
+      "name": "u3",
+      "type": "vec3",
+      "defalutValue": [
+        "0.31",
+        "0.32",
+        "0.33"
+      ],
+      "exposed": true
+    },
+    {
+      "name": "u4",
+      "type": "vec4",
+      "defalutValue": [
+        "0.41",
+        "0.42",
+        "0.43",
+        "0.44"
+      ],
+      "exposed": true
+    },
+    {
+      "name": "map",
+      "type": "texture2d",
+      "defalutValue": {
+        "id": "https://avatars.githubusercontent.com/u/12824616?v=4",
+        "label": "deepkolos"
+      },
+      "exposed": true
+    }
+  ]
+}

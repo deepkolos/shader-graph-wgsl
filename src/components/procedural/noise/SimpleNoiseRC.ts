@@ -46,8 +46,8 @@ export class SimpleNoiseRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteSimpleNoiseNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'simple_noise');
-    const scaleVar = compiler.getInputVarCoverted(node, 'scale');
-    let uvVar = compiler.getInputVarCoverted(node, 'uv', false);
+    const scaleVar = compiler.getInputVarConverted(node, 'scale');
+    let uvVar = compiler.getInputVarConverted(node, 'uv', false);
 
     if (!uvVar) uvVar = UVRC.initUVContext(compiler);
 
@@ -93,7 +93,7 @@ fn ${varName}(UV: vec2<f32>, Scale: f32) -> f32 {
 
   return t;
 }`;
-    const fnVar = compiler.setContext('defineFns', node, 'fn', codeFn);
+    const fnVar = compiler.setContext('defines', node, 'fn', codeFn);
 
     return {
       outputs: { out: outVar },

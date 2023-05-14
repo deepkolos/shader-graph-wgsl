@@ -42,7 +42,7 @@ export class NormalizeRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteNormalizeNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'norm');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     if (node.data.inValueType === ValueType.float) {
       return { outputs: { out: inVar }, code: '' };
     }

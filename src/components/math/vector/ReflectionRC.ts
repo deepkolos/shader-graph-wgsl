@@ -47,8 +47,8 @@ export class ReflectionRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteReflectionNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'reflect');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
-    const normalVar = compiler.getInputVarCoverted(node, 'normal');
+    const inVar = compiler.getInputVarConverted(node, 'in');
+    const normalVar = compiler.getInputVarConverted(node, 'normal');
     if (node.data.inValueType === ValueType.float) {
       return {
         outputs: { out: outVar },

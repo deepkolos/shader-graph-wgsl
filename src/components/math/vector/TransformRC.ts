@@ -60,7 +60,7 @@ export class TransformRC extends RC {
   }
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteTransformNode>): SGNodeOutput {
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     const inSpace = node.data.inSpaceValue;
     const outSpace = node.data.outSpaceValue;
     const combine = `${inSpace}_to_${outSpace}`;

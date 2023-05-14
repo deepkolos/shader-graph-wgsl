@@ -45,7 +45,7 @@ export class PreviewNumberRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<RetePreviewNumberNode>): SGNodeOutput {
     const fnBaseVar = compiler.setContext(
-      'defineFns',
+      'defines',
       node,
       'base',
       varName => /* wgsl */ `
@@ -135,7 +135,7 @@ fn ${varName}_PrintValue( vStringCoords: vec2f, fValue_: f32, fMaxDigits: f32, f
       [ValueType.vec4]: print('-40, 75.0', '.x') + print('-40, 55.0', '.y') + print('-40, 35.0', '.z') + print('-40, 15.0', '.w'),
     };
     const fnVar = compiler.setContext(
-      'defineFns',
+      'defines',
       node,
       node.data.inValueType,
       varName => /* wgsl */ `
@@ -153,7 +153,7 @@ fn ${varName}(uv: vec2f, value: ${compiler.getTypeClass(node.data.inValueType)})
   return vColour;
 }`,
     );
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     const outVar = compiler.getOutVarName(node, 'out');
     const uvVar = UVRC.initUVContext(compiler);
     return {

@@ -51,7 +51,7 @@ export class HueRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteHueNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'hue');
-    const [offsetVar, inVar] = compiler.getInputVarCovertedArray(node, ['offset', 'in']);
+    const [offsetVar, inVar] = compiler.getInputVarConvertedArray(node, ['offset', 'in']);
 
     const codeFn = (varName: string) => /* wgsl */ `
 fn ${varName}(In: vec3<f32>, Offset: f32) -> vec3<f32> {
@@ -81,7 +81,7 @@ fn ${varName}(In: vec3<f32>, Offset: f32) -> vec3<f32> {
   let P2 = abs(fract(hsv.xxx + K2.xyz) * 6.0 - K2.www);
   return hsv.z * mix(K2.xxx, clamp(P2 - K2.xxx, vec3f(0.0), vec3f(1.0)), hsv.y);
 }`;
-    const fnVar = compiler.setContext('defineFns', node, node.data.rangeValue, codeFn);
+    const fnVar = compiler.setContext('defines', node, node.data.rangeValue, codeFn);
 
     return {
       outputs: { out: outVar },

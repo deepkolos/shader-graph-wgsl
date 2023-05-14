@@ -52,9 +52,9 @@ export class ClampRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteClampNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'clamp');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
-    const minVar = compiler.getInputVarCoverted(node, 'min');
-    const maxVar = compiler.getInputVarCoverted(node, 'max');
+    const inVar = compiler.getInputVarConverted(node, 'in');
+    const minVar = compiler.getInputVarConverted(node, 'min');
+    const maxVar = compiler.getInputVarConverted(node, 'max');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = clamp(${inVar}, ${minVar}, ${maxVar});`,

@@ -175,7 +175,7 @@ export class CustomFunctionRC extends RC {
       if (key.startsWith('fnOut') && key.endsWith('Value')) outputs.push(prefix);
     });
 
-    const inVars = inputs.map(key => compiler.getInputVarCoverted(node, key));
+    const inVars = inputs.map(key => compiler.getInputVarConverted(node, key));
     const outVars = outputs.map(key => compiler.getOutVarName(node, key, 'fnOut'));
 
     const codeFn = (varName: string) => {
@@ -194,7 +194,7 @@ fn ${varName}(${args.join(', ')}) {
 }`;
     };
     const fnVar = compiler.setContext(
-      'defineFns',
+      'defines',
       node,
       `${removeWhiteSpace(node.data.nameValue)}_${hash(node.data.bodyValue)}`,
       codeFn,

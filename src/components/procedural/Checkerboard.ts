@@ -54,10 +54,10 @@ export class CheckerboardRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteCheckerboardNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'checker');
-    const colorAVar = compiler.getInputVarCoverted(node, 'colorA');
-    const colorBVar = compiler.getInputVarCoverted(node, 'colorB');
-    const frequencyVar = compiler.getInputVarCoverted(node, 'frequency');
-    let uvVar = compiler.getInputVarCoverted(node, 'uv', false);
+    const colorAVar = compiler.getInputVarConverted(node, 'colorA');
+    const colorBVar = compiler.getInputVarConverted(node, 'colorB');
+    const frequencyVar = compiler.getInputVarConverted(node, 'frequency');
+    let uvVar = compiler.getInputVarConverted(node, 'uv', false);
 
     if (!uvVar) uvVar = UVRC.initUVContext(compiler);
 
@@ -74,7 +74,7 @@ fn ${varName}(UV_: vec2<f32>, ColorA: vec3<f32>, ColorB: vec3<f32>, Frequency: v
   let alpha = clamp(0.5f + 0.5f * vector_alpha.x * vector_alpha.y * freqLimiter, 0.0, 1.0);
   return mix(ColorA, ColorB, alpha);
 }`;
-    const fnVar = compiler.setContext('defineFns', node, 'fn', codeFn);
+    const fnVar = compiler.setContext('defines', node, 'fn', codeFn);
 
     return {
       outputs: { out: outVar },

@@ -47,8 +47,8 @@ export class ModuloRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteModuloNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'mod');
-    const aVar = compiler.getInputVarCoverted(node, 'a');
-    const bVar = compiler.getInputVarCoverted(node, 'b');
+    const aVar = compiler.getInputVarConverted(node, 'a');
+    const bVar = compiler.getInputVarConverted(node, 'b');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = ${aVar} % ${bVar};`,

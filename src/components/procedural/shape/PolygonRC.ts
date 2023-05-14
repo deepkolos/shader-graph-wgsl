@@ -55,10 +55,10 @@ export class PolygonRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<RetePolygonNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'polygon');
-    const sidesVar = compiler.getInputVarCoverted(node, 'sides');
-    const widthVar = compiler.getInputVarCoverted(node, 'width');
-    const heightVar = compiler.getInputVarCoverted(node, 'height');
-    let uvVar = compiler.getInputVarCoverted(node, 'uv', false);
+    const sidesVar = compiler.getInputVarConverted(node, 'sides');
+    const widthVar = compiler.getInputVarConverted(node, 'width');
+    const heightVar = compiler.getInputVarConverted(node, 'height');
+    let uvVar = compiler.getInputVarConverted(node, 'uv', false);
     if (!uvVar) uvVar = UVRC.initUVContext(compiler);
 
     const codeFn = (varName: string) => /* wgsl */ `
@@ -73,7 +73,7 @@ fn ${varName}(UV: vec2<f32>, Sides: f32, Width: f32, Height: f32) -> f32 {
   let d = cos(floor(0.5 + pCoord / r) * r - pCoord) * length(uv);
   return clamp((1.0 - d) / fwidth(d), 0.0, 1.0);
 }`;
-    const fnVar = compiler.setContext('defineFns', node, 'fn', codeFn);
+    const fnVar = compiler.setContext('defines', node, 'fn', codeFn);
 
     return {
       outputs: { out: outVar },

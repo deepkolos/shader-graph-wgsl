@@ -74,41 +74,67 @@ export class SubGraphRC extends RC {
     node: SGNodeData<ReteSubGraphNode>,
   ): Promise<SGNodeOutput> {
     // 因为compiler设计是可以脱离editor运行所以不能使用editor相关数据
-    if (!compiler.subGraphProvider) return { outputs: {}, code: '' };
+    if (!compiler.subGraphProvider || !node.data.assetValue) return { outputs: {}, code: '' };
 
     const inputs: string[] = Object.keys(node.inputs);
     const outputs: string[] = Object.keys(node.outputs);
-    const inputKeyVarMap: { [k: string]: string } = {};
+    const fnInputs: string[] = [];
+    const inputVars: string[] = [];
     inputs.forEach(key => {
-      inputKeyVarMap[key] = compiler.getInputVarCoverted(node, key);
+      inputVars.push(compiler.getInputVarConverted(node, key));
+      fnInputs.push(`${key}: ${compiler.getTypeClass(node.data[key + 'ValueType'])}`);
     });
     const outVars = outputs.map(key => compiler.getOutVarName(node, key, 'subGraphOut'));
-    const graphData = await compiler.subGraphProvider.getGraphData(node.data.assetValue);
-    const subGraphCompiler = await compiler.compileSubGraph(graphData, inputKeyVarMap);
-
-    const subGraphNodes = Object.values(subGraphCompiler.graphData.nodes);
-    const output = subGraphNodes.find(i => i.name === OutputRC.Name);
-    if (!output) return console.error('missing output node in subgraph');
-
-    // 去除output preview的code
-    subGraphCompiler.nodesCompilation.get(output.id)!.code = '';
-    const subGraphCode = subGraphCompiler.linkBlocks([output], true);
-
-    const SubGraphRCOutVars_To_OutputRCInVars: { [k: string]: string } = {};
-    Object.keys(output.inputs).forEach(key => {
-      SubGraphRCOutVars_To_OutputRCInVars[key.replace('In', 'Out')] =
-        subGraphCompiler.getInputVarCoverted(output, key);
-    });
     const outVarDefineCode = outputs
-      .map((v, k) => `let ${outVars[k]} = ${SubGraphRCOutVars_To_OutputRCInVars[v]};`)
+      .map((v, k) => `var ${outVars[k]}: ${compiler.getTypeClass(node.data[v + 'ValueType'])};`)
       .join(' ');
+
+    let fnVar = compiler.getContext('defines', node, node.data.assetValue.id)?.varName;
+    if (!fnVar) {
+      const graphData = await compiler.subGraphProvider.getGraphData(node.data.assetValue);
+      const subGraphCompiler = await compiler.compileSubGraph(graphData);
+
+      const subGraphNodes = Object.values(subGraphCompiler.graphData.nodes);
+      const subOutput = subGraphNodes.find(i => i.name === OutputRC.Name);
+      if (!subOutput) return console.error('missing output node in subgraph');
+
+      // 去除output preview的code
+      subGraphCompiler.nodesCompilation.get(subOutput.id)!.code = '';
+      const subGraphCode = subGraphCompiler.linkBlocks([subOutput], true);
+
+      const SubGraphRCOutVars_To_OutputRCInVars: { [k: string]: string } = {};
+      const fnOutputs: string[] = [];
+      const fnOutputCodes: string[] = [];
+      Object.keys(subOutput.inputs).forEach(key => {
+        const subKey = key.replace('In', 'Out');
+        SubGraphRCOutVars_To_OutputRCInVars[subKey] = subGraphCompiler.getInputVarConverted(
+          subOutput,
+          key,
+        );
+        fnOutputs.push(
+          `${subKey}: ptr<function, ${subGraphCompiler.getTypeClass(
+            subOutput.data[key + 'ValueType'],
+          )}>`,
+        );
+        fnOutputCodes.push(`*${subKey} = ${SubGraphRCOutVars_To_OutputRCInVars[subKey]};`);
+      });
+
+      const codeFn = (varName: string) => /* wgsl */ `
+fn ${varName} (${[...fnInputs, ...fnOutputs, 'v: Varying'].join(', ')}) {
+  ${subGraphCode}
+${fnOutputCodes.map(i => `  ${i}`).join('\n')}
+}`;
+      fnVar = compiler.setContext('defines', node, node.data.assetValue.id, codeFn);
+    }
 
     return {
       outputs: outputs.reduce((acc, curr, i) => {
         acc[curr] = outVars[i];
         return acc;
       }, {} as { [k: string]: string }),
-      code: `${subGraphCode}\n  ${outVarDefineCode}`,
+      code: `${outVarDefineCode} ${fnVar}(${[...inputVars, ...outVars.map(i => `&${i}`), 'v'].join(
+        ', ',
+      )});`,
     };
   }
 }

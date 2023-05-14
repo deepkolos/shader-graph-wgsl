@@ -66,9 +66,9 @@ export class VoronoiRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteVoronoiNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'voronoi');
-    const angleOffsetVar = compiler.getInputVarCoverted(node, 'angleOffset');
-    const cellDensityVar = compiler.getInputVarCoverted(node, 'cellDensity');
-    let uvVar = compiler.getInputVarCoverted(node, 'uv', false);
+    const angleOffsetVar = compiler.getInputVarConverted(node, 'angleOffset');
+    const cellDensityVar = compiler.getInputVarConverted(node, 'cellDensity');
+    let uvVar = compiler.getInputVarConverted(node, 'uv', false);
     if (!uvVar) uvVar = UVRC.initUVContext(compiler);
 
     const codeFn = (varName: string) => /* wgsl */ `
@@ -96,7 +96,7 @@ fn ${varName}(UV: vec2<f32>, AngleOffset: f32, CellDensity: f32) -> vec2<f32> {
   }
   return res.xy;
 }`;
-    const fnVar = compiler.setContext('defineFns', node, 'fn', codeFn);
+    const fnVar = compiler.setContext('defines', node, 'fn', codeFn);
 
     return {
       outputs: { out: outVar + '.x', cell: outVar + '.y' },

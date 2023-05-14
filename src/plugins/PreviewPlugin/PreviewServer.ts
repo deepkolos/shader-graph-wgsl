@@ -22,7 +22,13 @@ import { getClientSize, PreviewClient } from './PreviewClient';
 import { ShaderGraphEditor } from '../../editors';
 import { Rete } from '../../types';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { GPUGeometry, WebGPUMaterial, WebGPURenderer, disposeGeometry } from '../../materials';
+import {
+  GPUGeometry,
+  SGController,
+  WebGPUMaterial,
+  WebGPURenderer,
+  disposeGeometry,
+} from '../../materials';
 
 const I_Model = new Matrix4();
 const IT_ModelView = new Matrix4();
@@ -138,8 +144,7 @@ export class PreviewServer {
   }
 
   async updateAllMaterial() {
-    const clients = [...this.nodeClients];
-    // console.log('updateAllMaterial', clients);
+    SGController.textureInUsed.clear();
     if (this.editor.editing === 'ShaderGraph') {
       const graphData = await this.editor.compiler.compile(this.editor.toJSON());
       await this.mainMaterial.sg.init(graphData);
@@ -151,9 +156,10 @@ export class PreviewServer {
       await this.mainMaterial.sg.init(graphData);
       this.mesh.material = this.mainMaterial;
     }
+    SGController.disposeUnusedTexture();
 
     await Promise.all(
-      clients.map(async client => {
+      [...this.nodeClients].map(async client => {
         try {
           const compilation = await this.editor.compiler.compilePreview(client.node!);
           client.updateMaterial(compilation, this.mainMaterial);
@@ -188,7 +194,8 @@ export class PreviewServer {
     if (this.clients.has(client.canvas)) this.remove(client.canvas);
     this.clients.set(client.canvas, client);
     (client.node ? this.nodeClients : this.mainClients).add(client);
-    if (!client.node) this.control = this.control || new OrbitControls(this.camera3D, client.canvas);
+    if (!client.node)
+      this.control = this.control || new OrbitControls(this.camera3D, client.canvas);
   }
 
   remove(canvas: HTMLCanvasElement) {

@@ -43,7 +43,7 @@ export class RadiansToDegreesRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteRadiansToDegreesNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'radToDeg');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = degrees(${inVar});`,

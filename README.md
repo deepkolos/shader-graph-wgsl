@@ -16,11 +16,11 @@
 
 ## TODO
 
-- Lit template
-- https://www.bilibili.com/video/BV1GB4y1y7FT
-- PreviewNumber ✅
-- FlowMap
-- 内存泄漏 ✅
+- 完善 Lit template
+- 增加 视频内 Demo https://www.bilibili.com/video/BV1GB4y1y7FT
+- 增加 PreviewNumber 节点 ✅
+- 增加 FlowMap Demo ✅
+- 修复内存泄漏 ✅
 
 # License
 

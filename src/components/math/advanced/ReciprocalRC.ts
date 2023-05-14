@@ -42,7 +42,7 @@ export class ReciprocalRC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteReciprocalNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'rec');
-    const inVar = compiler.getInputVarCoverted(node, 'in');
+    const inVar = compiler.getInputVarConverted(node, 'in');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = 1.0 / ${inVar};`,

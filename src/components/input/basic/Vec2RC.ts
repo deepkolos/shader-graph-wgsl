@@ -47,8 +47,8 @@ export class Vec2RC extends RC {
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteVec2Node>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'v2');
-    const xVar = compiler.getInputVarCoverted(node, 'x');
-    const yVar = compiler.getInputVarCoverted(node, 'y');
+    const xVar = compiler.getInputVarConverted(node, 'x');
+    const yVar = compiler.getInputVarConverted(node, 'y');
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = ${compiler.compileValue([xVar, yVar], node.data.outValueType)};`,
