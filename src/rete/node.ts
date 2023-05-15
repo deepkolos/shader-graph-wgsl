@@ -195,7 +195,7 @@ export class Node {
         const [x, y] = json.position;
 
         node.id = json.id;
-        node.data = json.data;
+        node.data = { ...json.data };
         node.position = [x, y];
         node.name = json.name;
         node.blocks = json.blocks.map(Node.fromJSON);
