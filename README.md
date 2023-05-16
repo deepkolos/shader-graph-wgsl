@@ -18,8 +18,8 @@
 ## TODO
 
 - 增加 视频内 Demo https://www.bilibili.com/video/BV1GB4y1y7FT
-- 增加 PreviewNumber 节点 ✅
-- 增加 FlowMap Demo ✅
+- 增加 [PreviewNumber 节点](https://deepkolos.github.io/shader-graph-wgsl/?graph=devUtility) ✅
+- 增加 [FlowMap Demo](https://deepkolos.github.io/shader-graph-wgsl/?graph=demoFlowMap) ✅
 - 修复内存泄漏 ✅
 - 迁移 https://juejin.cn/post/7160463663504031781 文中特效到shader graph
   - [demoImageFlip](https://deepkolos.github.io/shader-graph-wgsl/?graph=demoImageFlip) ✅
