@@ -53,6 +53,7 @@ export const DynamicVectorPlugin: Plugin = {
   install(editor: Rete.NodeEditor) {
     // 当链接断开时, 更新port类型
     editor.on('connectionremoved', connection => {
+      if (editor.silent) return;
       const node = connection.input.node!;
       const [maxInputValueComLen, minInputValueComLen] = getInputConnectedComLen(node, true);
       const ios = [...node.inputs.values(), ...node.outputs.values()].filter(
@@ -85,7 +86,7 @@ export const DynamicVectorPlugin: Plugin = {
 
     // 当链接创建, 更新port类型
     editor.on('connectioncreate', ({ input, output }): boolean => {
-      if (input.socket !== Sockets.dynamicVector) return true;
+      if (editor.silent || input.socket !== Sockets.dynamicVector) return true;
 
       const inputNode = input.node!;
       const inputValueType = input.node!.getValueType(input.key);

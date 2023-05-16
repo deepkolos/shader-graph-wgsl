@@ -19,7 +19,13 @@ export const ContextView: FC<ContextViewProps> = ({ node, bindBlock, editor, bin
       <div className="sg-context-block-can">
         {node.blocks.length ? (
           node.blocks.map(block => {
-            return <div className="sg-context-block" key={block.id} ref={el => el && bindBlock(el, block)} />;
+            return (
+              <div
+                className="sg-context-block"
+                key={block.id}
+                ref={el => el && bindBlock(el, block)}
+              />
+            );
           })
         ) : (
           <div className="sg-context-block-placeholder">右键添加节点</div>

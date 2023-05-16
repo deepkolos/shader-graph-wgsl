@@ -96,13 +96,13 @@ export const DynamicVecMatPlugin: Plugin = {
 
     // 当链接断开时, 更新port类型
     editor.on('connectionremoved', ({ input }) => {
-      if (input.socket !== Sockets.dynamicVecMat) return;
+      if (editor.silent || input.socket !== Sockets.dynamicVecMat) return;
       onConnectionChange(input.node as ReteMultiplyNode, input.key, undefined);
     });
 
     // 当链接创建时, 更新port类型
     editor.on('connectioncreate', ({ input, output }) => {
-      if (input.socket !== Sockets.dynamicVecMat) return true;
+      if (editor.silent || input.socket !== Sockets.dynamicVecMat) return true;
 
       const node = input.node as ReteMultiplyNode;
       const oneType = output.node!.getValueType(output.key) as ValueType;

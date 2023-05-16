@@ -22,13 +22,7 @@ import { getClientSize, PreviewClient } from './PreviewClient';
 import { ShaderGraphEditor } from '../../editors';
 import { Rete } from '../../types';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import {
-  GPUGeometry,
-  SGController,
-  WebGPUMaterial,
-  WebGPURenderer,
-  disposeGeometry,
-} from '../../materials';
+import { SGController, WebGPUMaterial, WebGPURenderer, disposeGeometry } from '../../materials';
 
 const I_Model = new Matrix4();
 const IT_ModelView = new Matrix4();
@@ -49,7 +43,7 @@ export class PreviewServer {
     Capsule: new CapsuleGeometry(10 * scaleFactor, 10 * scaleFactor, 25, 25),
     Cylinder: new CylinderGeometry(15 * scaleFactor, 15 * scaleFactor, 15 * scaleFactor),
     Cube: new BoxGeometry(20 * scaleFactor, 20 * scaleFactor, 20 * scaleFactor),
-    Quad: new PlaneGeometry(25 * scaleFactor, 25 * scaleFactor),
+    Quad: new PlaneGeometry(25 * scaleFactor, 25 * scaleFactor, 25, 25),
     Sprite: new PlaneGeometry(25 * scaleFactor, 25 * scaleFactor),
   } as const;
   mesh: Mesh<BufferGeometry, RawShaderMaterial>;
@@ -93,6 +87,10 @@ export class PreviewServer {
     const geometry = this.geometries[geometryName as keyof typeof this.geometries];
     if (geometry) {
       this.geometry3D = geometry;
+      if (geometryName === 'Quad') {
+        this.camera3D.position.set(0, 0, 3.1);
+        this.camera3D.lookAt(0, 0, 0);
+      }
     } else if (geometryName === 'Custom Mesh') {
       this.editor.trigger('previewcustommesh', geometry => {
         if (!geometry) throw new Error('load custom mesh failed');

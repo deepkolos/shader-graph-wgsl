@@ -27,6 +27,7 @@ import demoFresnelOutline from './demo/demoFresnelOutline.json';
 import demoConstantBiasScaleSubGraph from './demo/demoConstantBiasScaleSubGraph.json';
 import demoFlowMapSubGraph from './demo/demoFlowMapSubGraph.json';
 import demoFlowMap from './demo/demoFlowMap.json';
+import demoImageFlip from './demo/demoImageFlip.json';
 
 export const Presets = {
   devCompile,
@@ -58,4 +59,5 @@ export const Presets = {
   demoConstantBiasScaleSubGraph,
   demoFlowMapSubGraph,
   demoFlowMap,
+  demoImageFlip,
 };

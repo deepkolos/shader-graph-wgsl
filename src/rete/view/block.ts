@@ -28,26 +28,30 @@ export class BlockView extends Emitter<EventsTypes> {
 
     this.node = node;
     this.component = component;
-    this.el = el;
     this.contextView = contextView;
-    this.onRebind();
+    this.el = el;
+    this.onRebind(el, true);
   }
 
-  onRebind(el = this.el) {
-    if (el !== this.el) {
+  onRebind(el = this.el, force = false) {
+    if (el !== this.el || force) {
       this.drag?.destroy();
       this.disposeListener?.();
       this.el = el;
       this.drag = new Drag(el, this.onTranslate, this.onSelect, this.onDragEnd);
-      this.disposeListener = listen(this.el, 'contextmenu', e => this.trigger('contextmenu', { e, node: this.node }));
-      this.trigger('rendernode', {
-        el: this.el,
-        node: this.node,
-        view: this,
-        component: this.component.data,
-        bindSocket: this.bindSocket,
-        bindControl: this.bindControl,
-      });
+      this.disposeListener = listen(this.el, 'contextmenu', e =>
+        this.trigger('contextmenu', { e, node: this.node }),
+      );
+      setTimeout(() => {
+        this.trigger('rendernode', {
+          el: this.el,
+          node: this.node,
+          view: this,
+          component: this.component.data,
+          bindSocket: this.bindSocket,
+          bindControl: this.bindControl,
+        });
+      })
     }
   }
 
@@ -107,7 +111,9 @@ export class BlockView extends Emitter<EventsTypes> {
     for (; nextIndex < centerYs.length; nextIndex++) {
       if (y < centerYs[nextIndex]) break;
     }
-    siblings.forEach((el, i) => el.setAttribute('data-indicator-show', i === nextIndex ? 'top' : 'none'));
+    siblings.forEach((el, i) =>
+      el.setAttribute('data-indicator-show', i === nextIndex ? 'top' : 'none'),
+    );
     if (nextIndex === centerYs.length) {
       siblings[nextIndex - 1].setAttribute('data-indicator-show', 'bottom');
     }

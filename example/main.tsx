@@ -7,6 +7,8 @@ import { Select, ShaderGraphEditor } from '../src';
 import { Presets } from './presets';
 
 let toasted = false;
+const GraphKey = 'graph';
+const DefaultGraph = 'demoFlowMap';
 const showTestToolBar = location.search.includes('test=true');
 
 const Preset: FC<{ editorRef: MutableRefObject<ShaderGraphEditor> }> = ({ editorRef }) => {
@@ -15,12 +17,17 @@ const Preset: FC<{ editorRef: MutableRefObject<ShaderGraphEditor> }> = ({ editor
   const onChange = (name: any) => {
     editorRef.current.fromJSON(Presets[name]);
     setPreset(name);
+    const params = new URLSearchParams(location.search);
+    params.set(GraphKey, name);
+    const url = location.origin + location.pathname + '?' + params.toString();
+    history.replaceState(null, '', url);
   };
 
   useEffect(() => {
-    // setTimeout(() => onChange('demoFlowMapSubGraph'), 200);
-    setTimeout(() => onChange('demoFlowMap'), 200);
-    // setTimeout(() => onChange('devTexture2D'), 200);
+    const graph = new URLSearchParams(location.search).get(GraphKey) || DefaultGraph;
+    if (graph && Presets[graph]) {
+      setTimeout(() => onChange(graph), 200);
+    }
   }, []);
 
   return <Select value={preset} options={Object.keys(Presets)} onChange={onChange} />;
