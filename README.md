@@ -22,6 +22,7 @@
 - 增加 FlowMap Demo ✅
 - 修复内存泄漏 ✅
 - 迁移 https://juejin.cn/post/7160463663504031781 文中特效到shader graph
+  - [demoImageFlip](https://deepkolos.github.io/shader-graph-wgsl/?graph=demoImageFlip) ✅
 - 完善 Lit template
 - 编辑操作
   - 缩放限制
