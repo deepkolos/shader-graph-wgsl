@@ -21,6 +21,7 @@
 - 增加 PreviewNumber 节点 ✅
 - 增加 FlowMap Demo ✅
 - 修复内存泄漏 ✅
+- 复刻 https://juejin.cn/post/7160463663504031781 文中图片放大效果
 - 完善 Lit template
 - 编辑操作
   - 缩放限制
