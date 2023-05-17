@@ -26,7 +26,7 @@ export class ViewVectorRC extends RC {
   initNode(node: ReteViewVectorNode) {
     const { data, meta } = node;
     node.initValueType('out', [0, 0, 0], ValueType.vec3);
-    node.initValueType('space', 'world');
+    node.initValueType('space', 'world', ValueType.string);
     data.exposed ??= true;
     data.expanded ??= true;
     data.previewType ??= '3d';
