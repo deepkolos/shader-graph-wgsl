@@ -10,20 +10,22 @@ import { Presets } from './presets';
 
 setResourceAdapter(asset => asset?.id);
 
+export const SubGraphProvider = {
+  getList: () =>
+    Object.keys(Presets)
+      .map(name => {
+        const cfg = Presets[name];
+        if (cfg.type === 'SubGraph') return { id: name, label: name };
+      })
+      .filter(i => Boolean(i)),
+  getGraphData: asset => Presets[asset!.id],
+};
+
 export async function createEditor(container: HTMLElement) {
   const editor = new ShaderGraphEditor('demo@0.1.0', container);
   editor.use(AssetSimplePlugin);
   editor.use(PreviewCustomMeshPlugin);
-  editor.setSubGraphProvider({
-    getList: () =>
-      Object.keys(Presets)
-        .map(name => {
-          const cfg = Presets[name];
-          if (cfg.type === 'SubGraph') return { id: name, label: name };
-        })
-        .filter(i => Boolean(i)),
-    getGraphData: asset => Presets[asset!.id],
-  });
+  editor.setSubGraphProvider(SubGraphProvider);
 
   await editor.initShaderGraphNodes();
 

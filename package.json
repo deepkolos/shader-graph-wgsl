@@ -25,11 +25,12 @@
   ],
   "author": "deepkolos@qq.com",
   "dependencies": {
+    "@orillusion/core": "^0.6.2",
+    "copy-to-clipboard": "3.3.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "three": "^0.151.3",
-    "copy-to-clipboard": "3.3.3",
     "rete-area-plugin": "^0.2.1",
+    "three": "^0.151.3",
     "use-debounce": "^9.0.4"
   },
   "devDependencies": {

@@ -28,7 +28,6 @@ input[type='color']::-webkit-color-swatch {
 }
 
 :root {
-  /* FIXME 这些默认值需要挪到组件内, 否则会影响全局... */
   line-height: 1.5;
   font-weight: 400;
 

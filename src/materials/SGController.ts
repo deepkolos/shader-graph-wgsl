@@ -26,7 +26,7 @@ import { Texture, RawShaderMaterial, DepthModes, Matrix4, Vector3 } from 'three'
 import type { Resource, BindingMap, SGCompilation, UniformMap } from '../compilers';
 import { MaterialTemplates } from '../templates';
 import { ResourceAdapter } from './ResourceAdapter';
-import type { AssetValue, MaybePromise, ValueType } from '../types';
+import type { AssetValue, MaybePromise } from '../types';
 import { disposeTexture } from './WebGPURenderer';
 
 export interface TemplateStore {
