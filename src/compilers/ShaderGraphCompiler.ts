@@ -108,6 +108,9 @@ export class ShaderGraphCompiler extends GraphCompiler {
   }
 
   setAutoVaryings(node: NodeName, key: string, varyingVar: string, vertVar: string) {
+    if (['positionOS', 'normalOS', 'tangentOS'].includes(vertVar)) {
+      vertVar = `*${vertVar}`;
+    }
     return this.setContext('autoVaryings', node, key, {
       varName: varyingVar,
       code: `${varyingVar.replace('v.', '(*v).')} = ${vertVar};`,
