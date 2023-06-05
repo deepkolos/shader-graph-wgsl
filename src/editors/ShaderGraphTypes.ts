@@ -125,6 +125,9 @@ import {
   ReteSamplerStateNode,
   RetePreviewNumberNode,
   ReteTilingAndOffsetNode,
+  RetePolarCoordinatesNode,
+  ReteRotateNode,
+  ReteTwirlNode,
 } from '../components';
 import { NodeData } from '../rete/core/data';
 import { Rete, ParameterData, GraphData } from '../types';
@@ -279,7 +282,10 @@ export type SGNodes =
   | ReteColorSpaceConversionNode
   | ReteBlendNode
   // uv
-  | ReteTilingAndOffsetNode;
+  | ReteTilingAndOffsetNode
+  | RetePolarCoordinatesNode
+  | ReteRotateNode
+  | ReteTwirlNode;
 
 export interface SGNodeData<Node extends Rete.Node> extends NodeData {
   name: Node['name'];

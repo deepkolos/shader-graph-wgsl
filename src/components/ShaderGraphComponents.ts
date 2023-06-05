@@ -114,7 +114,7 @@ import {
   VoronoiRC,
 } from './procedural';
 import { CustomFunctionRC, PreviewNumberRC, PreviewRC, SubGraphRC } from './utility';
-import { TilingAndOffsetRC } from './uv';
+import { PolarCoordinatesRC, RotateRC, TilingAndOffsetRC, TwirlRC } from './uv';
 
 export const initShaderGraphComponents = () => [
   new Vec2RC(),
@@ -241,4 +241,7 @@ export const initShaderGraphComponents = () => [
   new SamplerStateRC(),
   new PreviewNumberRC(),
   new TilingAndOffsetRC(),
+  new PolarCoordinatesRC(),
+  new RotateRC(),
+  new TwirlRC(),
 ];
