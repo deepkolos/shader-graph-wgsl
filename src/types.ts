@@ -42,11 +42,10 @@ export const ValueTypeNameMap: { [k in ValueType]: string } = Object.freeze({
 } as const);
 
 export const ValueTypeNameReverseMap: { [k: string]: ValueType } = Object.freeze(
-  Object.keys(ValueTypeNameMap).reduce((acc, key) => {
-    // @ts-ignore
+  (Object.keys(ValueTypeNameMap) as ValueType[]).reduce((acc, key) => {
     acc[ValueTypeNameMap[key]] = key;
     return acc;
-  }, {}),
+  }, {} as { [k: string]: ValueType }),
 ) as any;
 
 export const ValueTypeSocketMap = Sockets;
@@ -98,7 +97,7 @@ export const ChannelLenNeedsMap = Object.freeze({
   w: 4,
 } as const);
 
-export const ValueTypeCtor = Object.freeze({
+export const ValueTypeCtor: { [k: string]: () => any } = Object.freeze({
   float: () => 0,
   vec2: () => [0, 0],
   vec3: () => [0, 0, 0],

@@ -131,9 +131,7 @@ function install(editor: NodeEditor, { createRoot }: { createRoot?: typeof ICrea
   });
 }
 
-class ReactRenderPluginClass implements Plugin {
-  name = 'ReactRenderPlugin';
-  install = install;
-}
-
-export const ReactRenderPlugin = new ReactRenderPluginClass();
+export const ReactRenderPlugin: Plugin = {
+  name: 'ReactRenderPlugin',
+  install,
+};
