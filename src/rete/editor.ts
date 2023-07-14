@@ -1,7 +1,7 @@
 import { Component } from './component';
 import { Connection } from './connection';
 import { Context } from './core/context';
-import { Data } from './core/data';
+import { Data, NodeData } from './core/data';
 import { EditorView } from './view/index';
 import { Input } from './input';
 import { Node } from './node';
@@ -14,7 +14,7 @@ import { EditorEvents, EventsTypes } from './events';
 export class NodeEditor extends Context<EventsTypes> {
 
     nodes: Node[] = [];
-    selected = new Selected();
+    selected = new Selected(this);
     view: EditorView;
 
     constructor(id: string, container: HTMLElement) {
@@ -71,7 +71,7 @@ export class NodeEditor extends Context<EventsTypes> {
         }
     }
 
-    connect(output: Output, input: Input, data: unknown = {}) {
+    connect(output: Output, input: Input, data: unknown = {}, handelError = false) {
         if (!this.trigger('connectioncreate', { output, input })) return;
 
         try {
@@ -82,7 +82,8 @@ export class NodeEditor extends Context<EventsTypes> {
 
             this.trigger('connectioncreated', connection);
         } catch (e) {
-            this.trigger('warn', e as Error)
+            if (!handelError) this.trigger('warn', e as Error)
+            else throw e;
         }
     }
 
@@ -95,7 +96,11 @@ export class NodeEditor extends Context<EventsTypes> {
         this.trigger('connectionremoved', connection);
     }
 
-    selectNode(node: Node, accumulate = false) {
+    selectNode(node: Node, accumulate = false, fromRectSelect = false) {
+        if (this.selected.contains(node) && !fromRectSelect) {
+            this.trigger('nodeselected', node);
+            return;
+        }
         if (!node.contextNode && this.nodes.indexOf(node) === -1)
             throw new Error('Node not exist in list');
 
@@ -104,6 +109,11 @@ export class NodeEditor extends Context<EventsTypes> {
         this.selected.add(node, accumulate);
 
         this.trigger('nodeselected', node);
+    }
+
+    unselect() {
+        this.selected.clear();
+        this.trigger('nodeunselectall');
     }
 
     getComponent(name: string) {
@@ -157,6 +167,14 @@ export class NodeEditor extends Context<EventsTypes> {
         return true;
     }
 
+    async buildNode(nodeData: NodeData) {
+        const component = this.getComponent(nodeData.name);
+
+        const node = await component.build(Node.fromJSON(nodeData));
+        await Promise.all(node.blocks.map(block => this.getComponent(block.name).build(block)))
+        return node;
+    }
+
     async fromJSON(json: Data) {
         if (!this.beforeImport(json)) return false;
         const nodes: {[key: string]: Node} = {};
@@ -165,10 +183,7 @@ export class NodeEditor extends Context<EventsTypes> {
             const contextNodes: Node[] = [];
             await Promise.all(Object.keys(json.nodes).map(async id => {
                 const node = json.nodes[id];
-                const component = this.getComponent(node.name);
-
-                nodes[id] = await component.build(Node.fromJSON(node));
-                await Promise.all(nodes[id].blocks.map(block => this.getComponent(block.name).build(block)))
+                nodes[id] = await this.buildNode(node);
                 this.addNode(nodes[id]);
                 if (node.blocks.length) contextNodes.push(nodes[id]);
             }));

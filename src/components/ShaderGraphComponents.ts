@@ -1,4 +1,4 @@
-import { BlendRC, ChannelMixerRC, ColorSpaceConversionRC, ContrastRC, HueRC, ReplaceColorRC, SaturationRC, WhiteBalanceRC } from './artistic';
+import { BlendRC, ChannelMixerRC, ColorMaskRC, ColorSpaceConversionRC, ContrastRC, HueRC, InvertColorsRC, NormalBlendRC, NormalFromTextureRC, NormalReconstructZRC, NormalStrengthRC, ReplaceColorRC, SaturationRC, WhiteBalanceRC } from './artistic';
 import {
   PositionBlock,
   NormalBlock,
@@ -39,6 +39,10 @@ import {
   Matrix2x2RC,
   Matrix3x3RC,
   SamplerStateRC,
+  ScreenPositionRC,
+  CameraRC,
+  ObjectRC,
+  ScreenRC,
 } from './input';
 import {
   AbsoluteRC,
@@ -114,7 +118,7 @@ import {
   VoronoiRC,
 } from './procedural';
 import { CustomFunctionRC, PreviewNumberRC, PreviewRC, SubGraphRC } from './utility';
-import { PolarCoordinatesRC, RotateRC, TilingAndOffsetRC, TwirlRC } from './uv';
+import { FlipBookRC, PolarCoordinatesRC, RadialShearRC, RotateRC, SpherizeRC, TilingAndOffsetRC, TriplanarRC, TwirlRC } from './uv';
 
 export const initShaderGraphComponents = () => [
   new Vec2RC(),
@@ -244,4 +248,18 @@ export const initShaderGraphComponents = () => [
   new PolarCoordinatesRC(),
   new RotateRC(),
   new TwirlRC(),
+  new InvertColorsRC(),
+  new ColorMaskRC(),
+  new NormalBlendRC(),
+  new NormalFromTextureRC(),
+  new NormalReconstructZRC(),
+  new NormalStrengthRC(),
+  new CameraRC(),
+  new ObjectRC(),
+  new ScreenRC(),
+  new ScreenPositionRC(),
+  new FlipBookRC(),
+  new RadialShearRC(),
+  new SpherizeRC(),
+  new TriplanarRC(),
 ];

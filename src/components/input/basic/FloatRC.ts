@@ -29,7 +29,7 @@ export class FloatRC extends RC {
 
     meta.category = 'input/basic';
     meta.previewDisabled = true;
-    meta.keywords = ['vector'];
+    meta.keywords = ['vector', 'f32'];
   }
 
   async builder(node: ReteFloatNode) {

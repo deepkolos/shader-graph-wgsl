@@ -119,10 +119,10 @@ fn ${varName}_PrintValue( vStringCoords: vec2f, fValue_: f32, fMaxDigits: f32, f
 }`,
     );
     const colorMap = {
-      [ValueType.float]: 'vec3(0.6627450980392157, 0.8784313725490196, 0.8941176470588236)',
-      [ValueType.vec2]: 'vec3(0.7294117647058823, 0.9137254901960784, 0.6392156862745098)',
-      [ValueType.vec3]: 'vec3(0.9764705882352941, 0.9882352941176471, 0.6901960784313725)',
-      [ValueType.vec4]: 'vec3(0.9294117647058824, 0.807843137254902, 0.9372549019607843)',
+      [ValueType.float]: 'vec3f(0.6627450980392157, 0.8784313725490196, 0.8941176470588236)',
+      [ValueType.vec2]: 'vec3f(0.7294117647058823, 0.9137254901960784, 0.6392156862745098)',
+      [ValueType.vec3]: 'vec3f(0.9764705882352941, 0.9882352941176471, 0.6901960784313725)',
+      [ValueType.vec4]: 'vec3f(0.9294117647058824, 0.807843137254902, 0.9372549019607843)',
     };
 
     const print = (offset: string, suffix: string) =>
@@ -141,9 +141,9 @@ fn ${varName}_PrintValue( vStringCoords: vec2f, fValue_: f32, fMaxDigits: f32, f
       varName => /* wgsl */ `
 fn ${varName}(uv: vec2f, value: ${compiler.getTypeClass(node.data.inValueType)}) -> vec3f{
   let fragCoord = uv * 100.0;
-  var vColour = vec3(0.0);
+  var vColour = vec3f(0.0);
   let fontColor = ${colorMap[node.data.inValueType]};
-  let vFontSize = vec2(10.0, 15.0); // Multiples of 4x5 work best
+  let vFontSize = vec2f(10.0, 15.0); // Multiples of 4x5 work best
   let fDecimalPlaces = 3.0;
   let fDigits = 7.0;
 

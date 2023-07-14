@@ -39,7 +39,7 @@ export class TwirlRC extends RC {
     data.preview ??= true;
 
     meta.previewDisabled = false;
-    meta.category = 'uv';
+    meta.category = 'UV';
   }
 
   async builder(node: ReteTwirlNode) {

@@ -1,17 +1,19 @@
 import { Rete } from '../types';
 import { Plugin } from '../rete/core/plugin';
-import { PopupNodeAddView, EditorMenuView } from '../view';
+import { PopupNodeAddView, EditorMenuView, PopupNodeAddProps } from '../view';
 
 declare module '../rete/core/events' {
   interface EventsTypes {
     hidecontextmenu: void;
     showcontextmenu: void;
+    showpopupadd: PopupNodeAddProps;
   }
 }
 
 function install(editor: Rete.NodeEditor) {
   editor.bind('hidecontextmenu');
   editor.bind('showcontextmenu');
+  editor.bind('showpopupadd');
 
   const popupAdd = new PopupNodeAddView(editor);
   const menu = new EditorMenuView(editor, popupAdd);
@@ -25,9 +27,13 @@ function install(editor: Rete.NodeEditor) {
 
     menu.show({ x: e.clientX, y: e.clientY, node, connection });
   });
+
+  editor.on('showpopupadd', props => popupAdd.show(props));
 }
 
-export const EditorContextMenuPlugin: Plugin = {
-  name: 'EditorContextMenuPlugin',
-  install,
-};
+class EditorContextMenuPluginClass implements Plugin {
+  name = 'EditorContextMenuPlugin';
+  install = install;
+}
+
+export const EditorContextMenuPlugin = new EditorContextMenuPluginClass();

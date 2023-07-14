@@ -39,6 +39,7 @@ export class Vec4RC extends RC {
 
     meta.previewDisabled = true;
     meta.category = 'input/basic';
+    meta.keywords = ['vec2'];
   }
 
   async builder(node: ReteVec4Node) {

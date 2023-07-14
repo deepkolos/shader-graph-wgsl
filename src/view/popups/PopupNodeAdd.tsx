@@ -1,6 +1,6 @@
 import './PopupNodeAdd.less';
 import React, { FC, useContext, useEffect, useRef, useState } from 'react';
-import { Rete } from '../../types';
+import { Rete, ValueTypeAbbreviationMap } from '../../types';
 import { useDebounce } from 'use-debounce';
 import { moveableContext, Moveable } from '../common/Moveable';
 import { Popup } from '../common/Popup';
@@ -22,13 +22,14 @@ const PopupTitle: FC<DefaultProps> = ({ children, className = '' }) => {
   );
 };
 
-interface PopupNodeAddProps extends PopupViewProps {
+export interface PopupNodeAddProps extends PopupViewProps {
   x?: number;
   y?: number;
-  scope?: 'node' | 'context';
+  scope?: 'node' | 'context' | 'node-io-pick';
   contextNode?: Rete.Node;
+  io?: Rete.IO;
 }
-export const PopupNodeAdd: FC<PopupNodeAddProps> = ({ editor, view, x = 0, y = 0, scope = 'node', contextNode }) => {
+export const PopupNodeAdd: FC<PopupNodeAddProps> = ({ editor, view, x = 0, y = 0, scope = 'node', contextNode, io }) => {
   const initTreeData = useRef<Array<TreeNode>>();
   const [data, setData] = useState<Array<TreeNode>>([]);
   const [keyword, setKeyword] = useState('');
@@ -36,16 +37,19 @@ export const PopupNodeAdd: FC<PopupNodeAddProps> = ({ editor, view, x = 0, y = 0
   const setDataRef = useRef(setData);
   const [keywordDebounced] = useDebounce(keyword, 150);
   const nodeRemovedRef = useRef(0);
+  const [kbCursor, setkbCursor] = useState(0);
   setDataRef.current = setData;
 
   const onItemClick = async (item: TreeNode) => {
     const nameParts = item.name.split('_');
     const isVarying = nameParts[0] === CustomInterpolatorBlock.Name && item.name !== CustomInterpolatorBlock.Name;
     const isSubGraph = nameParts[0] === SubGraphRC.Name;
-
+    const isNodeIO = io && scope === 'node-io-pick';
     let nodeName = item.name;
+    let ioKey = '';
     if (isVarying) nodeName = VaryingRC.Name;
     if (isSubGraph) nodeName = SubGraphRC.Name;
+    if (isNodeIO) [nodeName, ioKey] = item.name.split(':');
     const com = editor.components.get(nodeName) as RCBlock | Rete.Component | undefined;
     if (!com) return;
     try {
@@ -62,8 +66,18 @@ export const PopupNodeAdd: FC<PopupNodeAddProps> = ({ editor, view, x = 0, y = 0
         node.position[0] = gx;
         node.position[1] = gy;
         editor.addNode(node);
-      } else if (contextNode) {
+      } else if (contextNode && scope === 'context') {
         editor.addBlock(contextNode, node, com as RCBlock);
+      } else if (isNodeIO) {
+        const [gx, gy] = editor.view.area.convertToGraphSpace([x, y]);
+        node.position[0] = gx;
+        node.position[1] = gy;
+        editor.addNode(node);
+        if (io.type === 'input') {
+          editor.connect(node.outputs.get(ioKey)!, io as Rete.Input);
+        } else {
+          editor.connect(io as Rete.Output, node.inputs.get(ioKey)!);
+        }
       }
     } catch (error) {
       // supressed
@@ -92,10 +106,9 @@ export const PopupNodeAdd: FC<PopupNodeAddProps> = ({ editor, view, x = 0, y = 0
         return item.data;
       };
 
-      // TODO emit 事件处理扩展逻辑
       const coms = ([...editor.components.values()] as RC[]).filter(i => i.initNode);
       if (scope === 'node') {
-        coms.map(({ nodeLayout, name }) => {
+        coms.forEach(({ nodeLayout, name }) => {
           if (nodeLayout.meta.category) {
             const dirs = nodeLayout.meta.category.split('/');
             const list = dirs.reduce((scope, dir) => getDir(capitalizeFirstLetter(dir), scope), rootData);
@@ -137,6 +150,23 @@ export const PopupNodeAdd: FC<PopupNodeAddProps> = ({ editor, view, x = 0, y = 0
             rootData.push({ name, label: nodeLayout.meta.label, keywords: nodeLayout.meta.keywords });
           });
         } else console.warn("Can's find context component or node's blockComponents", contextNode.name);
+      } else if (io && scope === 'node-io-pick') {
+        coms.forEach(({ nodeLayout, name }) => {
+          const { category, label, keywords } = nodeLayout.meta;
+          if (category) {
+            const dirs = category.split('/');
+            const list = dirs.reduce((scope, dir) => getDir(capitalizeFirstLetter(dir), scope), rootData);
+            const ioList = io.type === 'input' ? nodeLayout.outputs : nodeLayout.inputs;
+            ioList.forEach(i => {
+              const typeAddr = ValueTypeAbbreviationMap[nodeLayout.data[i.key + 'ValueType']];
+              list.push({
+                name: `${name}:${i.key}`,
+                label: `${label || name}:${i.name}${typeAddr ? `(${typeAddr})` : ''}`,
+                keywords: keywords,
+              });
+            });
+          }
+        });
       }
 
       sortTree((a, b) => a.name.charCodeAt(0) - b.name.charCodeAt(0), rootData);
@@ -145,7 +175,7 @@ export const PopupNodeAdd: FC<PopupNodeAddProps> = ({ editor, view, x = 0, y = 0
       initTreeData.current = rootData;
     };
     fn();
-  }, [scope, contextNode, nodeRemovedRef.current]);
+  }, [scope, contextNode, nodeRemovedRef.current, io?.type]);
 
   // 更新treeData
   useEffect(() => {

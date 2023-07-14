@@ -1,0 +1,695 @@
+{
+  "id": "",
+  "nodes": {
+    "1": {
+      "id": 1,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 2,
+              "output": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "outputs": {},
+      "blocks": [
+        {
+          "id": 5,
+          "data": {
+            "baseColorValue": [
+              0,
+              0,
+              0
+            ],
+            "baseColorValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "baseColor": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "BaseColorBlock",
+          "contextId": 1
+        }
+      ],
+      "position": [
+        550,
+        0
+      ],
+      "name": "Fragment"
+    },
+    "2": {
+      "id": 2,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 1,
+              "input": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "id": 3,
+          "data": {
+            "positionValue": [
+              0,
+              0,
+              0
+            ],
+            "positionValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "position": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "PositionBlock",
+          "contextId": 2
+        },
+        {
+          "id": 4,
+          "data": {
+            "normalValue": [
+              0,
+              0,
+              0
+            ],
+            "normalValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "normal": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "NormalBlock",
+          "contextId": 2
+        }
+      ],
+      "position": [
+        550,
+        -300
+      ],
+      "name": "Vertex"
+    },
+    "6": {
+      "id": 6,
+      "data": {
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "widthValue": 1,
+        "widthValueType": "float",
+        "heightValue": 1,
+        "heightValueType": "float",
+        "tileValue": 0,
+        "tileValueType": "float",
+        "invertXValue": false,
+        "invertXValueType": "bool",
+        "invertYValue": true,
+        "invertYValueType": "bool",
+        "outValue": [
+          0,
+          0
+        ],
+        "outValueType": "vec2",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "uv": {
+          "connections": []
+        },
+        "width": {
+          "connections": []
+        },
+        "height": {
+          "connections": []
+        },
+        "tile": {
+          "connections": [
+            {
+              "node": 222,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -584.437170154559,
+        -463.87190950021096
+      ],
+      "name": "FlipBook"
+    },
+    "11": {
+      "id": 11,
+      "data": {
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "centerValue": [
+          0.5,
+          0.5
+        ],
+        "centerValueType": "vec2",
+        "radialScaleValue": 1,
+        "radialScaleValueType": "float",
+        "lengthScaleValue": 1,
+        "lengthScaleValueType": "float",
+        "outValue": [
+          0,
+          0
+        ],
+        "outValueType": "vec2",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "uv": {
+          "connections": []
+        },
+        "center": {
+          "connections": []
+        },
+        "radialScale": {
+          "connections": [
+            {
+              "node": 222,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "lengthScale": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -214.92430421394891,
+        -456.51312539294935
+      ],
+      "name": "PolarCoordinates"
+    },
+    "20": {
+      "id": 20,
+      "data": {
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "centerValue": [
+          0.5,
+          0.5
+        ],
+        "centerValueType": "vec2",
+        "rotationValue": 0,
+        "rotationValueType": "float",
+        "unitValue": "radians",
+        "unitValueType": "string",
+        "outValue": [
+          0,
+          0
+        ],
+        "outValueType": "vec2",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "uv": {
+          "connections": []
+        },
+        "center": {
+          "connections": []
+        },
+        "rotation": {
+          "connections": [
+            {
+              "node": 222,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        145.42364837525125,
+        -454.7592917027524
+      ],
+      "name": "Rotate"
+    },
+    "33": {
+      "id": 33,
+      "data": {
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "centerValue": [
+          0.5,
+          0.5
+        ],
+        "centerValueType": "vec2",
+        "strengthValue": [
+          10,
+          10
+        ],
+        "strengthValueType": "vec2",
+        "offsetValue": [
+          0,
+          0
+        ],
+        "offsetValueType": "vec2",
+        "outValue": [
+          0,
+          0
+        ],
+        "outValueType": "vec2",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "uv": {
+          "connections": []
+        },
+        "center": {
+          "connections": []
+        },
+        "strength": {
+          "connections": []
+        },
+        "offset": {
+          "connections": [
+            {
+              "node": 222,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -580.9730197057562,
+        43.459075806886915
+      ],
+      "name": "RadialShear"
+    },
+    "50": {
+      "id": 50,
+      "data": {
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "centerValue": [
+          0.5,
+          0.5
+        ],
+        "centerValueType": "vec2",
+        "strengthValue": [
+          10,
+          10
+        ],
+        "strengthValueType": "vec2",
+        "offsetValue": [
+          0,
+          0
+        ],
+        "offsetValueType": "vec2",
+        "outValue": [
+          0,
+          0
+        ],
+        "outValueType": "vec2",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "uv": {
+          "connections": []
+        },
+        "center": {
+          "connections": [
+            {
+              "node": 222,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "strength": {
+          "connections": []
+        },
+        "offset": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -194.14174398559163,
+        58.5482390441983
+      ],
+      "name": "Spherize"
+    },
+    "71": {
+      "id": 71,
+      "data": {
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "tilingValue": [
+          1,
+          1
+        ],
+        "tilingValueType": "vec2",
+        "offsetValue": [
+          0,
+          0
+        ],
+        "offsetValueType": "vec2",
+        "outValue": 0,
+        "outValueType": "vec2",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "uv": {
+          "connections": []
+        },
+        "tiling": {
+          "connections": []
+        },
+        "offset": {
+          "connections": [
+            {
+              "node": 222,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        153.33684849431177,
+        80.17399306530429
+      ],
+      "name": "TilingAndOffset"
+    },
+    "96": {
+      "id": 96,
+      "data": {
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "centerValue": [
+          0.5,
+          0.5
+        ],
+        "centerValueType": "vec2",
+        "strengthValue": 10,
+        "strengthValueType": "float",
+        "offsetValue": [
+          0,
+          0
+        ],
+        "offsetValueType": "vec2",
+        "outValue": 0,
+        "outValueType": "vec2",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "uv": {
+          "connections": []
+        },
+        "center": {
+          "connections": [
+            {
+              "node": 222,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "strength": {
+          "connections": []
+        },
+        "offset": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -579.386190121151,
+        529.7680107549743
+      ],
+      "name": "Twirl"
+    },
+    "125": {
+      "id": 125,
+      "data": {
+        "textureValue": {
+          "id": "https://avatars.githubusercontent.com/u/12824616?v=4",
+          "label": "deepkolos"
+        },
+        "textureValueType": "texture2d",
+        "positionValue": [
+          0,
+          0,
+          0
+        ],
+        "positionValueType": "vec3",
+        "normalValue": [
+          0,
+          0,
+          0
+        ],
+        "normalValueType": "vec3",
+        "tileValue": 1,
+        "tileValueType": "float",
+        "blendValue": 1,
+        "blendValueType": "float",
+        "outValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec4",
+        "typeValue": "default",
+        "typeValueType": "string",
+        "expanded": true,
+        "previewType": "3d",
+        "preview": true
+      },
+      "inputs": {
+        "texture": {
+          "connections": []
+        },
+        "position": {
+          "connections": []
+        },
+        "normal": {
+          "connections": []
+        },
+        "tile": {
+          "connections": [
+            {
+              "node": 222,
+              "output": "sinTime",
+              "data": {}
+            }
+          ]
+        },
+        "blend": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -188.4396880635379,
+        539.3702055423543
+      ],
+      "name": "Triplanar"
+    },
+    "222": {
+      "id": 222,
+      "data": {
+        "timeValue": 0,
+        "timeValueType": "float",
+        "sinTimeValue": 0,
+        "sinTimeValueType": "float",
+        "cosTimeValue": 0,
+        "cosTimeValueType": "float",
+        "deltaTimeValue": 0,
+        "deltaTimeValueType": "float",
+        "smoothDeltaValue": 0,
+        "smoothDeltaValueType": "float",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "time": {
+          "connections": []
+        },
+        "sinTime": {
+          "connections": [
+            {
+              "node": 6,
+              "input": "tile",
+              "data": {}
+            },
+            {
+              "node": 11,
+              "input": "radialScale",
+              "data": {}
+            },
+            {
+              "node": 20,
+              "input": "rotation",
+              "data": {}
+            },
+            {
+              "node": 33,
+              "input": "offset",
+              "data": {}
+            },
+            {
+              "node": 50,
+              "input": "center",
+              "data": {}
+            },
+            {
+              "node": 96,
+              "input": "center",
+              "data": {}
+            },
+            {
+              "node": 125,
+              "input": "tile",
+              "data": {}
+            },
+            {
+              "node": 71,
+              "input": "offset",
+              "data": {}
+            }
+          ]
+        },
+        "cosTime": {
+          "connections": []
+        },
+        "deltaTime": {
+          "connections": []
+        },
+        "smoothDelta": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -1122.5322094656085,
+        81.6662506109945
+      ],
+      "name": "Time"
+    }
+  },
+  "UIState": {
+    "showMainPreview": true,
+    "showBlackBoard": true,
+    "showInspector": true
+  },
+  "type": "ShaderGraph",
+  "version": "",
+  "setting": {
+    "template": "unlit",
+    "precision": "single",
+    "allowMaterialOverride": false,
+    "surfaceType": "opaque",
+    "blendingMode": "alpha",
+    "renderFace": "front",
+    "depthWrite": "auto",
+    "depthTest": "l equal",
+    "alphaClipping": false,
+    "castShadows": true,
+    "clearCoat": false
+  },
+  "parameters": []
+}

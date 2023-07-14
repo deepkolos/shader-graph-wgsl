@@ -55,6 +55,7 @@ export class WebGPURenderer {
   depthTextures = new Map<string, GPUTexture>();
   lastSubmit!: Promise<undefined>;
   samplerCache: { [k: string]: GPUSampler } = {};
+  viewport: number[] = [0, 0];
 
   async init() {
     this.adapter = (await navigator.gpu.requestAdapter({ powerPreference: 'high-performance' }))!;
@@ -126,6 +127,7 @@ export class WebGPURenderer {
     }
 
     const { width, height } = targetCtx.canvas;
+    this.viewport = [width, height];
     const key = `${Math.ceil(width)}x${Math.ceil(height)}`;
     let depthTexture = this.depthTextures.get(key);
     if (!depthTexture) {

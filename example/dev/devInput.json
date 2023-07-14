@@ -1,0 +1,712 @@
+{
+  "id": "",
+  "nodes": {
+    "603": {
+      "id": 603,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 604,
+              "output": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "outputs": {},
+      "blocks": [
+        {
+          "id": 607,
+          "data": {
+            "baseColorValue": [
+              0,
+              0,
+              0
+            ],
+            "baseColorValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "baseColor": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "BaseColorBlock",
+          "contextId": 603
+        }
+      ],
+      "position": [
+        550,
+        0
+      ],
+      "name": "Fragment"
+    },
+    "604": {
+      "id": 604,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 603,
+              "input": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "id": 605,
+          "data": {
+            "positionValue": [
+              0,
+              0,
+              0
+            ],
+            "positionValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "position": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "PositionBlock",
+          "contextId": 604
+        },
+        {
+          "id": 606,
+          "data": {
+            "normalValue": [
+              0,
+              0,
+              0
+            ],
+            "normalValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "normal": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "NormalBlock",
+          "contextId": 604
+        }
+      ],
+      "position": [
+        550,
+        -300
+      ],
+      "name": "Vertex"
+    },
+    "608": {
+      "id": 608,
+      "data": {
+        "outValue": 0,
+        "outValueType": "float",
+        "typeValue": "PI",
+        "typeValueType": "string",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -694.5631425781432,
+        -571.9077328929135
+      ],
+      "name": "Constant"
+    },
+    "609": {
+      "id": 609,
+      "data": {
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -494.7438288824387,
+        -570.1024300593795
+      ],
+      "name": "Color"
+    },
+    "610": {
+      "id": 610,
+      "data": {
+        "timeValue": 0,
+        "timeValueType": "float",
+        "sinTimeValue": 0,
+        "sinTimeValueType": "float",
+        "cosTimeValue": 0,
+        "cosTimeValueType": "float",
+        "deltaTimeValue": 0,
+        "deltaTimeValueType": "float",
+        "smoothDeltaValue": 0,
+        "smoothDeltaValueType": "float",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "time": {
+          "connections": []
+        },
+        "sinTime": {
+          "connections": []
+        },
+        "cosTime": {
+          "connections": []
+        },
+        "deltaTime": {
+          "connections": []
+        },
+        "smoothDelta": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -313.42272760311465,
+        -564.8083833066985
+      ],
+      "name": "Time"
+    },
+    "611": {
+      "id": 611,
+      "data": {
+        "xValue": 0,
+        "xValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true
+      },
+      "inputs": {
+        "x": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -709.1724012139681,
+        -397.85571827655565
+      ],
+      "name": "Float"
+    },
+    "612": {
+      "id": 612,
+      "data": {
+        "xValue": 0,
+        "xValueType": "float",
+        "yValue": 0,
+        "yValueType": "float",
+        "outValue": [
+          0,
+          0
+        ],
+        "outValueType": "vec2",
+        "expanded": true
+      },
+      "inputs": {
+        "x": {
+          "connections": []
+        },
+        "y": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -714.160715094292,
+        -286.91677699072704
+      ],
+      "name": "Vector 2"
+    },
+    "613": {
+      "id": 613,
+      "data": {
+        "xValue": 0,
+        "xValueType": "float",
+        "yValue": 0,
+        "yValueType": "float",
+        "zValue": 0,
+        "zValueType": "float",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true
+      },
+      "inputs": {
+        "x": {
+          "connections": []
+        },
+        "y": {
+          "connections": []
+        },
+        "z": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -717.44370197243,
+        -154.78329398326497
+      ],
+      "name": "Vector 3"
+    },
+    "614": {
+      "id": 614,
+      "data": {
+        "xValue": 0,
+        "xValueType": "float",
+        "yValue": 0,
+        "yValueType": "float",
+        "zValue": 0,
+        "zValueType": "float",
+        "wValue": 0,
+        "wValueType": "float",
+        "outValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec4",
+        "expanded": true
+      },
+      "inputs": {
+        "x": {
+          "connections": []
+        },
+        "y": {
+          "connections": []
+        },
+        "z": {
+          "connections": []
+        },
+        "w": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -718.4136097819004,
+        11.32136500098594
+      ],
+      "name": "Vector 4"
+    },
+    "615": {
+      "id": 615,
+      "data": {
+        "outValue": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "outValueType": "mat4",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -499.1224269235362,
+        -302.0594682037927
+      ],
+      "name": "Matrix4x4"
+    },
+    "616": {
+      "id": 616,
+      "data": {
+        "outValue": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "outValueType": "mat3",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -499.0773620723219,
+        -92.70063492422989
+      ],
+      "name": "Matrix3x3"
+    },
+    "617": {
+      "id": 617,
+      "data": {
+        "outValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "outValueType": "mat2",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -500.04182020240734,
+        102.9246510527882
+      ],
+      "name": "Matrix2x2"
+    },
+    "618": {
+      "id": 618,
+      "data": {
+        "outValue": 0,
+        "outValueType": "mat4",
+        "typeValue": "Model",
+        "typeValueType": "string",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -500.04182020240734,
+        264.9668892477225
+      ],
+      "name": "TransformationMatrix"
+    },
+    "619": {
+      "id": 619,
+      "data": {
+        "positionValue": [
+          0,
+          0,
+          0
+        ],
+        "positionValueType": "vec3",
+        "directionValue": [
+          0,
+          0,
+          0
+        ],
+        "directionValueType": "vec3",
+        "orthographicValue": 0,
+        "orthographicValueType": "float",
+        "nearPlaneValue": 0,
+        "nearPlaneValueType": "float",
+        "farPlaneValue": 0,
+        "farPlaneValueType": "float",
+        "zBufferSignValue": 0,
+        "zBufferSignValueType": "float",
+        "widthValue": 0,
+        "widthValueType": "float",
+        "heightValue": 0,
+        "heightValueType": "float",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "position": {
+          "connections": []
+        },
+        "direction": {
+          "connections": []
+        },
+        "orthographic": {
+          "connections": []
+        },
+        "nearPlane": {
+          "connections": []
+        },
+        "farPlane": {
+          "connections": []
+        },
+        "zBufferSign": {
+          "connections": []
+        },
+        "width": {
+          "connections": []
+        },
+        "height": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -210.44494510472887,
+        -290.35715433261515
+      ],
+      "name": "Camera"
+    },
+    "620": {
+      "id": 620,
+      "data": {
+        "positionValue": [
+          0,
+          0,
+          0
+        ],
+        "positionValueType": "vec3",
+        "scaleValue": [
+          0,
+          0,
+          0
+        ],
+        "scaleValueType": "vec3",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "position": {
+          "connections": []
+        },
+        "scale": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -199.98135439979285,
+        63.24827378700573
+      ],
+      "name": "Object"
+    },
+    "621": {
+      "id": 621,
+      "data": {
+        "widthValue": 0,
+        "widthValueType": "float",
+        "heightValue": 0,
+        "heightValueType": "float",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "width": {
+          "connections": [
+            {
+              "node": 622,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        },
+        "height": {
+          "connections": [
+            {
+              "node": 629,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -192.95082059811025,
+        212.05827300191984
+      ],
+      "name": "Screen"
+    },
+    "622": {
+      "id": 622,
+      "data": {
+        "inValue": 0,
+        "inValueType": "float",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 621,
+              "output": "width",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        59.75939072121143,
+        54.74963846511022
+      ],
+      "name": "PreviewNumber"
+    },
+    "629": {
+      "id": 629,
+      "data": {
+        "inValue": 0,
+        "inValueType": "float",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 621,
+              "output": "height",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        54.898328201616835,
+        355.42959804794407
+      ],
+      "name": "PreviewNumber"
+    }
+  },
+  "UIState": {
+    "showMainPreview": true,
+    "showBlackBoard": false,
+    "showInspector": false
+  },
+  "type": "ShaderGraph",
+  "version": "0.0.0",
+  "setting": {
+    "template": "unlit",
+    "precision": "single",
+    "allowMaterialOverride": false,
+    "surfaceType": "opaque",
+    "blendingMode": "alpha",
+    "renderFace": "front",
+    "depthWrite": "auto",
+    "depthTest": "l equal",
+    "alphaClipping": false,
+    "castShadows": true,
+    "clearCoat": false
+  },
+  "parameters": []
+}

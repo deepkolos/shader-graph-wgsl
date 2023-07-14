@@ -53,6 +53,7 @@ function install(editor: NodeEditor, { createRoot }: { createRoot?: typeof ICrea
           el,
         );
       node.update(callback);
+      (node as any)._reactComponent = true;
     },
   );
 
@@ -113,19 +114,26 @@ function install(editor: NodeEditor, { createRoot }: { createRoot?: typeof ICrea
 
   let previousSelected: Rete.Node[] = [];
 
+  editor.on('nodeunselectall', () => {
+    previousSelected.filter(n => (n as any)._reactComponent).forEach(n => n?.update?.());
+    previousSelected.length = 0;
+  });
+
   editor.on('nodeselected', node => {
     const selected = [...editor.selected.list];
 
     previousSelected
       .filter(n => !selected.includes(n))
       .filter(n => (n as any)._reactComponent)
-      .forEach(n => n.update());
-    if ((node as any)._reactComponent) node.update();
+      .forEach(n => n.update?.());
+    if ((node as any)._reactComponent) node.update?.();
     previousSelected = selected;
   });
 }
 
-export const ReactRenderPlugin: Plugin = {
-  name: 'ReactRenderPlugin',
-  install,
-};
+class ReactRenderPluginClass implements Plugin {
+  name = 'ReactRenderPlugin';
+  install = install;
+}
+
+export const ReactRenderPlugin = new ReactRenderPluginClass();

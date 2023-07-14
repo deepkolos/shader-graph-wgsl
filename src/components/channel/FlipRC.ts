@@ -1,6 +1,6 @@
 import { BoolControl, DynamicControl, NodeView } from '../../view';
 import { Sockets } from '../../sockets';
-import { ValueType, Rete, ExtendReteNode, VectorValueType, ValueComponentMap } from '../../types';
+import { ValueType, Rete, ExtendReteNode, VectorValueType, ValueComponentMap, ReteNode } from '../../types';
 import { RC } from '../ReteComponent';
 import { ShaderGraphCompiler, SGNodeOutput } from '../../compilers';
 import { SGNodeData } from '../../editors';
@@ -18,6 +18,19 @@ export type ReteFlipNode = ExtendReteNode<
     flipWValue: boolean;
   }
 >;
+
+const checkDisable = (node: ReteNode, key: string): boolean => {
+  const comLen = ValueComponentMap[node.data.inValueType];
+  if (
+    (key === 'flipX' && comLen >= 1) ||
+    (key === 'flipY' && comLen >= 2) ||
+    (key === 'flipZ' && comLen >= 3) ||
+    (key === 'flipW' && comLen >= 4)
+  ) {
+    return false;
+  }
+  return true;
+};
 
 export class FlipRC extends RC {
   constructor() {
@@ -44,10 +57,10 @@ export class FlipRC extends RC {
     node
       .addInput(new Rete.Input('in', 'In', Sockets.dynamicVector).addControl(new DynamicControl('in', node)))
       .addOutput(new Rete.Output('out', 'Out', Sockets.dynamicVector))
-      .addControl(new BoolControl('flipX', node, 'Red', false))
-      .addControl(new BoolControl('flipY', node, 'Green', false))
-      .addControl(new BoolControl('flipZ', node, 'Blue', false))
-      .addControl(new BoolControl('flipW', node, 'Alpha', false));
+      .addControl(new BoolControl('flipX', node, 'Red', false, checkDisable))
+      .addControl(new BoolControl('flipY', node, 'Green', false, checkDisable))
+      .addControl(new BoolControl('flipZ', node, 'Blue', false, checkDisable))
+      .addControl(new BoolControl('flipW', node, 'Alpha', false, checkDisable));
   }
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteFlipNode>): SGNodeOutput {

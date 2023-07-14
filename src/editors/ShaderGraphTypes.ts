@@ -128,6 +128,20 @@ import {
   RetePolarCoordinatesNode,
   ReteRotateNode,
   ReteTwirlNode,
+  ReteInvertColorsNode,
+  ReteColorMaskNode,
+  ReteNormalBlendNode,
+  ReteNormalFromTextureNode,
+  ReteNormalReconstructZNode,
+  ReteNormalStrengthNode,
+  ReteCameraNode,
+  ReteObjectNode,
+  ReteScreenNode,
+  ReteScreenPositionNode,
+  ReteFlipBookNode,
+  ReteRadialShearNode,
+  ReteSpherizeNode,
+  ReteTriplanarNode,
 } from '../components';
 import { NodeData } from '../rete/core/data';
 import { Rete, ParameterData, GraphData } from '../types';
@@ -176,11 +190,16 @@ export type SGNodes =
   | RetePositionNode
   | ReteViewVectorNode
   | ReteViewDirectionNode
+  | ReteScreenPositionNode
   // input/matrix
   | ReteTransformationMatrixNode
   | ReteMatrix4x4Node
   | ReteMatrix3x3Node
   | ReteMatrix2x2Node
+  // input/scene
+  | ReteCameraNode
+  | ReteObjectNode
+  | ReteScreenNode
   // math/basic
   | ReteSubtractNode
   | ReteDivideNode
@@ -278,6 +297,14 @@ export type SGNodes =
   | ReteReplaceColorNode
   | ReteSaturationNode
   | ReteWhiteBalanceNode
+  | ReteInvertColorsNode
+  // artistic/mask
+  | ReteColorMaskNode
+  // artistic/normal
+  | ReteNormalFromTextureNode
+  | ReteNormalBlendNode
+  | ReteNormalReconstructZNode
+  | ReteNormalStrengthNode
   // artistic
   | ReteColorSpaceConversionNode
   | ReteBlendNode
@@ -285,7 +312,11 @@ export type SGNodes =
   | ReteTilingAndOffsetNode
   | RetePolarCoordinatesNode
   | ReteRotateNode
-  | ReteTwirlNode;
+  | ReteTwirlNode
+  | ReteFlipBookNode
+  | ReteRadialShearNode
+  | ReteSpherizeNode
+  | ReteTriplanarNode;
 
 export interface SGNodeData<Node extends Rete.Node> extends NodeData {
   name: Node['name'];
@@ -305,7 +336,15 @@ export interface SGSetting {
   blendingMode: 'alpha' | 'premultiply' | 'additive' | 'multiply';
   renderFace: 'front' | 'back' | 'both';
   depthWrite: 'auto' | 'enable' | 'disable';
-  depthTest: 'never' | 'less' | 'equal' | 'l equal' | 'greater' | 'not equal' | 'g equal' | 'always';
+  depthTest:
+    | 'never'
+    | 'less'
+    | 'equal'
+    | 'l equal'
+    | 'greater'
+    | 'not equal'
+    | 'g equal'
+    | 'always';
   alphaClipping: boolean;
   castShadows: boolean;
   clearCoat: boolean;
@@ -355,6 +394,8 @@ export const SGSettingValueCfgs: SettingValueCfgs = {
   },
   renderFace: { options: ['front', 'back', 'both'] },
   depthWrite: { options: ['auto', 'enable', 'disable'] },
-  depthTest: { options: ['never', 'less', 'equal', 'l equal', 'greater', 'not equal', 'g equal', 'always'] },
+  depthTest: {
+    options: ['never', 'less', 'equal', 'l equal', 'greater', 'not equal', 'g equal', 'always'],
+  },
   blendingMode: { options: ['alpha', 'premultiply', 'additive', 'multiply'] },
 };

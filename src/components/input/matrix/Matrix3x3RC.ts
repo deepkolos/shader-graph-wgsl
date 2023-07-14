@@ -27,6 +27,7 @@ export class Matrix3x3RC extends RC {
     meta.category = 'input/matrix';
     meta.previewDisabled = true;
     meta.label = 'Matrix 3x3';
+    meta.keywords = ['mat3'];
   }
 
   async builder(node: ReteMatrix3x3Node) {

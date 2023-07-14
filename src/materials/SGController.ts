@@ -16,18 +16,28 @@ import {
   NeverDepth,
   NormalBlending,
   NotEqualDepth,
+  Object3D,
   OneFactor,
   OneMinusSrcAlphaFactor,
+  OrthographicCamera,
+  PerspectiveCamera,
   Side,
   SrcAlphaFactor,
   TextureLoader,
+  Vector4,
 } from 'three';
 import { Texture, RawShaderMaterial, DepthModes, Matrix4, Vector3 } from 'three';
 import type { Resource, BindingMap, SGCompilation, UniformMap } from '../compilers';
 import { MaterialTemplates } from '../templates';
 import { ResourceAdapter } from './ResourceAdapter';
 import type { AssetValue, MaybePromise, ValueType } from '../types';
-import { disposeTexture } from './WebGPURenderer';
+import { WebGPURenderer, disposeTexture } from './WebGPURenderer';
+
+const I_Model = new Matrix4();
+const IT_ModelView = new Matrix4();
+const ViewProj = new Matrix4();
+const I_ViewProj = new Matrix4();
+const cameraWS = new Vector3();
 
 export interface TemplateStore {
   [template: string]: {
@@ -83,6 +93,12 @@ type SetParams = {
       | 'I_ModelView'
       | 'IT_Model'
       | 'IT_ModelView']: Matrix4;
+  };
+  Screen: {
+    [k in 'width' | 'height']: number;
+  };
+  Camera: {
+    [k in 'orthographic' | 'nearPlane' | 'farPlane' | 'zBufferSign' | 'width' | 'height']: number;
   };
 };
 
@@ -227,6 +243,58 @@ export class SGController {
     this.set('Time', 'cosTime', Math.cos(this.time));
     this.set('Time', 'deltaTime', deltaTime);
     this.set('Time', 'smoothDelta', deltaTime);
+  }
+
+  /**
+   * 由onBeforeRender触发, 用于更新内置节点的uniform
+   * @internal
+   */
+  updateMatrix(
+    object: Object3D,
+    camera: PerspectiveCamera | OrthographicCamera,
+    renderer: WebGPURenderer,
+  ): void {
+    this.set('Matrix', 'Model', object.matrixWorld);
+    this.set('Matrix', 'View', camera.matrixWorldInverse);
+    this.set('Matrix', 'Proj', camera.projectionMatrix);
+    if (this.has('Matrix', 'ViewProj')) {
+      ViewProj.multiplyMatrices(camera.projectionMatrix, camera.matrixWorld);
+      this.set('Matrix', 'ViewProj', ViewProj);
+    }
+    this.set('Matrix', 'ModelView', object.modelViewMatrix);
+    if (this.has('Matrix', 'I_Model')) {
+      I_Model.copy(object.matrixWorld).invert();
+      this.set('Matrix', 'I_Model', I_Model);
+    }
+    this.set('Matrix', 'I_View', camera.matrixWorld);
+    this.set('Matrix', 'I_Proj', camera.projectionMatrixInverse);
+    if (this.has('Matrix', 'I_ViewProj')) {
+      I_ViewProj.copy(ViewProj).invert();
+      this.set('Matrix', 'I_ViewProj', I_ViewProj);
+    }
+    if (this.has('Matrix', 'IT_Model')) {
+      I_Model.copy(object.matrixWorld).invert().transpose();
+      this.set('Matrix', 'IT_Model', I_Model);
+    }
+    if (this.has('Matrix', 'IT_ModelView')) {
+      IT_ModelView.copy(object.modelViewMatrix).invert().transpose();
+      this.set('Matrix', 'IT_ModelView', IT_ModelView);
+    }
+
+    this.set('ViewVector', 'cameraWS', cameraWS.setFromMatrixPosition(camera.matrixWorld));
+    this.set('Camera', 'farPlane', camera.far);
+    this.set('Camera', 'nearPlane', camera.near);
+    if ((camera as any).isOrthographicCamera) {
+      // 见makeOrthographic
+      const proj = (camera as unknown as OrthographicCamera).projectionMatrix.elements;
+      this.set('Camera', 'width', (1 / proj[0]) * 0.5);
+      this.set('Camera', 'height', (1 / proj[5]) * 0.5);
+      this.set('Camera', 'orthographic', 1);
+    } else {
+      this.set('Camera', 'orthographic', 0);
+    }
+    this.set('Screen', 'width', renderer.viewport[0]);
+    this.set('Screen', 'height', renderer.viewport[1]);
   }
 
   static loadTexture(asset: AssetValue) {

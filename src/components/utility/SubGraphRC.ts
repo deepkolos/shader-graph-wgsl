@@ -42,6 +42,7 @@ export class SubGraphRC extends RC {
 
   async builder(node: ReteSubGraphNode) {
     this.initNode(node);
+    if (!this.editor) return;
     if (node.data.assetValue === undefined) throw new Error('empty assetValue');
 
     const editor = this.editor!;
@@ -52,6 +53,7 @@ export class SubGraphRC extends RC {
 
     graphData.parameters.forEach(({ name, type }) => {
       const key = `fnIn${removeWhiteSpace(name)}`;
+      // @ts-ignore
       node.initValueType(key, ValueTypeCtor[type]?.(), type);
       const input = new Rete.Input(key, name, Sockets[type]);
       if (isVectorType(type)) input.addControl(new DynamicControl(key, node));
@@ -64,6 +66,7 @@ export class SubGraphRC extends RC {
       const type = output.data[key + 'ValueType'] as ValueType;
       const name = capitalizeFirstLetter(key.replace('fnIn', ''));
       key = key.replace('fnIn', 'fnOut');
+      // @ts-ignore
       node.initValueType(key, ValueTypeCtor[type]?.(), type);
       node.addOutput(new Rete.Output(key, name, Sockets[type]));
     });

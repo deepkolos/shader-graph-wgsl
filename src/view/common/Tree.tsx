@@ -53,7 +53,7 @@ export const TreeItem: FC<TreeItemProps> = ({ keyword, item, onItemClick }) => {
       </div>
 
       <div className="sg-tree-item-body">
-        <div className="sg-tree-item-name" onClick={() => onItemClick?.(item)}>
+        <div className="sg-tree-item-name" onClick={() => (showSubTree ? setExpaned(!expanded) : onItemClick?.(item))}>
           {labelParsed}
         </div>
         {showSubTree && expanded && <Tree data={data} keyword={keyword} onItemClick={onItemClick} />}

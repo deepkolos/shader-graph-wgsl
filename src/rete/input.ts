@@ -5,6 +5,7 @@ import { InputData } from './core/data';
 import { Socket } from './socket';
 
 export class Input extends IO {
+    type = 'input' as const;
 
     control: Control | null = null;
 

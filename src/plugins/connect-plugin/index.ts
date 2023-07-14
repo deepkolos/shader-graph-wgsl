@@ -1,4 +1,4 @@
-import { NodeEditor } from '../../rete';
+import type { NodeEditor } from '../../rete';
 import { renderConnection, renderPathData, updateConnection, getMapItemRecursively } from './utils';
 import { Picker } from './picker';
 import { Flow, FlowParams } from './flow';
@@ -56,9 +56,11 @@ function install(editor: NodeEditor) {
   editor.on(['click', 'nodeselect', 'connectionpick'], unselectPath);
   //#endregion
 
+  let pointerDownTriggered = false;
+
   function pointerDown(this: HTMLElement, e: PointerEvent) {
     const flowParams = socketsParams.get(this);
-
+    pointerDownTriggered = true;
     if (flowParams) {
       const { input, output } = flowParams;
 
@@ -70,13 +72,25 @@ function install(editor: NodeEditor) {
   }
 
   function pointerUp(this: Window, e: PointerEvent) {
+    if (!pointerDownTriggered) return;
+    pointerDownTriggered = false;
     const flowEl = document.elementFromPoint(e.clientX, e.clientY);
 
     if (picker.io) {
       editor.trigger('connectiondrop', picker.io);
     }
     if (flowEl) {
-      flow.complete(getMapItemRecursively(socketsParams, flowEl) || {});
+      let flowParams = getMapItemRecursively(socketsParams, flowEl);
+      let io = flow.target;
+      // 处理点击时, start end 均为相同io
+      if (flowParams && io && (io === flowParams.input || io === flowParams.output)) {
+        flowParams = io = null;
+      }
+      flow.complete(flowParams || {});
+
+      if (!flowParams && io) {
+        editor.trigger('showpopupadd', { x: e.clientX, y: e.clientY, scope: 'node-io-pick', io });
+      }
     }
   }
 

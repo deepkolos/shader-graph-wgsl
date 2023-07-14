@@ -1,22 +1,9 @@
 import './IO.less';
 import React, { FC } from 'react';
-import { ReteNode } from '../../types';
+import { ReteNode, ValueTypeAbbreviationMap } from '../../types';
 import { Socket } from './Socket';
 import { Control } from '../controls';
 import { Rete } from '../../types';
-
-const ValueTypeAbbreviationMap: { [k: string]: string } = {
-  float: '1',
-  vec2: '2',
-  vec3: '3',
-  vec4: '4',
-  texture2d: 'T2',
-  sampler: 'SS',
-  gradient: 'G',
-  mat4: '4x4',
-  mat3: '3x3',
-  mat2: '2x2',
-};
 
 export const IO: FC<{
   inputs: Rete.Input[];

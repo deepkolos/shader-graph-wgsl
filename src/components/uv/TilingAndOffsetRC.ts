@@ -36,7 +36,7 @@ export class TilingAndOffsetRC extends RC {
     data.preview ??= true;
 
     meta.previewDisabled = false;
-    meta.category = 'uv';
+    meta.category = 'UV';
     meta.label = 'Tiling And Offset';
   }
 

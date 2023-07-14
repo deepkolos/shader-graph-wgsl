@@ -1,18 +1,30 @@
 import type { SGNodeOutput, ShaderGraphCompiler } from '../compilers';
 import { SGNodeData, SGNodes } from '../editors';
+import { Node } from '../rete';
 import { MaybePromise, Rete, ReteNode } from '../types';
 
 export abstract class RC extends Rete.Component {
   data: { component?: any } = {};
-  nodeLayout: Pick<ReteNode, 'data' | 'meta'>;
+  // nodeLayout: Pick<ReteNode, 'data' | 'meta'>;
+  nodeLayout: ReteNode;
 
   constructor(name: string) {
     super(name);
 
-    const nodeLayout = { data: {}, meta: {} } as ReteNode;
+    // layout实现有待改善... 主要用于给增加菜单提供信息
+    // const nodeLayout = { data: {}, meta: {} } as ReteNode;
+    const nodeLayout = new Node(name) as ReteNode;
     Object.setPrototypeOf(nodeLayout, Rete.Node.prototype);
-    this.initNode(nodeLayout);
+    this.builder(nodeLayout);
     this.nodeLayout = nodeLayout;
+    nodeLayout.inputs.forEach(i => {
+      if (i.control) {
+        i.control.parent = null;
+        i.control = null;
+      }
+    });
+    nodeLayout.controls.clear();
+    nodeLayout.dispose();
   }
 
   abstract initNode(node: Rete.Node): void | Promise<void>;

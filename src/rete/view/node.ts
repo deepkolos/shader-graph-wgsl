@@ -9,6 +9,10 @@ import { Node } from '../node';
 import { SocketView } from './socket';
 import { BlockView } from './block';
 import { listen, rebind } from './utils';
+import { Box2, Vector2 } from 'three';
+import { EditorView } from '.';
+
+const V2 = new Vector2();
 
 export class NodeView extends Emitter<EventsTypes> {
   node: Node;
@@ -23,9 +27,10 @@ export class NodeView extends Emitter<EventsTypes> {
   protected _drag: Drag;
   resizeObserver: ResizeObserver;
   disposeContextMenu: () => void;
+  boundingBox = new Box2();
 
-  constructor(node: Node, component: Component, emitter: Emitter<EventsTypes>, components: Map<string, Component>) {
-    super(emitter);
+  constructor(node: Node, component: Component, public editorView: EditorView, components: Map<string, Component>) {
+    super(editorView);
 
     this.node = node;
     this.component = component;
@@ -56,6 +61,7 @@ export class NodeView extends Emitter<EventsTypes> {
     this.resizeObserver = new ResizeObserver(entries => {
       if (!ignoreFirstResize) this.trigger('nodetranslated', { node, prev: node });
       ignoreFirstResize = false;
+      this.updateBox();
     });
 
     this.resizeObserver.observe(this.el);
@@ -65,6 +71,13 @@ export class NodeView extends Emitter<EventsTypes> {
     });
 
     this.update();
+  }
+
+  updateBox() {
+    const { width, height, top, left } = this.el.getBoundingClientRect();
+    this.boundingBox.makeEmpty();
+    this.boundingBox.expandByPoint(V2.fromArray([left, top]));
+    this.boundingBox.expandByPoint(V2.fromArray([left + width, top + height]));
   }
 
   clearSockets() {
@@ -152,7 +165,6 @@ export class NodeView extends Emitter<EventsTypes> {
 
   dispose() {
     this._drag.destroy();
-    (this as any)._drag = undefined;
     this.resizeObserver.unobserve(this.el);
     (this.node as any).update = undefined;
     this.trigger('disposenode', { el: this.el });

@@ -27,6 +27,7 @@ export class Matrix2x2RC extends RC {
     meta.category = 'input/matrix';
     meta.previewDisabled = true;
     meta.label = 'Matrix 2x2';
+    meta.keywords = ['mat2'];
   }
 
   async builder(node: ReteMatrix2x2Node) {

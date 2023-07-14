@@ -33,6 +33,7 @@ export class Vec3RC extends RC {
     data.expanded ??= true;
     meta.previewDisabled = true;
     meta.category = 'input/basic';
+    meta.keywords = ['vec3'];
   }
 
   async builder(node: ReteVec3Node) {

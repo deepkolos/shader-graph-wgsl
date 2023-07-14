@@ -8,6 +8,7 @@ import { Node } from '../node';
 import { NodeView } from './node';
 import { listen, listenWindow } from './utils';
 import { BlockView } from './block';
+import { NodeEditor } from '../editor';
 export class EditorView extends Emitter<EventsTypes> {
 
     container: HTMLElement;
@@ -18,8 +19,8 @@ export class EditorView extends Emitter<EventsTypes> {
     areaRoot: HTMLDivElement;
 
     // eslint-disable-next-line max-statements
-    constructor(container: HTMLElement, components: Map<string, Component>, emitter: Emitter<EventsTypes>) {
-        super(emitter);
+    constructor(container: HTMLElement, components: Map<string, Component>, public editor: NodeEditor) {
+        super(editor);
 
         this.container = container;
         this.components = components;
@@ -35,10 +36,10 @@ export class EditorView extends Emitter<EventsTypes> {
 
         this.container.style.overflow = 'hidden';
 
-        emitter.on('destroy', this.dispose)
-        emitter.on('destroy', listenWindow('resize', this.resize.bind(this)));
-        emitter.on('destroy', listen(this.container, 'click', this.click))
-        emitter.on('destroy', listen(this.container, 'contextmenu', e => this.trigger('contextmenu', { e, view: this })))
+        editor.on('destroy', this.dispose)
+        editor.on('destroy', listenWindow('resize', this.resize.bind(this)));
+        editor.on('destroy', listen(this.container, 'click', this.click))
+        editor.on('destroy', listen(this.container, 'contextmenu', e => this.trigger('contextmenu', { e, view: this })))
 
         this.on('nodetranslated', this.updateConnections.bind(this));
         this.on('rendersocket', ({ input, output }) => {

@@ -5,6 +5,8 @@ import { OutputData } from './core/data';
 import { Socket } from './socket';
 
 export class Output extends IO {
+  type = 'output' as const;
+
   constructor(key: string, title: string, socket: Socket, multiConns = true) {
     super(key, title, socket, multiConns);
   }
@@ -15,10 +17,8 @@ export class Output extends IO {
 
   connectTo(input: Input) {
     if (!this.socket.compatibleWith(input.socket)) throw new Error('Sockets not compatible');
-    if (!input.multipleConnections && input.hasConnection())
-      throw new Error('Input already has one connection');
-    if (!this.multipleConnections && this.hasConnection())
-      throw new Error('Output already has one connection');
+    if (!input.multipleConnections && input.hasConnection()) throw new Error('Input already has one connection');
+    if (!this.multipleConnections && this.hasConnection()) throw new Error('Output already has one connection');
 
     const connection = new Connection(this, input);
 

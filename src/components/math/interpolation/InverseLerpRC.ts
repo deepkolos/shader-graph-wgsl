@@ -35,6 +35,7 @@ export class InverseLerpRC extends RC {
 
     meta.previewDisabled = false;
     meta.category = 'math/interpolation';
+    meta.label = 'Inverse Lerp';
   }
 
   async builder(node: ReteInverseLerpNode) {

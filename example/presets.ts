@@ -21,6 +21,8 @@ import devSubGraph from './dev/devSubGraph.json';
 import devSubGraphNested from './dev/devSubGraphNested.json';
 import devSubGraphUsage from './dev/devSubGraphUsage.json';
 import devArtistic from './dev/devArtistic.json';
+import devUV from './dev/devUV.json';
+import devInput from './dev/devInput.json';
 import demoGradient from './demo/demoGradient.json';
 import demoDissolve from './demo/demoDissolve.json';
 import demoFresnelOutline from './demo/demoFresnelOutline.json';
@@ -53,6 +55,8 @@ export const Presets = {
   devSubGraphNested,
   devSubGraphUsage,
   devArtistic,
+  devUV,
+  devInput,
   demoGradient,
   demoDissolve,
   demoFresnelOutline,

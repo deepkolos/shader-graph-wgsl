@@ -4,6 +4,7 @@ import { Socket } from './socket';
 
 export class IO {
 
+    type!: 'input' | 'output';
     node: Node | null = null;
     multipleConnections: boolean;
     connections: Connection[] = [];

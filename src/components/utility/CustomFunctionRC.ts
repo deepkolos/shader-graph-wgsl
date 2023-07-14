@@ -158,8 +158,10 @@ export class CustomFunctionRC extends RC {
         outputList.push({ name, type: node.data[`fnOut${name}ValueType`] });
     });
 
-    onInputChange(node, inputList, this.editor!);
-    onOutputChange(node, outputList, this.editor!);
+    if (this.editor) {
+      onInputChange(node, inputList, this.editor);
+      onOutputChange(node, outputList, this.editor);
+    }
     const nodeCfgs = node.meta.nodeCfgs!;
     (nodeCfgs.Inputs as NodeListCfg).list = inputList;
     (nodeCfgs.Outputs as NodeListCfg).list = outputList;

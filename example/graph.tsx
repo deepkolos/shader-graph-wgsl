@@ -11,7 +11,7 @@ import { Presets } from './presets';
 setResourceAdapter(asset => asset?.id);
 
 export async function createEditor(container: HTMLElement) {
-  const editor = new ShaderGraphEditor('demo@0.1.0', container);
+  const editor = new ShaderGraphEditor('', container);
   editor.use(AssetSimplePlugin);
   editor.use(PreviewCustomMeshPlugin);
   editor.setSubGraphProvider({

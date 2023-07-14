@@ -109,25 +109,11 @@ export class PreviewServer {
     // setTimeout(this.render, 500);
   };
 
-  updateMaterialUnifroms(camera: Camera) {
+  updateMaterialUnifroms(camera: PerspectiveCamera | OrthographicCamera) {
     const { mesh, mainMaterial } = this;
     camera.updateMatrixWorld(); // 需要使用最新的算 否则出现抖动
     mesh.modelViewMatrix.multiplyMatrices(camera.matrixWorldInverse, mesh.matrixWorld);
-    IT_ModelView.copy(mesh.modelViewMatrix).invert().transpose();
-    I_Model.copy(mesh.matrixWorld).invert();
-    IT_Model.copy(I_Model).transpose();
-    mainMaterial.sg.set('Matrix', 'IT_Model', IT_Model);
-    mainMaterial.sg.set('Matrix', 'IT_ModelView', IT_ModelView);
-    mainMaterial.sg.set('Matrix', 'I_Model', I_Model);
-    mainMaterial.sg.set('Matrix', 'Model', mesh.matrixWorld);
-    mainMaterial.sg.set('Matrix', 'ModelView', mesh.modelViewMatrix);
-    mainMaterial.sg.set('Matrix', 'Proj', camera.projectionMatrix);
-
-    mainMaterial.sg.set(
-      'ViewVector',
-      'cameraWS',
-      cameraWS.setFromMatrixPosition(camera.matrixWorld),
-    );
+    mainMaterial.sg.updateMatrix(mesh, camera, this.renderer);
   }
 
   async checkNodeChange() {

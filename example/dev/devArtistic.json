@@ -1,5 +1,5 @@
 {
-  "id": "demo@0.1.0",
+  "id": "",
   "nodes": {
     "36": {
       "id": 36,
@@ -674,6 +674,363 @@
         1110.6024001922283
       ],
       "name": "ColorSpaceConversion"
+    },
+    "715": {
+      "id": 715,
+      "data": {
+        "aValue": [
+          0,
+          "1",
+          1
+        ],
+        "aValueType": "vec3",
+        "bValue": [
+          0,
+          0,
+          1
+        ],
+        "bValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "modeValue": "default",
+        "modeValueType": "string",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": []
+        },
+        "b": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        1128.4241898065052,
+        255.35031126891602
+      ],
+      "name": "NormalBlend"
+    },
+    "752": {
+      "id": 752,
+      "data": {
+        "inValue": [
+          "1",
+          "0.5"
+        ],
+        "inValueType": "vec2",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        1115.1101043801814,
+        647.6986243772635
+      ],
+      "name": "NormalReconstructZ"
+    },
+    "833": {
+      "id": 833,
+      "data": {
+        "inValue": [
+          "1",
+          "1",
+          1
+        ],
+        "inValueType": "vec3",
+        "strengthValue": "0.5",
+        "strengthValueType": "float",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": []
+        },
+        "strength": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        1599.527858600556,
+        251.7817185047537
+      ],
+      "name": "NormalStrength"
+    },
+    "878": {
+      "id": 878,
+      "data": {
+        "textureValue": {
+          "id": "https://avatars.githubusercontent.com/u/12824616?v=4",
+          "label": "deepkolos"
+        },
+        "textureValueType": "texture2d",
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "offsetValue": 0.5,
+        "offsetValueType": "float",
+        "strengthValue": "8",
+        "strengthValueType": "float",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "texture": {
+          "connections": []
+        },
+        "uv": {
+          "connections": []
+        },
+        "offset": {
+          "connections": []
+        },
+        "strength": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        1601.3678159151661,
+        659.4639916382263
+      ],
+      "name": "NormalFromTexture"
+    },
+    "927": {
+      "id": 927,
+      "data": {
+        "inValue": [
+          "1",
+          "1",
+          "1"
+        ],
+        "inValueType": "vec3",
+        "maskColorValue": [
+          1,
+          0,
+          0
+        ],
+        "maskColorValueType": "vec3",
+        "rangeValue": "1",
+        "rangeValueType": "float",
+        "fuzzinessValue": "10",
+        "fuzzinessValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": []
+        },
+        "maskColor": {
+          "connections": []
+        },
+        "range": {
+          "connections": []
+        },
+        "fuzziness": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        719.2960321887873,
+        1094.311376747829
+      ],
+      "name": "ColorMask"
+    },
+    "982": {
+      "id": 982,
+      "data": {
+        "inValue": 0,
+        "inValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "invertRValue": true,
+        "invertRValueType": "bool",
+        "invertGValue": false,
+        "invertGValueType": "bool",
+        "invertBValue": false,
+        "invertBValueType": "bool",
+        "invertAValue": false,
+        "invertAValueType": "bool",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        1304.0460812477213,
+        1110.962986075596
+      ],
+      "name": "InvertColors"
+    },
+    "1067": {
+      "id": 1067,
+      "data": {
+        "xValue": 0,
+        "xValueType": "float",
+        "yValue": 0,
+        "yValueType": "float",
+        "zValue": 0,
+        "zValueType": "float",
+        "wValue": 0,
+        "wValueType": "float",
+        "outValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec4",
+        "expanded": true
+      },
+      "inputs": {
+        "x": {
+          "connections": []
+        },
+        "y": {
+          "connections": []
+        },
+        "z": {
+          "connections": []
+        },
+        "w": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 1125,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        1053.1065095076451,
+        1562.6278022481158
+      ],
+      "name": "Vector 4"
+    },
+    "1125": {
+      "id": 1125,
+      "data": {
+        "inValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "inValueType": "vec4",
+        "outValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec4",
+        "invertRValue": true,
+        "invertRValueType": "bool",
+        "invertGValue": false,
+        "invertGValueType": "bool",
+        "invertBValue": false,
+        "invertBValueType": "bool",
+        "invertAValue": true,
+        "invertAValueType": "bool",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 1067,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        1305.8074381789925,
+        1534.7551653684307
+      ],
+      "name": "InvertColors"
     }
   },
   "UIState": {
@@ -682,7 +1039,7 @@
     "showInspector": false
   },
   "type": "ShaderGraph",
-  "version": "0.0.0",
+  "version": "",
   "setting": {
     "template": "unlit",
     "precision": "single",

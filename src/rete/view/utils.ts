@@ -6,7 +6,12 @@ export function listenWindow<K extends keyof WindowEventMap>(event: K, handler: 
   };
 }
 
-export function listen<K extends keyof HTMLElementEventMap>(el: HTMLElement, event: K, handler: (e: HTMLElementEventMap[K]) => void, options?: boolean) {
+export function listen<K extends keyof HTMLElementEventMap>(
+  el: HTMLElement,
+  event: K,
+  handler: (e: HTMLElementEventMap[K]) => void,
+  options?: boolean,
+) {
   el.addEventListener(event, handler, options);
   return () => el.removeEventListener<K>(event, handler, options);
 }
@@ -41,4 +46,8 @@ export function getOffset(el: HTMLElement, offsetParentEl: HTMLElement, searchDe
   }
 
   return { x, y };
+}
+
+export function clamp(n: number, min: number, max: number) {
+  return Math.min(Math.max(n, min), max);
 }

@@ -5,7 +5,7 @@
 
     @w: 3px;
     @wHalf: @w * 0.5;
-    @borderW: 0.5px;
+    @borderW: 1px;
 
     &::after {
       content: ' ';
@@ -25,7 +25,7 @@
     }
 
     &.selected::after {
-      @borderW: 1px;
+      @borderW: 2px;
       border-color: #268bbd;
       border-width: @borderW;
       top: -@wHalf - @borderW;
@@ -35,12 +35,5 @@
     &-control-can {
       background-color: rgba(255, 255, 255, 0.15);
     }
-  }
-}
-
-.rete-node-view {
-  will-change: transform;
-  &:hover {
-    z-index: 1;
   }
 }

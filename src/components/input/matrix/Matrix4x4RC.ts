@@ -27,6 +27,7 @@ export class Matrix4x4RC extends RC {
     meta.category = 'input/matrix';
     meta.previewDisabled = true;
     meta.label = 'Matrix 4x4';
+    meta.keywords = ['mat4'];
   }
 
   async builder(node: ReteMatrix4x4Node) {

@@ -42,10 +42,11 @@ export const ValueTypeNameMap: { [k in ValueType]: string } = Object.freeze({
 } as const);
 
 export const ValueTypeNameReverseMap: { [k: string]: ValueType } = Object.freeze(
-  (Object.keys(ValueTypeNameMap) as ValueType[]).reduce((acc, key) => {
+  Object.keys(ValueTypeNameMap).reduce((acc, key) => {
+    // @ts-ignore
     acc[ValueTypeNameMap[key]] = key;
     return acc;
-  }, {} as { [k: string]: ValueType }),
+  }, {}),
 ) as any;
 
 export const ValueTypeSocketMap = Sockets;
@@ -97,7 +98,7 @@ export const ChannelLenNeedsMap = Object.freeze({
   w: 4,
 } as const);
 
-export const ValueTypeCtor: { [k: string]: () => any } = Object.freeze({
+export const ValueTypeCtor = Object.freeze({
   float: () => 0,
   vec2: () => [0, 0],
   vec3: () => [0, 0, 0],
@@ -111,6 +112,8 @@ export type NodeValueCfg = {
   dataKey: string;
   options?: string[];
   labelWidth?: string;
+  itemWidth?: string;
+  itemHeight?: string;
   textarea?: boolean;
   asset?: { type: ValueType };
   excludes?: { [value: string]: string[] };
@@ -171,14 +174,19 @@ export type ValueTypeEdit = undefined | 'color';
 export interface ParameterData {
   type: ValueType;
   name: string;
-  defalutValue: any | undefined;
+  defalutValue: any;
   exposed: boolean;
   editing?: boolean;
   typeEdit?: ValueTypeEdit;
 }
 
 export type AssetValue = { id: string; label: string } | undefined;
-export type SpaceValue = 'object' | 'view' | 'world' | 'tangent';
+// TODO support tangent
+export const SpaceOptions = ['object', 'view', 'world'] as const;
+export type SpaceValue = ArrayElement<typeof SpaceOptions>;
+// TODO support UV123
+export const UVOptions = ['UV0'] as const;
+export type UVValue = ArrayElement<typeof UVOptions>;
 export type SamplerValue = {
   filter: 'linear' | 'point' | 'trilinear';
   warp: 'repeat' | 'clamp' | 'mirror';
@@ -189,6 +197,7 @@ export const SpaceSuffixMap = Object.freeze({
   tangent: 'TS',
   view: 'VS',
   world: 'WS',
+  clip: 'CS',
 } as const);
 
 export const UV_OPTIONS = ['UV0', 'UV1', 'UV2', 'UV3'];
@@ -203,3 +212,16 @@ export const isVectorType = (valueType?: ValueType) =>
   !!valueType && VectorTypes.includes(valueType);
 export const isMatrixType = (valueType?: ValueType) =>
   !!valueType && MatrixTypes.includes(valueType);
+
+export const ValueTypeAbbreviationMap: { [k: string]: string } = {
+  float: '1',
+  vec2: '2',
+  vec3: '3',
+  vec4: '4',
+  texture2d: 'T2',
+  sampler: 'SS',
+  gradient: 'G',
+  mat4: '4x4',
+  mat3: '3x3',
+  mat2: '2x2',
+};

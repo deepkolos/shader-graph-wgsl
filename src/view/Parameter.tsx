@@ -4,7 +4,7 @@ import { NodeViewProps } from './Node';
 import { IO } from './common';
 
 export const ParameterView: FC<NodeViewProps> = ({ node, editor, bindSocket, bindControl }) => (
-  <div className="sg-parameter">
+  <div className={`sg-parameter ${editor.selected.contains(node) ? 'selected' : ''}`}>
     <div className="sg-parameter-item-exposed" style={{ display: node.data.exposed ? 'block' : 'none' }} />
     <IO
       inputs={[...node.inputs.values()]}

@@ -25,11 +25,17 @@
   - [demoImageFlip](https://deepkolos.github.io/shader-graph-wgsl/?graph=demoImageFlip) ✅
 - 完善 Lit template
 - 编辑操作
-  - 缩放限制
+  - 缩放限制 ✅
   - minimap
   - 全貌
   - 自动对齐
-  - 多选
+  - 多选 ✅
+  - 背景拖拽 ✅
+    - no alt 框选 ✅
+    - alt 整体拖拽 ✅
+  - 复制粘贴剪切[单/多] ✅ 快捷键控制(TBD)
+  - 单点链接未完成弹出新增节点菜单,选择后并链接 ✅
+  - 新增节点弹窗增加键盘控制[enter/上下] (TBD)
 
 # 赞助
 

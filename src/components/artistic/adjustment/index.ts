@@ -4,3 +4,4 @@ export * from './HueRC';
 export * from './ReplaceColorRC';
 export * from './SaturationRC';
 export * from './WhiteBalanceRC';
+export * from './InvertColorsRC';

@@ -1,0 +1,21 @@
+.rete-node-view {
+  will-change: transform;
+  &:hover {
+    z-index: 1;
+  }
+}
+
+.rete-area-select {
+  border: 1.5px dashed #7b5622;
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: width, height;
+  pointer-events: none;
+  opacity: 0;
+  // transition: opacity linear 0.15s;
+
+  &.rete-area-select-active {
+    opacity: 1;
+  }
+}
