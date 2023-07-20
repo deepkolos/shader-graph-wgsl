@@ -257,8 +257,8 @@ export class SGController {
     this.set('Matrix', 'Model', object.matrixWorld);
     this.set('Matrix', 'View', camera.matrixWorldInverse);
     this.set('Matrix', 'Proj', camera.projectionMatrix);
-    if (this.has('Matrix', 'ViewProj')) {
-      ViewProj.multiplyMatrices(camera.projectionMatrix, camera.matrixWorld);
+    if (this.has('Matrix', 'ViewProj') || this.has('Matrix', 'I_ViewProj')) {
+      ViewProj.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
       this.set('Matrix', 'ViewProj', ViewProj);
     }
     this.set('Matrix', 'ModelView', object.modelViewMatrix);
