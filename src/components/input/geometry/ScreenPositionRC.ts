@@ -49,11 +49,13 @@ export class ScreenPositionRC extends RC {
       .addControl(new SelectControl('mode', node, 'Mode', ModeOptions as any, false));
   }
 
-  static initScreenPositionContext(compiler: ShaderGraphCompiler, mode: ModeValue) {
+  static initScreenPositionContext(
+    compiler: ShaderGraphCompiler,
+    mode: Exclude<ModeValue, 'tiled'>,
+  ) {
     const node = { name: ScreenPositionRC.Name, data: {} } as any;
     const vertVar = 'ScreenPosition' + capitalizeFirstLetter(mode);
 
-    // TODO 确认结果是否正确
     let code = '';
     if (mode === 'default') {
       const screenPositionVar = ScreenPositionRC.initScreenPositionContext(compiler, 'raw');
@@ -72,19 +74,13 @@ export class ScreenPositionRC extends RC {
     } else if (mode === 'center') {
       const screenPositionVar = ScreenPositionRC.initScreenPositionContext(compiler, 'raw');
       code = `let ${vertVar} = vec4f((${screenPositionVar}.xy / ${screenPositionVar}.w) * 2.0 - 1.0, 0., 0.);`;
-    } else if (mode === 'tiled') {
-      const screenPositionVar = ScreenPositionRC.initScreenPositionContext(compiler, 'raw');
-      const screenWidth = ScreenRC.initScreenContext(compiler, 'width');
-      const screenHeight = ScreenRC.initScreenContext(compiler, 'height');
-      code = `let ${vertVar} = fract(vec4f(((${screenPositionVar}.x / ${screenPositionVar}.w) * 2. - 1.) * ${screenWidth} / ${screenHeight}, (${screenPositionVar}.y / ${screenPositionVar}.w) * 2.0 - 1.0, 0.0, 0.0));`;
     }
 
     compiler.setContext('vertShared', node, mode, { varName: vertVar, code });
-
     const varyingVar = compiler.setContext(
       'varyings',
       node,
-      +'v_' + mode,
+      'v' + mode,
       varName => `${varName}: vec4f`,
     );
     const defVar = compiler.setVarNameMap(node, mode, vertVar, varyingVar);
@@ -93,9 +89,20 @@ export class ScreenPositionRC extends RC {
   }
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteScreenPositionNode>): SGNodeOutput {
-    return {
-      outputs: { out: ScreenPositionRC.initScreenPositionContext(compiler, node.data.modeValue) },
-      code: '',
-    };
+    if (node.data.modeValue !== 'tiled') {
+      return {
+        outputs: { out: ScreenPositionRC.initScreenPositionContext(compiler, node.data.modeValue) },
+        code: '',
+      };
+    } else {
+      const outVar = compiler.getOutVarName(node, 'mode', 'screenPos' + node.data.modeValue);
+      const screenPositionVar = ScreenPositionRC.initScreenPositionContext(compiler, 'raw');
+      const screenWidth = ScreenRC.initScreenContext(compiler, 'width');
+      const screenHeight = ScreenRC.initScreenContext(compiler, 'height');
+      return {
+        outputs: { out: outVar },
+        code: `let ${outVar} = fract(vec4f(((${screenPositionVar}.x / ${screenPositionVar}.w) * 2. - 1.) * ${screenWidth} / ${screenHeight}, (${screenPositionVar}.y / ${screenPositionVar}.w) * 2.0 - 1.0, 0.0, 0.0));`,
+      };
+    }
   }
 }
