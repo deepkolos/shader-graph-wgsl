@@ -1,3 +1,4 @@
+import './Rete.less';
 export * from './Block';
 export * from './Node';
 export * from './Context';
