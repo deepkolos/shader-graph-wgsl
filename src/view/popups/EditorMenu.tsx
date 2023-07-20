@@ -225,7 +225,7 @@ const EditorContextMenu: FC<MenuProps> = ({ editor, connection, node, popupAdd, 
           onclick: () => {
             let accumulate = false;
             editor.nodes.forEach(node => {
-              const linkToContext = Object.values(node.outputs).some(io => getIOLinkToContextType(io));
+              const linkToContext = [...node.outputs.values()].some(io => getIOLinkToContextType(io));
               if (!linkToContext && !node.isContext()) {
                 editor.selectNode(node, accumulate, true);
                 accumulate = true;
