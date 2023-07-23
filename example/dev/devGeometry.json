@@ -26,7 +26,11 @@
         {
           "id": 5,
           "data": {
-            "baseColorValue": [0, 0.8, 1],
+            "baseColorValue": [
+              0,
+              0.8,
+              1
+            ],
             "baseColorValueType": "vec3",
             "expanded": true
           },
@@ -37,12 +41,18 @@
           },
           "outputs": {},
           "blocks": [],
-          "position": [0, 0],
+          "position": [
+            0,
+            0
+          ],
           "name": "BaseColorBlock",
           "contextId": 1
         }
       ],
-      "position": [550, 0],
+      "position": [
+        550,
+        0
+      ],
       "name": "Fragment"
     },
     "2": {
@@ -70,7 +80,11 @@
         {
           "id": 3,
           "data": {
-            "positionValue": [0, 0, 0],
+            "positionValue": [
+              0,
+              0,
+              0
+            ],
             "positionValueType": "vec3",
             "expanded": true
           },
@@ -81,14 +95,21 @@
           },
           "outputs": {},
           "blocks": [],
-          "position": [0, 0],
+          "position": [
+            0,
+            0
+          ],
           "name": "PositionBlock",
           "contextId": 2
         },
         {
           "id": 4,
           "data": {
-            "normalValue": [0, 0, 0],
+            "normalValue": [
+              0,
+              0,
+              0
+            ],
             "normalValueType": "vec3",
             "expanded": true
           },
@@ -99,18 +120,27 @@
           },
           "outputs": {},
           "blocks": [],
-          "position": [0, 0],
+          "position": [
+            0,
+            0
+          ],
           "name": "NormalBlock",
           "contextId": 2
         }
       ],
-      "position": [550, -300],
+      "position": [
+        550,
+        -300
+      ],
       "name": "Vertex"
     },
     "6": {
       "id": 6,
       "data": {
-        "outValue": [0, 0],
+        "outValue": [
+          0,
+          0
+        ],
         "outValueType": "vec2",
         "channelValue": "UV0",
         "exposed": true,
@@ -126,13 +156,20 @@
         }
       },
       "blocks": [],
-      "position": [-242.28228024910547, -229.69810622360754],
+      "position": [
+        -242.28228024910547,
+        -229.69810622360754
+      ],
       "name": "UV"
     },
     "11": {
       "id": 11,
       "data": {
-        "outValue": [0, 0, 0],
+        "outValue": [
+          0,
+          0,
+          0
+        ],
         "outValueType": "vec3",
         "spaceValue": "world",
         "exposed": true,
@@ -148,15 +185,22 @@
         }
       },
       "blocks": [],
-      "position": [34.79242576474714, -226.2983500884126],
+      "position": [
+        34.79242576474714,
+        -226.2983500884126
+      ],
       "name": "Normal"
     },
     "21": {
       "id": 21,
       "data": {
-        "outValue": [0, 0, 0],
+        "outValue": [
+          0,
+          0,
+          0
+        ],
         "outValueType": "vec3",
-        "spaceValue": "world",
+        "spaceValue": "object",
         "exposed": true,
         "expanded": true,
         "preview": true,
@@ -170,13 +214,20 @@
         }
       },
       "blocks": [],
-      "position": [274.96952951667595, 168.82148903444332],
+      "position": [
+        274.96952951667595,
+        168.82148903444332
+      ],
       "name": "Position"
     },
     "34": {
       "id": 34,
       "data": {
-        "outValue": [0, 0, 0],
+        "outValue": [
+          0,
+          0,
+          0
+        ],
         "outValueType": "vec3",
         "spaceValue": "world",
         "exposed": true,
@@ -192,15 +243,22 @@
         }
       },
       "blocks": [],
-      "position": [-246.10611979166669, 142.48704020182294],
+      "position": [
+        -246.10611979166669,
+        142.48704020182294
+      ],
       "name": "ViewVector"
     },
     "195": {
       "id": 195,
       "data": {
-        "outValue": [0, 0, 0],
+        "outValue": [
+          0,
+          0,
+          0
+        ],
         "outValueType": "vec3",
-        "spaceValue": "world",
+        "spaceValue": "view",
         "exposed": true,
         "expanded": true,
         "previewType": "3d",
@@ -214,13 +272,21 @@
         }
       },
       "blocks": [],
-      "position": [18.256482118813096, 166.88480439174964],
+      "position": [
+        18.256482118813096,
+        166.88480439174964
+      ],
       "name": "ViewDirection"
     },
     "216": {
       "id": 216,
       "data": {
-        "outValue": [0, 0, 0, 0],
+        "outValue": [
+          0,
+          0,
+          0,
+          0
+        ],
         "outValueType": "vec4",
         "modeValue": "default",
         "modeValueType": "string",
@@ -236,13 +302,21 @@
         }
       },
       "blocks": [],
-      "position": [-266.9480504432696, 533.5870688934422],
+      "position": [
+        -266.9480504432696,
+        533.5870688934422
+      ],
       "name": "ScreenPosition"
     },
     "241": {
       "id": 241,
       "data": {
-        "outValue": [0, 0, 0, 0],
+        "outValue": [
+          0,
+          0,
+          0,
+          0
+        ],
         "outValueType": "vec4",
         "modeValue": "raw",
         "modeValueType": "string",
@@ -258,13 +332,21 @@
         }
       },
       "blocks": [],
-      "position": [22.626931842831322, 542.3341032037259],
+      "position": [
+        22.626931842831322,
+        542.3341032037259
+      ],
       "name": "ScreenPosition"
     },
     "270": {
       "id": 270,
       "data": {
-        "outValue": [0, 0, 0, 0],
+        "outValue": [
+          0,
+          0,
+          0,
+          0
+        ],
         "outValueType": "vec4",
         "modeValue": "center",
         "modeValueType": "string",
@@ -280,13 +362,21 @@
         }
       },
       "blocks": [],
-      "position": [280.63588313476316, 545.3161223483148],
+      "position": [
+        280.63588313476316,
+        545.3161223483148
+      ],
       "name": "ScreenPosition"
     },
     "303": {
       "id": 303,
       "data": {
-        "outValue": [0, 0, 0, 0],
+        "outValue": [
+          0,
+          0,
+          0,
+          0
+        ],
         "outValueType": "vec4",
         "modeValue": "tiled",
         "modeValueType": "string",
@@ -302,7 +392,10 @@
         }
       },
       "blocks": [],
-      "position": [553.7981795976377, 545.9295556617591],
+      "position": [
+        553.7981795976377,
+        545.9295556617591
+      ],
       "name": "ScreenPosition"
     }
   },
@@ -312,7 +405,7 @@
     "showInspector": true
   },
   "type": "ShaderGraph",
-  "version": "",
+  "version": "0.0.0",
   "setting": {
     "template": "unlit",
     "precision": "single",

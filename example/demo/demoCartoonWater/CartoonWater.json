@@ -1,0 +1,2851 @@
+{
+  "id": "",
+  "nodes": {
+    "13923": {
+      "id": 13923,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 13924,
+              "output": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "outputs": {},
+      "blocks": [
+        {
+          "id": 13927,
+          "data": {
+            "baseColorValue": [
+              0.8901960784313725,
+              0.19215686274509805,
+              0.19215686274509805
+            ],
+            "baseColorValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "baseColor": {
+              "connections": [
+                {
+                  "node": 16548,
+                  "output": "out",
+                  "data": {}
+                }
+              ]
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "BaseColorBlock",
+          "contextId": 13923
+        },
+        {
+          "id": 16813,
+          "data": {
+            "alphaValue": 1,
+            "alphaValueType": "float",
+            "expanded": true
+          },
+          "inputs": {
+            "alpha": {
+              "connections": [
+                {
+                  "node": 16858,
+                  "output": "out",
+                  "data": {}
+                }
+              ]
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "AlphaBlock",
+          "contextId": 13923
+        },
+        {
+          "id": 16947,
+          "data": {
+            "alphaValue": 0.5,
+            "alphaValueType": "float",
+            "expanded": true
+          },
+          "inputs": {
+            "alpha": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "AlphaClipBlock",
+          "contextId": 13923
+        }
+      ],
+      "position": [
+        4296.064867296497,
+        198.06879762879475
+      ],
+      "name": "Fragment"
+    },
+    "13924": {
+      "id": 13924,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 13923,
+              "input": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "id": 13925,
+          "data": {
+            "positionValue": [
+              0,
+              0,
+              0
+            ],
+            "positionValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "position": {
+              "connections": [
+                {
+                  "node": 28543,
+                  "output": "out",
+                  "data": {}
+                }
+              ]
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "PositionBlock",
+          "contextId": 13924
+        },
+        {
+          "id": 13926,
+          "data": {
+            "normalValue": [
+              0,
+              0,
+              0
+            ],
+            "normalValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "normal": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "NormalBlock",
+          "contextId": 13924
+        },
+        {
+          "id": 15019,
+          "data": {
+            "tangentValue": [
+              0,
+              0,
+              0
+            ],
+            "tangentValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "tangent": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "TangentBlock",
+          "contextId": 13924
+        }
+      ],
+      "position": [
+        4297.836343261305,
+        -81.46763923361664
+      ],
+      "name": "Vertex"
+    },
+    "13928": {
+      "id": 13928,
+      "data": {
+        "timeValue": 0,
+        "timeValueType": "float",
+        "sinTimeValue": 0,
+        "sinTimeValueType": "float",
+        "cosTimeValue": 0,
+        "cosTimeValueType": "float",
+        "deltaTimeValue": 0,
+        "deltaTimeValueType": "float",
+        "smoothDeltaValue": 0,
+        "smoothDeltaValueType": "float",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "time": {
+          "connections": [
+            {
+              "node": 13930,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        },
+        "sinTime": {
+          "connections": []
+        },
+        "cosTime": {
+          "connections": []
+        },
+        "deltaTime": {
+          "connections": []
+        },
+        "smoothDelta": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -388.0542745462867,
+        959.4445475349363
+      ],
+      "name": "Time"
+    },
+    "13930": {
+      "id": 13930,
+      "data": {
+        "aValue": 0,
+        "aValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": false
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 13928,
+              "output": "time",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 13935,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 13975,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -168.00353540755737,
+        1078.665598242307
+      ],
+      "name": "Multiply"
+    },
+    "13935": {
+      "id": 13935,
+      "data": {
+        "aValue": 0,
+        "aValueType": "float",
+        "bValue": 2,
+        "bValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": false
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 13957,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 13966,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 13930,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -323.5204370607172,
+        1261.4159869372027
+      ],
+      "name": "Divide"
+    },
+    "13957": {
+      "id": 13957,
+      "data": {
+        "outValue": "0.1",
+        "outValueType": "float",
+        "outValueName": "FlowSpeed",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 13935,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -477.61988955064237,
+        1261.729615658133
+      ],
+      "name": "Parameter"
+    },
+    "13966": {
+      "id": 13966,
+      "data": {
+        "outValue": "2",
+        "outValueType": "float",
+        "outValueName": "Size",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 13935,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -442.6494233295608,
+        1355.534509627064
+      ],
+      "name": "Parameter"
+    },
+    "13975": {
+      "id": 13975,
+      "data": {
+        "aValue": [
+          0,
+          0
+        ],
+        "aValueType": "vec2",
+        "bValue": [
+          0,
+          0
+        ],
+        "bValueType": "vec2",
+        "outValue": [
+          0,
+          0
+        ],
+        "outValueType": "vec2",
+        "expanded": true,
+        "preview": false
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 13994,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 13930,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 19210,
+              "input": "uv",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        68.12629306883127,
+        882.6789602373077
+      ],
+      "name": "Add"
+    },
+    "13994": {
+      "id": 13994,
+      "data": {
+        "outValue": [
+          0,
+          0
+        ],
+        "outValueType": "vec2",
+        "channelValue": "UV0",
+        "channelValueType": "string",
+        "exposed": true,
+        "expanded": true,
+        "preview": false
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 13975,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -178.35223769555046,
+        745.1010770943416
+      ],
+      "name": "UV"
+    },
+    "14048": {
+      "id": 14048,
+      "data": {
+        "outValueType": "texture2d",
+        "outValueName": "FlowTexture",
+        "exposed": true,
+        "expanded": true,
+        "outValue": {
+          "id": "/example/demo/demoCartoonWater/flowmap.png",
+          "label": "flowmap.png"
+        }
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 19210,
+              "input": "texture",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        92.8796911185928,
+        714.3886358885085
+      ],
+      "name": "Parameter"
+    },
+    "14128": {
+      "id": 14128,
+      "data": {
+        "aValue": [
+          0,
+          0,
+          0
+        ],
+        "aValueType": "vec3",
+        "bValue": [
+          0,
+          0,
+          0
+        ],
+        "bValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 19210,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 14177,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 14231,
+              "input": "b",
+              "data": {}
+            },
+            {
+              "node": 18191,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        582.7412197241417,
+        764.7104804309771
+      ],
+      "name": "Multiply"
+    },
+    "14177": {
+      "id": 14177,
+      "data": {
+        "outValue": "0.01",
+        "outValueType": "float",
+        "outValueName": "FlowStrength",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 14128,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        322.6831294400112,
+        1099.1617317631826
+      ],
+      "name": "Parameter"
+    },
+    "14202": {
+      "id": 14202,
+      "data": {
+        "outValue": [
+          0,
+          0
+        ],
+        "outValueType": "vec2",
+        "channelValue": "UV0",
+        "channelValueType": "string",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 25653,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        350.65622488507483,
+        256.86660033197666
+      ],
+      "name": "UV"
+    },
+    "14231": {
+      "id": 14231,
+      "data": {
+        "aValue": [
+          0,
+          0,
+          0
+        ],
+        "aValueType": "vec3",
+        "bValue": [
+          0,
+          0,
+          0
+        ],
+        "bValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": false,
+        "previewType": "2d"
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 25241,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 14128,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 14329,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        922.397582389214,
+        258.71349779898935
+      ],
+      "name": "Add"
+    },
+    "14312": {
+      "id": 14312,
+      "data": {
+        "outValue": "2",
+        "outValueType": "float",
+        "outValueName": "Size",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 14329,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        1140.127568814603,
+        353.38634658159333
+      ],
+      "name": "Parameter"
+    },
+    "14329": {
+      "id": 14329,
+      "data": {
+        "aValue": [
+          0,
+          0,
+          0
+        ],
+        "aValueType": "vec3",
+        "bValue": [
+          0,
+          0,
+          0
+        ],
+        "bValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": false
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 14231,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 14312,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 14439,
+              "input": "uv",
+              "data": {}
+            },
+            {
+              "node": 14520,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        1308.8813694968694,
+        254.0498127084015
+      ],
+      "name": "Multiply"
+    },
+    "14420": {
+      "id": 14420,
+      "data": {
+        "outValueType": "texture2d",
+        "outValueName": "FoamTexture",
+        "exposed": true,
+        "expanded": true,
+        "outValue": {
+          "id": "/example/demo/demoCartoonWater/noise.png",
+          "label": "noise.png"
+        }
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 14439,
+              "input": "texture",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        1323.8180094094387,
+        195.8403270659553
+      ],
+      "name": "Parameter"
+    },
+    "14439": {
+      "id": 14439,
+      "data": {
+        "rgbaValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rgbaValueType": "vec4",
+        "rValue": 0,
+        "rValueType": "float",
+        "gValue": 0,
+        "gValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "aValue": 0,
+        "aValueType": "float",
+        "textureValueType": "texture2d",
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "typeValue": "default",
+        "typeValueType": "string",
+        "spaceValue": "object",
+        "spaceValueType": "string",
+        "expanded": true,
+        "preview": true,
+        "samplerValueType": "sampler"
+      },
+      "inputs": {
+        "texture": {
+          "connections": [
+            {
+              "node": 14420,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "uv": {
+          "connections": [
+            {
+              "node": 14329,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "sampler": {
+          "connections": [
+            {
+              "node": 28845,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "rgba": {
+          "connections": [
+            {
+              "node": 16293,
+              "input": "t",
+              "data": {}
+            }
+          ]
+        },
+        "r": {
+          "connections": []
+        },
+        "g": {
+          "connections": []
+        },
+        "a": {
+          "connections": []
+        },
+        "b": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        1572.8993945199477,
+        240.79548122005087
+      ],
+      "name": "SampleTexture2D"
+    },
+    "14520": {
+      "id": 14520,
+      "data": {
+        "aValue": [
+          0,
+          0,
+          0
+        ],
+        "aValueType": "vec3",
+        "bValue": [
+          "0.1",
+          "0.1",
+          0
+        ],
+        "bValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 14329,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 14609,
+              "input": "uv",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        2134.32762753579,
+        166.02187234989037
+      ],
+      "name": "Add"
+    },
+    "14609": {
+      "id": 14609,
+      "data": {
+        "rgbaValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rgbaValueType": "vec4",
+        "rValue": 0,
+        "rValueType": "float",
+        "gValue": 0,
+        "gValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "aValue": 0,
+        "aValueType": "float",
+        "textureValueType": "texture2d",
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "typeValue": "default",
+        "typeValueType": "string",
+        "spaceValue": "object",
+        "spaceValueType": "string",
+        "expanded": true,
+        "preview": true,
+        "samplerValueType": "sampler"
+      },
+      "inputs": {
+        "texture": {
+          "connections": [
+            {
+              "node": 14682,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "uv": {
+          "connections": [
+            {
+              "node": 14520,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "sampler": {
+          "connections": [
+            {
+              "node": 29026,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "rgba": {
+          "connections": [
+            {
+              "node": 14781,
+              "input": "t",
+              "data": {}
+            }
+          ]
+        },
+        "r": {
+          "connections": []
+        },
+        "g": {
+          "connections": []
+        },
+        "a": {
+          "connections": []
+        },
+        "b": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        2359.2572021782753,
+        148.0798431547662
+      ],
+      "name": "SampleTexture2D"
+    },
+    "14682": {
+      "id": 14682,
+      "data": {
+        "outValueType": "texture2d",
+        "outValueName": "FoamTexture",
+        "exposed": true,
+        "expanded": true,
+        "outValue": {
+          "id": "/example/demo/demoCartoonWater/noise.png",
+          "label": "noise.png"
+        }
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 14609,
+              "input": "texture",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        2095.952529614211,
+        105.88323831949833
+      ],
+      "name": "Parameter"
+    },
+    "14731": {
+      "id": 14731,
+      "data": {
+        "outValue": [
+          0.20784313725490197,
+          0.6431372549019608,
+          1
+        ],
+        "outValueType": "vec3",
+        "outValueName": "WaterColor",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 14781,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        2618.381484215888,
+        55.043988520739504
+      ],
+      "name": "Parameter"
+    },
+    "14756": {
+      "id": 14756,
+      "data": {
+        "outValue": [
+          0.1803921568627451,
+          0.5607843137254902,
+          0.8705882352941177
+        ],
+        "outValueType": "vec3",
+        "outValueName": "DarkFoamColor",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 14781,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        2584.799193291637,
+        99.36292280377143
+      ],
+      "name": "Parameter"
+    },
+    "14781": {
+      "id": 14781,
+      "data": {
+        "aValue": [
+          0,
+          0,
+          0
+        ],
+        "aValueType": "vec3",
+        "bValue": [
+          0,
+          0,
+          0
+        ],
+        "bValueType": "vec3",
+        "tValue": [
+          0,
+          0,
+          0
+        ],
+        "tValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 14731,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 14756,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "t": {
+          "connections": [
+            {
+              "node": 14609,
+              "output": "rgba",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 16293,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        2853.836143845212,
+        32.92706473166095
+      ],
+      "name": "Lerp"
+    },
+    "15046": {
+      "id": 15046,
+      "data": {
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "spaceValue": "object",
+        "spaceValueType": "string",
+        "exposed": true,
+        "expanded": true,
+        "previewType": "3d"
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 28543,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        3891.490009356867,
+        -422.16980006339804
+      ],
+      "name": "Position"
+    },
+    "15131": {
+      "id": 15131,
+      "data": {
+        "xValue": 0,
+        "xValueType": "float",
+        "yValue": 0,
+        "yValueType": "float",
+        "zValue": 0,
+        "zValueType": "float",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true
+      },
+      "inputs": {
+        "x": {
+          "connections": []
+        },
+        "y": {
+          "connections": []
+        },
+        "z": {
+          "connections": [
+            {
+              "node": 15369,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 28543,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        3914.2085598948292,
+        -262.8079091192669
+      ],
+      "name": "Vector 3"
+    },
+    "15369": {
+      "id": 15369,
+      "data": {
+        "aValue": 0,
+        "aValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 15466,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 15535,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 15131,
+              "input": "z",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        3663.8590913062326,
+        -227.02605034468183
+      ],
+      "name": "Multiply"
+    },
+    "15466": {
+      "id": 15466,
+      "data": {
+        "inValue": 0,
+        "inValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": false
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 15711,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 15369,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        3479.335876607095,
+        -230.12403383664537
+      ],
+      "name": "Sine"
+    },
+    "15535": {
+      "id": 15535,
+      "data": {
+        "outValue": "0.15",
+        "outValueType": "float",
+        "outValueName": "Choppiness",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 15369,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        3474.3239813419054,
+        -117.34303278433595
+      ],
+      "name": "Parameter"
+    },
+    "15638": {
+      "id": 15638,
+      "data": {
+        "aValue": 0,
+        "aValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": false,
+        "previewType": "2d"
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 15864,
+              "output": "r",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 15864,
+              "output": "b",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 15711,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        3101.283175659069,
+        -339.8867724374543
+      ],
+      "name": "Add"
+    },
+    "15711": {
+      "id": 15711,
+      "data": {
+        "aValue": 0,
+        "aValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": false
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 15638,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 16017,
+              "output": "time",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 15466,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        3302.8293750568455,
+        -230.6989863734509
+      ],
+      "name": "Add"
+    },
+    "15864": {
+      "id": 15864,
+      "data": {
+        "inValue": [
+          0,
+          0,
+          0
+        ],
+        "inValueType": "vec3",
+        "rValue": 0,
+        "rValueType": "float",
+        "gValue": 0,
+        "gValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "aValue": 0,
+        "aValueType": "float",
+        "expanded": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 16132,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "r": {
+          "connections": [
+            {
+              "node": 15638,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        },
+        "g": {
+          "connections": []
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 15638,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        },
+        "a": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        2929.8516022613076,
+        -355.87616699260866
+      ],
+      "name": "Split"
+    },
+    "16017": {
+      "id": 16017,
+      "data": {
+        "timeValue": 0,
+        "timeValueType": "float",
+        "sinTimeValue": 0,
+        "sinTimeValueType": "float",
+        "cosTimeValue": 0,
+        "cosTimeValueType": "float",
+        "deltaTimeValue": 0,
+        "deltaTimeValueType": "float",
+        "smoothDeltaValue": 0,
+        "smoothDeltaValueType": "float",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "time": {
+          "connections": [
+            {
+              "node": 15711,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        },
+        "sinTime": {
+          "connections": []
+        },
+        "cosTime": {
+          "connections": []
+        },
+        "deltaTime": {
+          "connections": []
+        },
+        "smoothDelta": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        3096.78766144512,
+        -195.80123290388815
+      ],
+      "name": "Time"
+    },
+    "16132": {
+      "id": 16132,
+      "data": {
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "spaceValue": "world",
+        "spaceValueType": "string",
+        "exposed": true,
+        "expanded": true,
+        "previewType": "3d"
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 15864,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        2749.4473656659584,
+        -355.7140791717154
+      ],
+      "name": "Position"
+    },
+    "16293": {
+      "id": 16293,
+      "data": {
+        "aValue": [
+          0,
+          0,
+          0
+        ],
+        "aValueType": "vec3",
+        "bValue": [
+          0,
+          0,
+          0
+        ],
+        "bValueType": "vec3",
+        "tValue": [
+          0,
+          0,
+          0
+        ],
+        "tValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 14781,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 16378,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "t": {
+          "connections": [
+            {
+              "node": 14439,
+              "output": "rgba",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 16548,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        3561.7299966205405,
+        210.10027048666984
+      ],
+      "name": "Lerp"
+    },
+    "16378": {
+      "id": 16378,
+      "data": {
+        "outValue": [
+          1,
+          1,
+          1
+        ],
+        "outValueType": "vec3",
+        "outValueName": "LightFoamColor",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 16293,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        3141.878884901196,
+        278.35001126798704
+      ],
+      "name": "Parameter"
+    },
+    "16505": {
+      "id": 16505,
+      "data": {
+        "outValue": [
+          1,
+          1,
+          1
+        ],
+        "outValueType": "vec3",
+        "outValueName": "LightFoamColor",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 16548,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        3556.20609829685,
+        140.26864791320372
+      ],
+      "name": "Parameter"
+    },
+    "16548": {
+      "id": 16548,
+      "data": {
+        "aValue": [
+          0,
+          0,
+          0
+        ],
+        "aValueType": "vec3",
+        "bValue": [
+          0,
+          0,
+          0
+        ],
+        "bValueType": "vec3",
+        "tValue": [
+          0,
+          0,
+          0
+        ],
+        "tValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 16505,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 16293,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "t": {
+          "connections": [
+            {
+              "node": 17080,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 13927,
+              "input": "baseColor",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        3810.331528281997,
+        171.35873764599432
+      ],
+      "name": "Lerp"
+    },
+    "16858": {
+      "id": 16858,
+      "data": {
+        "outValue": "1",
+        "outValueType": "float",
+        "outValueName": "Opacity",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 16813,
+              "input": "alpha",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        4137.578371775704,
+        278.04361676305064
+      ],
+      "name": "Parameter"
+    },
+    "17080": {
+      "id": 17080,
+      "data": {
+        "edgeValue": "0.5",
+        "edgeValueType": "float",
+        "inValue": 0,
+        "inValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": false
+      },
+      "inputs": {
+        "edge": {
+          "connections": []
+        },
+        "in": {
+          "connections": [
+            {
+              "node": 17219,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 16548,
+              "input": "t",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        3583.791495647559,
+        587.1258203655851
+      ],
+      "name": "Step"
+    },
+    "17219": {
+      "id": 17219,
+      "data": {
+        "inValue": 0,
+        "inValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 17412,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 17080,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        3329.4599126723265,
+        616.2956257086543
+      ],
+      "name": "Saturate"
+    },
+    "17412": {
+      "id": 17412,
+      "data": {
+        "aValue": 0,
+        "aValueType": "float",
+        "bValue": 2,
+        "bValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 17563,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 17720,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 17219,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        3081.362469157899,
+        618.955005551151
+      ],
+      "name": "Divide"
+    },
+    "17563": {
+      "id": 17563,
+      "data": {
+        "aValue": 0,
+        "aValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 27089,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 17825,
+              "output": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 17412,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        2662.5661828546586,
+        611.5451222083607
+      ],
+      "name": "Subtract"
+    },
+    "17720": {
+      "id": 17720,
+      "data": {
+        "outValue": "1.5",
+        "outValueType": "float",
+        "outValueName": "FoamDistance",
+        "exposed": true,
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 17412,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        2881.4719936157658,
+        695.4166133142028
+      ],
+      "name": "Parameter"
+    },
+    "17825": {
+      "id": 17825,
+      "data": {
+        "inValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "inValueType": "vec4",
+        "rValue": 0,
+        "rValueType": "float",
+        "gValue": 0,
+        "gValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "aValue": 0,
+        "aValueType": "float",
+        "expanded": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 26682,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "r": {
+          "connections": []
+        },
+        "g": {
+          "connections": []
+        },
+        "b": {
+          "connections": []
+        },
+        "a": {
+          "connections": [
+            {
+              "node": 17563,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        2417.2683709820863,
+        756.513488528823
+      ],
+      "name": "Split"
+    },
+    "18191": {
+      "id": 18191,
+      "data": {
+        "aValue": [
+          0,
+          0,
+          0
+        ],
+        "aValueType": "vec3",
+        "bValue": [
+          0,
+          0,
+          0
+        ],
+        "bValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 14128,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 26219,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 27089,
+              "input": "uv",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        2159.2113329190915,
+        605.3526078253724
+      ],
+      "name": "Add"
+    },
+    "19210": {
+      "id": 19210,
+      "data": {
+        "textureValueType": "texture2d",
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "offsetValue": 0.5,
+        "offsetValueType": "float",
+        "strengthValue": 8,
+        "strengthValueType": "float",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true,
+        "samplerValueType": "sampler"
+      },
+      "inputs": {
+        "texture": {
+          "connections": [
+            {
+              "node": 14048,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "uv": {
+          "connections": [
+            {
+              "node": 13975,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "sampler": {
+          "connections": [
+            {
+              "node": 28664,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "offset": {
+          "connections": []
+        },
+        "strength": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 14128,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        302.085202693765,
+        701.839890204731
+      ],
+      "name": "NormalFromTexture"
+    },
+    "25241": {
+      "id": 25241,
+      "data": {
+        "xValue": 0,
+        "xValueType": "float",
+        "yValue": 0,
+        "yValueType": "float",
+        "zValue": 0,
+        "zValueType": "float",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true
+      },
+      "inputs": {
+        "x": {
+          "connections": [
+            {
+              "node": 25653,
+              "output": "r",
+              "data": {}
+            }
+          ]
+        },
+        "y": {
+          "connections": [
+            {
+              "node": 25653,
+              "output": "g",
+              "data": {}
+            }
+          ]
+        },
+        "z": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 14231,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        738.3729849520502,
+        256.1381928084814
+      ],
+      "name": "Vector 3"
+    },
+    "25653": {
+      "id": 25653,
+      "data": {
+        "inValue": [
+          0,
+          0
+        ],
+        "inValueType": "vec2",
+        "rValue": 0,
+        "rValueType": "float",
+        "gValue": 0,
+        "gValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "aValue": 0,
+        "aValueType": "float",
+        "expanded": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 14202,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "r": {
+          "connections": [
+            {
+              "node": 25241,
+              "input": "x",
+              "data": {}
+            }
+          ]
+        },
+        "g": {
+          "connections": [
+            {
+              "node": 25241,
+              "input": "y",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": []
+        },
+        "a": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        512.6405711083254,
+        255.84711967723723
+      ],
+      "name": "Split"
+    },
+    "26219": {
+      "id": 26219,
+      "data": {
+        "outValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec4",
+        "modeValue": "default",
+        "modeValueType": "string",
+        "exposed": true,
+        "expanded": true,
+        "preview": false,
+        "previewType": "3d"
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 18191,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        1930.9686839188694,
+        639.0487147027719
+      ],
+      "name": "ScreenPosition"
+    },
+    "26682": {
+      "id": 26682,
+      "data": {
+        "outValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec4",
+        "modeValue": "raw",
+        "modeValueType": "string",
+        "exposed": true,
+        "expanded": true,
+        "preview": false,
+        "previewType": "3d"
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 17825,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        2199.9112484448865,
+        756.4308331477558
+      ],
+      "name": "ScreenPosition"
+    },
+    "27089": {
+      "id": 27089,
+      "data": {
+        "uvValue": "default",
+        "uvValueType": "vec4",
+        "outValue": 0,
+        "outValueType": "float",
+        "modeValue": "eye",
+        "modeValueType": "string",
+        "expanded": true,
+        "preview": false
+      },
+      "inputs": {
+        "uv": {
+          "connections": [
+            {
+              "node": 18191,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 17563,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        2346.428529159055,
+        607.6733125638292
+      ],
+      "name": "SceneDepth"
+    },
+    "28543": {
+      "id": 28543,
+      "data": {
+        "aValue": [
+          0,
+          0,
+          0
+        ],
+        "aValueType": "vec3",
+        "bValue": [
+          0,
+          0,
+          0
+        ],
+        "bValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 15046,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 15131,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 13925,
+              "input": "position",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        4216.337516883902,
+        -352.66793064412684
+      ],
+      "name": "Add"
+    },
+    "28664": {
+      "id": 28664,
+      "data": {
+        "outValue": {
+          "filter": "point",
+          "warp": "clamp"
+        },
+        "outValueType": "sampler",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 19210,
+              "input": "sampler",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        13.730047238497924,
+        1127.7597329442938
+      ],
+      "name": "SamplerState"
+    },
+    "28845": {
+      "id": 28845,
+      "data": {
+        "outValue": {
+          "filter": "point",
+          "warp": "clamp"
+        },
+        "outValueType": "sampler",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 14439,
+              "input": "sampler",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        1288.8858125601228,
+        448.2416755020956
+      ],
+      "name": "SamplerState"
+    },
+    "29026": {
+      "id": 29026,
+      "data": {
+        "outValue": {
+          "filter": "point",
+          "warp": "clamp"
+        },
+        "outValueType": "sampler",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 14609,
+              "input": "sampler",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        2066.96779559463,
+        336.66181536053745
+      ],
+      "name": "SamplerState"
+    }
+  },
+  "UIState": {
+    "showMainPreview": true,
+    "showBlackBoard": true,
+    "showInspector": true
+  },
+  "type": "ShaderGraph",
+  "version": "0.0.0",
+  "setting": {
+    "template": "unlit",
+    "precision": "single",
+    "allowMaterialOverride": false,
+    "surfaceType": "transparent",
+    "blendingMode": "alpha",
+    "renderFace": "front",
+    "depthWrite": "auto",
+    "depthTest": "l equal",
+    "alphaClipping": false,
+    "castShadows": true,
+    "clearCoat": false
+  },
+  "parameters": [
+    {
+      "name": "Size",
+      "type": "float",
+      "defalutValue": "2",
+      "exposed": true
+    },
+    {
+      "name": "FlowTexture",
+      "type": "texture2d",
+      "defalutValue": {
+        "id": "/example/demo/demoCartoonWater/flowmap.png",
+        "label": "flowmap.png"
+      },
+      "exposed": true
+    },
+    {
+      "name": "FoamTexture",
+      "type": "texture2d",
+      "defalutValue": {
+        "id": "/example/demo/demoCartoonWater/noise.png",
+        "label": "noise.png"
+      },
+      "exposed": true
+    },
+    {
+      "name": "FlowStrength",
+      "type": "float",
+      "defalutValue": "0.01",
+      "exposed": true
+    },
+    {
+      "name": "FlowSpeed",
+      "type": "float",
+      "defalutValue": "0.1",
+      "exposed": true
+    },
+    {
+      "name": "LightFoamColor",
+      "type": "vec3",
+      "defalutValue": [
+        1,
+        1,
+        1
+      ],
+      "exposed": true,
+      "typeEdit": "color"
+    },
+    {
+      "name": "WaterColor",
+      "type": "vec3",
+      "defalutValue": [
+        0.20784313725490197,
+        0.6431372549019608,
+        1
+      ],
+      "exposed": true,
+      "typeEdit": "color"
+    },
+    {
+      "name": "DarkFoamColor",
+      "type": "vec3",
+      "defalutValue": [
+        0.1803921568627451,
+        0.5607843137254902,
+        0.8705882352941177
+      ],
+      "exposed": true,
+      "typeEdit": "color"
+    },
+    {
+      "name": "FoamDistance",
+      "type": "float",
+      "defalutValue": "1.5",
+      "exposed": true
+    },
+    {
+      "name": "Choppiness",
+      "type": "float",
+      "defalutValue": "0.15",
+      "exposed": true
+    },
+    {
+      "name": "Opacity",
+      "type": "float",
+      "defalutValue": "1",
+      "exposed": true
+    }
+  ]
+}

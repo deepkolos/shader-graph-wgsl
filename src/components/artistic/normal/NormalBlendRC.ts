@@ -66,8 +66,8 @@ export class NormalBlendRC extends RC {
     } else {
       const codeFn = (varName: string) => /* wgsl */ `
 fn ${varName}(A: vec3f, B: vec3f) -> vec3f {
-  vec3 t = A.xyz + vec3f(0.0, 0.0, 1.0);
-  vec3 u = B.xyz * vec3f(-1.0, -1.0, 1.0);
+  let t = A.xyz + vec3f(0.0, 0.0, 1.0);
+  let u = B.xyz * vec3f(-1.0, -1.0, 1.0);
   return (t / t.z) * dot(t, u) - u;
 }`;
       const fnVar = compiler.setContext('defines', node, mode, codeFn);

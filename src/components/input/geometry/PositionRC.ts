@@ -47,7 +47,7 @@ export class PositionRC extends RC {
     const node = { name: PositionRC.Name, data: {} } as any;
     const suffix = SpaceSuffixMap[space];
     const key = 'position' + suffix;
-    const vertVar = key;
+    let vertVar = key;
 
     if (space !== 'object') {
       let code = '';
@@ -61,6 +61,8 @@ export class PositionRC extends RC {
         code = `let ${vertVar} = vec3<f32>(0);`; // TODO
       }
       compiler.setContext('vertShared', node, key, { varName: vertVar, code });
+    } else {
+      vertVar = '*' + vertVar;
     }
 
     const varyingVar = compiler.setContext(

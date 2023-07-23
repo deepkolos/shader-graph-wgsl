@@ -30,6 +30,7 @@ import demoConstantBiasScaleSubGraph from './demo/demoConstantBiasScaleSubGraph.
 import demoFlowMapSubGraph from './demo/demoFlowMapSubGraph.json';
 import demoFlowMap from './demo/demoFlowMap.json';
 import demoImageFlip from './demo/demoImageFlip.json';
+import demoCartoonWater from './demo/demoCartoonWater';
 
 export const Presets = {
   devCompile,
@@ -64,4 +65,5 @@ export const Presets = {
   demoFlowMapSubGraph,
   demoFlowMap,
   demoImageFlip,
+  demoCartoonWater,
 };

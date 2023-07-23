@@ -63,12 +63,12 @@ export class ViewVectorRC extends RC {
       vertVar = compiler.setContext('vertShared', node, key, codeFn);
       fragVar = compiler.setContext('fragShared', node, key, codeFn);
     } else if (space === 'view') {
-      const codeFn = (varName: string) => `vec3 ${varName} = -${positionVar};`;
+      const codeFn = (varName: string) => `let ${varName} = -${positionVar};`;
       vertVar = compiler.setContext('vertShared', node, key, codeFn);
       fragVar = compiler.setContext('fragShared', node, key, codeFn);
     } else {
       // TODO
-      const codeFn = (varName: string) => `vec3 ${varName} = vec3<f32>(0);`;
+      const codeFn = (varName: string) => `let ${varName} = vec3<f32>(0);`;
       vertVar = compiler.setContext('vertShared', node, key, codeFn);
       fragVar = compiler.setContext('fragShared', node, key, codeFn);
     }
