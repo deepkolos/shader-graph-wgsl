@@ -2655,8 +2655,8 @@
       "id": 28664,
       "data": {
         "outValue": {
-          "filter": "point",
-          "warp": "clamp"
+          "filter": "linear",
+          "warp": "repeat"
         },
         "outValueType": "sampler",
         "expanded": true
@@ -2684,8 +2684,8 @@
       "id": 28845,
       "data": {
         "outValue": {
-          "filter": "point",
-          "warp": "clamp"
+          "filter": "linear",
+          "warp": "repeat"
         },
         "outValueType": "sampler",
         "expanded": true
@@ -2704,8 +2704,8 @@
       },
       "blocks": [],
       "position": [
-        1288.8858125601228,
-        448.2416755020956
+        1289.1701824829677,
+        448.2417411461221
       ],
       "name": "SamplerState"
     },
@@ -2713,8 +2713,8 @@
       "id": 29026,
       "data": {
         "outValue": {
-          "filter": "point",
-          "warp": "clamp"
+          "filter": "linear",
+          "warp": "repeat"
         },
         "outValueType": "sampler",
         "expanded": true
@@ -2734,7 +2734,7 @@
       "blocks": [],
       "position": [
         2066.96779559463,
-        336.66181536053745
+        336.846153226274
       ],
       "name": "SamplerState"
     }

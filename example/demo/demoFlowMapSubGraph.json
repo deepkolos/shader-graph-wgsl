@@ -1408,7 +1408,13 @@
           ]
         },
         "sampler": {
-          "connections": []
+          "connections": [
+            {
+              "node": 4810,
+              "output": "out",
+              "data": {}
+            }
+          ]
         }
       },
       "outputs": {
@@ -1490,7 +1496,13 @@
           ]
         },
         "sampler": {
-          "connections": []
+          "connections": [
+            {
+              "node": 4489,
+              "output": "out",
+              "data": {}
+            }
+          ]
         }
       },
       "outputs": {
@@ -1714,6 +1726,64 @@
         372.05846716460866
       ],
       "name": "Lerp"
+    },
+    "4489": {
+      "id": 4489,
+      "data": {
+        "outValue": {
+          "filter": "point",
+          "warp": "mirror"
+        },
+        "outValueType": "sampler",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 3780,
+              "input": "sampler",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        2540.626659700583,
+        744.2776345778565
+      ],
+      "name": "SamplerState"
+    },
+    "4810": {
+      "id": 4810,
+      "data": {
+        "outValue": {
+          "filter": "point",
+          "warp": "mirror"
+        },
+        "outValueType": "sampler",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 3713,
+              "input": "sampler",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        2581.4578327760037,
+        234.96895611927152
+      ],
+      "name": "SamplerState"
     }
   },
   "UIState": {

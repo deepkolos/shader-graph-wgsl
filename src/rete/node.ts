@@ -120,7 +120,12 @@ export class Node {
     }
 
     setValue(prefix: string, value: any) {
-        this.data[prefix + 'Value'] = value;
+        const [dataPrefix, valuePrefix] = prefix.split('.');
+        if (valuePrefix && this.data[dataPrefix + 'Value']) {
+            (this.data[dataPrefix + 'Value'] as Record<string, any>)[valuePrefix] = value;
+        } else {
+            this.data[dataPrefix + 'Value'] = value;
+        }
         this.dataChanged = true;
     }
 
