@@ -1,7 +1,13 @@
 import { ShaderGraphCompiler, SGNodeOutput } from '../../../compilers';
 import { SGNodeData } from '../../../editors';
 import { Sockets } from '../../../sockets';
-import { ExtendReteNode, ValueType, Rete, ArrayElement } from '../../../types';
+import {
+  ExtendReteNode,
+  ValueType,
+  Rete,
+  ScreenPositionModeValue,
+  ScreenPositionModeOptions,
+} from '../../../types';
 import { capitalizeFirstLetter } from '../../../utils';
 import { NodeView, SelectControl } from '../../../view';
 import { RC } from '../../ReteComponent';
@@ -9,15 +15,12 @@ import { TransformationMatrixRC } from '../matrix';
 import { ScreenRC } from '../scene';
 import { PositionRC } from './PositionRC';
 
-const ModeOptions = ['default', 'raw', 'center', 'tiled'] as const;
-type ModeValue = ArrayElement<typeof ModeOptions>;
-
 export type ReteScreenPositionNode = ExtendReteNode<
   'ScreenPosition',
   {
     outValue: number[];
     outValueType: ValueType.vec4;
-    modeValue: ModeValue;
+    modeValue: ScreenPositionModeValue;
   }
 >;
 
@@ -31,7 +34,7 @@ export class ScreenPositionRC extends RC {
   initNode(node: ReteScreenPositionNode) {
     const { data, meta } = node;
     node.initValueType('out', [0, 0, 0, 0], ValueType.vec4);
-    node.initValueType('mode', ModeOptions[0], ValueType.string);
+    node.initValueType('mode', ScreenPositionModeOptions[0], ValueType.string);
     data.exposed ??= true;
     data.expanded ??= true;
     data.preview ??= true;
@@ -46,12 +49,12 @@ export class ScreenPositionRC extends RC {
     const out = new Rete.Output('out', 'Out', Sockets.vec4);
     node
       .addOutput(out)
-      .addControl(new SelectControl('mode', node, 'Mode', ModeOptions as any, false));
+      .addControl(new SelectControl('mode', node, 'Mode', ScreenPositionModeOptions as any, false));
   }
 
   static initScreenPositionContext(
     compiler: ShaderGraphCompiler,
-    mode: Exclude<ModeValue, 'tiled'>,
+    mode: Exclude<ScreenPositionModeValue, 'tiled'>,
   ) {
     const node = { name: ScreenPositionRC.Name, data: {} } as any;
     const vertVar = 'ScreenPosition' + capitalizeFirstLetter(mode);

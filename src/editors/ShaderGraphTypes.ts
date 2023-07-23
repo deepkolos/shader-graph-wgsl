@@ -142,6 +142,8 @@ import {
   ReteRadialShearNode,
   ReteSpherizeNode,
   ReteTriplanarNode,
+  ReteSceneColorNode,
+  ReteSceneDepthNode,
 } from '../components';
 import { NodeData } from '../rete/core/data';
 import { Rete, ParameterData, GraphData } from '../types';
@@ -200,6 +202,8 @@ export type SGNodes =
   | ReteCameraNode
   | ReteObjectNode
   | ReteScreenNode
+  | ReteSceneColorNode
+  | ReteSceneDepthNode
   // math/basic
   | ReteSubtractNode
   | ReteDivideNode

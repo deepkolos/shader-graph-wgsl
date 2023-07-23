@@ -224,3 +224,6 @@ export const ValueTypeAbbreviationMap: { [k: string]: string } = {
   mat3: '3x3',
   mat2: '2x2',
 };
+
+export const ScreenPositionModeOptions = ['default', 'raw', 'center', 'tiled'] as const;
+export type ScreenPositionModeValue = ArrayElement<typeof ScreenPositionModeOptions>;

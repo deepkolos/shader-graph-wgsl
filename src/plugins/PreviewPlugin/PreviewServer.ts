@@ -2,7 +2,6 @@ import {
   AmbientLight,
   BoxGeometry,
   BufferGeometry,
-  Camera,
   CapsuleGeometry,
   Clock,
   Color,
@@ -16,18 +15,13 @@ import {
   RawShaderMaterial,
   Scene,
   SphereGeometry,
-  Vector3,
 } from 'three';
 import { getClientSize, PreviewClient } from './PreviewClient';
 import { ShaderGraphEditor } from '../../editors';
 import { Rete } from '../../types';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { SGController, WebGPUMaterial, WebGPURenderer, disposeGeometry } from '../../materials';
-
-const I_Model = new Matrix4();
-const IT_ModelView = new Matrix4();
-const IT_Model = new Matrix4();
-const cameraWS = new Vector3();
+import { FloorShader } from './floorShader';
 
 const scaleFactor = 1 / 15;
 
@@ -56,6 +50,7 @@ export class PreviewServer {
   renderer: WebGPURenderer;
   mainMaterial: WebGPUMaterial;
   disposed = false;
+  floor: Mesh<BoxGeometry, WebGPUMaterial>;
 
   constructor(public editor: ShaderGraphEditor) {
     this.canvas = document.createElement('canvas');
@@ -80,10 +75,33 @@ export class PreviewServer {
     this.camera3D.add(ambientLight, dirLight);
     this.scene.add(this.camera2D, this.camera3D);
 
+    const floorMaterial = new WebGPUMaterial();
+    this.floor = new Mesh(
+      new BoxGeometry(40 * scaleFactor, 2 * scaleFactor, 40 * scaleFactor),
+      floorMaterial,
+    );
+    floorMaterial.uniforms = {
+      modelViewMatrix: { value: new Matrix4(), type: 'mat4x4_f32' },
+      projectionMatrix: { value: new Matrix4(), type: 'mat4x4_f32' },
+    };
+    floorMaterial.vertexShader = FloorShader.vert;
+    floorMaterial.fragmentShader = FloorShader.frag;
+    floorMaterial.sg.uniformMap = {
+      modelViewMatrix: { name: 'modelViewMatrix', type: 'mat4x4<f32>' },
+      projectionMatrix: { name: 'projectionMatrix', type: 'mat4x4<f32>' },
+    };
+    this.floor.position.y = 12 * scaleFactor;
+    this.floor.updateMatrixWorld(true);
+    this.scene.add(this.floor);
+
     this.renderer.init().then(this.render);
   }
 
   updateGeometry3D(geometryName: string) {
+    if (geometryName === 'Toggle Floor') {
+      this.floor.visible = !this.floor.visible;
+      return;
+    }
     const geometry = this.geometries[geometryName as keyof typeof this.geometries];
     if (geometry) {
       this.geometry3D = geometry;
@@ -108,6 +126,14 @@ export class PreviewServer {
     requestAnimationFrame(this.render);
     // setTimeout(this.render, 500);
   };
+
+  updateFloor() {
+    const modelViewMatrix = this.floor.material.uniforms.modelViewMatrix.value as Matrix4;
+    const projectionMatrix = this.floor.material.uniforms.projectionMatrix.value as Matrix4;
+    this.floor.updateMatrixWorld(true);
+    modelViewMatrix.copy(this.floor.matrixWorld).multiply(this.camera3D.matrixWorldInverse);
+    projectionMatrix.copy(this.camera3D.projectionMatrix);
+  }
 
   updateMaterialUnifroms(camera: PerspectiveCamera | OrthographicCamera) {
     const { mesh, mainMaterial } = this;
@@ -157,13 +183,18 @@ export class PreviewServer {
 
   renderClient = (client: PreviewClient) => {
     if (client.enable) {
+      const floorVisible = this.floor.visible;
       this.mesh.material = client.node ? client.material : this.mainMaterial;
       this.mesh.geometry = client.type === '2d' ? this.geometry2D : this.geometry3D;
+      this.renderer.opaquePass.enabled = !client.node;
       const camera = client.type === '2d' ? this.camera2D : this.camera3D;
+      if (client.node) this.floor.visible = false;
       client.updateCamera(this.camera3D);
+      if (!client.node) this.updateFloor();
       this.updateMaterialUnifroms(camera);
       this.syncCanvasSize(client.canvas);
       this.renderer.render(this.scene, camera, client.ctx);
+      if (client.node) this.floor.visible = floorVisible;
     }
   };
 

@@ -686,20 +686,139 @@
         355.42959804794407
       ],
       "name": "PreviewNumber"
+    },
+    "664": {
+      "id": 664,
+      "data": {
+        "uvValue": "default",
+        "uvValueType": "vec4",
+        "outValue": 0,
+        "outValueType": "float",
+        "modeValue": "linear01",
+        "modeValueType": "string",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "uv": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -373.85587363697687,
+        750.8611410219091
+      ],
+      "name": "SceneDepth"
+    },
+    "896": {
+      "id": 896,
+      "data": {
+        "uvValue": "default",
+        "uvValueType": "vec4",
+        "outValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec4",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "uv": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -24.53235743661758,
+        771.0198077056773
+      ],
+      "name": "SceneColor"
+    },
+    "916": {
+      "id": 916,
+      "data": {
+        "uvValue": "default",
+        "uvValueType": "vec4",
+        "outValue": 0,
+        "outValueType": "float",
+        "modeValue": "eye",
+        "modeValueType": "string",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "uv": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -376.04696409883417,
+        1095.6785013734786
+      ],
+      "name": "SceneDepth"
+    },
+    "928": {
+      "id": 928,
+      "data": {
+        "uvValue": "default",
+        "uvValueType": "vec4",
+        "outValue": 0,
+        "outValueType": "float",
+        "modeValue": "raw",
+        "modeValueType": "string",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "uv": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -25.166192059033982,
+        1097.4644799062928
+      ],
+      "name": "SceneDepth"
     }
   },
   "UIState": {
     "showMainPreview": true,
     "showBlackBoard": false,
-    "showInspector": false
+    "showInspector": true
   },
   "type": "ShaderGraph",
-  "version": "0.0.0",
+  "version": "",
   "setting": {
     "template": "unlit",
     "precision": "single",
     "allowMaterialOverride": false,
-    "surfaceType": "opaque",
+    "surfaceType": "transparent",
     "blendingMode": "alpha",
     "renderFace": "front",
     "depthWrite": "auto",

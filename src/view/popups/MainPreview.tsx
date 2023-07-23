@@ -16,7 +16,16 @@ const MainPreviewTitle: FC = () => {
 
 interface MainPreviewProps extends PopupViewProps {}
 
-const MenuItems = ['Sphere', 'Capsule', 'Cylinder', 'Cube', 'Quad', 'Sprite', 'Custom Mesh'];
+const MenuItems = [
+  'Sphere',
+  'Capsule',
+  'Cylinder',
+  'Cube',
+  'Quad',
+  'Sprite',
+  'Custom Mesh',
+  'Toggle Floor',
+];
 
 export const MainPreview: FC<MainPreviewProps> = ({ editor, view }) => {
   const [show, setShow] = useState(false);

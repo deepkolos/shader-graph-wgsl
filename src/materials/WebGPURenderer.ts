@@ -15,6 +15,7 @@ import {
 } from 'three';
 import { WebGPUMaterial } from './WebGPUMaterial';
 import { wgsl } from './StructBuffer';
+import { OpaquePass } from './OpaquePass';
 
 declare global {
   interface GPUCanvasContext {
@@ -24,7 +25,7 @@ declare global {
 
 declare module 'three' {
   interface IUniform {
-    type: wgsl.Primitive | 'texture2d_f32';
+    type: wgsl.Primitive | 'texture2d_f32' | 'texture_depth_2d' | 'texture_2d<f32>';
   }
 }
 
@@ -56,6 +57,11 @@ export class WebGPURenderer {
   lastSubmit!: Promise<undefined>;
   samplerCache: { [k: string]: GPUSampler } = {};
   viewport: number[] = [0, 0];
+  opaquePass = new OpaquePass(this);
+  defaultDepthTexture?: GPUTexture;
+  defaultColorTexture?: GPUTexture;
+  defaultDepthTextureView?: GPUTextureView;
+  defaultColorTextureView?: GPUTextureView;
 
   async init() {
     this.adapter = (await navigator.gpu.requestAdapter({ powerPreference: 'high-performance' }))!;
@@ -139,6 +145,25 @@ export class WebGPURenderer {
       });
       this.depthTextures.set(key, depthTexture);
     }
+
+    if (!this.defaultDepthTexture) {
+      this.defaultDepthTexture = this.device.createTexture({
+        size: [1, 1, 1],
+        format: 'depth24plus',
+        dimension: '2d',
+        usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.TEXTURE_BINDING,
+      });
+      this.defaultDepthTextureView = this.defaultDepthTexture.createView();
+    }
+    if (!this.defaultColorTexture) {
+      this.defaultColorTexture = this.device.createTexture({
+        size: [1, 1, 1],
+        format: this.canvasFormat,
+        dimension: '2d',
+        usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.TEXTURE_BINDING,
+      });
+      this.defaultColorTextureView = this.defaultColorTexture.createView();
+    }
     return depthTexture;
   }
 
@@ -180,6 +205,7 @@ export class WebGPURenderer {
 
     if (material.version !== material.userData.version) {
       gpuMaterial.version = material.version;
+      // console.log(material, material.uniforms);
 
       (async () => {
         // 分离binding和uniform
@@ -193,18 +219,32 @@ export class WebGPURenderer {
             .map(async key => {
               const uniform = material.uniforms[key];
               const bindingCfg = material.sg.bindingMap[key.replace('sg_', '')];
-              if (uniform.type === 'texture2d_f32') {
+              const isDepthTexture = uniform.type === 'texture_depth_2d';
+              const isColorTexture =
+                uniform.type === 'texture2d_f32' || uniform.type === 'texture_2d<f32>';
+              if (isDepthTexture || isColorTexture) {
                 if (!bindingCfg) return;
                 const binding = bindingCfg.index;
                 bindingLayoutEntries.push({
                   binding,
                   visibility: GPUShaderStage.VERTEX | GPUShaderStage.FRAGMENT,
-                  texture: {},
+                  texture: { sampleType: isDepthTexture ? 'depth' : undefined },
                 });
-                const texture = await this.createTexture(uniform.value);
-                bindingEntries.push({ binding, resource: texture.createView() });
+                if (uniform.value instanceof GPUTextureView) {
+                  bindingEntries.push({ binding, resource: uniform.value });
+                } else if (uniform.value) {
+                  const texture = await this.createTexture(uniform.value);
+                  bindingEntries.push({ binding, resource: texture.createView() });
+                } else {
+                  bindingEntries.push({
+                    binding,
+                    resource: isDepthTexture
+                      ? this.defaultDepthTextureView!
+                      : this.defaultColorTextureView!,
+                  });
+                }
               } else if (uniformUsed.includes(key)) {
-                uniformStruct[key] = uniform.type;
+                uniformStruct[key] = uniform.type as wgsl.Primitive;
               }
             }),
         );
@@ -250,6 +290,8 @@ export class WebGPURenderer {
             bindingEntries.push({ binding: binding.index, resource: sampler });
           }
         });
+
+        // console.log(bindingLayoutEntries);
 
         const bindGroupLayout = device.createBindGroupLayout({
           entries: [
@@ -359,6 +401,36 @@ export class WebGPURenderer {
     }
   }
 
+  drawMesh(node: Mesh, passEncoder: GPURenderPassEncoder) {
+    this.prepareMesh(node);
+    const geometry = node.geometry;
+    const material = (
+      Array.isArray(node.material) ? node.material[0] : node.material
+    ) as WebGPUMaterial;
+    const gpuGeometry = geometry.userData as GPUGeometry;
+    const gpuMaterial = material.userData as GPUMaterial;
+    if (
+      !material.vertexShader ||
+      !material.fragmentShader ||
+      !gpuMaterial.pipeline ||
+      !gpuGeometry.position ||
+      gpuMaterial.pipeline instanceof Promise
+    )
+      return;
+
+    passEncoder.setPipeline(gpuMaterial.pipeline as GPURenderPipeline);
+    passEncoder.setBindGroup(0, gpuMaterial.bindGroup);
+    if (gpuGeometry.index) passEncoder.setIndexBuffer(gpuGeometry.index, 'uint16');
+    passEncoder.setVertexBuffer(0, gpuGeometry.position!);
+    passEncoder.setVertexBuffer(1, gpuGeometry.uv!);
+    passEncoder.setVertexBuffer(2, gpuGeometry.normal!);
+    if (gpuGeometry.index) {
+      passEncoder.drawIndexed(geometry.index!.count);
+    } else {
+      passEncoder.draw(geometry.getAttribute('position').count);
+    }
+  }
+
   render(scene: Scene, camera: Camera, targetCtx: GPUCanvasContext) {
     if (targetCtx.canvas.width === 0) return;
 
@@ -373,23 +445,32 @@ export class WebGPURenderer {
     camera.updateMatrixWorld();
 
     // 只是简单的shader graph 也不需要透明度排序啥
+    const opaqueList: Mesh[] = [];
+    const transparentList: Mesh[] = [];
     scene.traverseVisible(node => {
-      if (node instanceof Mesh) this.prepareMesh(node);
+      if (node instanceof Mesh) {
+        if (node.material.transparent) transparentList.push(node);
+        else opaqueList.push(node);
+      }
     });
 
+    const canvasColorView = targetCtx.getCurrentTexture().createView();
+    const canvasDepthView = depthTexture.createView();
+    const useOpaquePass = this.opaquePass.enabled;
+    this.opaquePass.init();
     // 写入draw calls
     const commandEncoder = this.device.createCommandEncoder();
-    const passEncoder = commandEncoder.beginRenderPass({
+    let passEncoder = commandEncoder.beginRenderPass({
       colorAttachments: [
         {
-          view: targetCtx.getCurrentTexture().createView(),
+          view: useOpaquePass ? this.opaquePass.colorView! : canvasColorView,
           clearValue,
           loadOp: 'clear',
           storeOp: 'store',
         },
       ],
       depthStencilAttachment: {
-        view: depthTexture.createView(),
+        view: useOpaquePass ? this.opaquePass.depthView! : canvasDepthView,
         depthClearValue: 1,
         depthLoadOp: 'clear',
         depthStoreOp: 'store',
@@ -400,37 +481,34 @@ export class WebGPURenderer {
     passEncoder.setViewport(0, 0, w, h, 0, 1);
     passEncoder.setScissorRect(0, 0, w, h);
 
-    scene.traverseVisible(node => {
-      if (node instanceof Mesh) {
-        const geometry = node.geometry;
-        const material = (
-          Array.isArray(node.material) ? node.material[0] : node.material
-        ) as WebGPUMaterial;
-        const gpuGeometry = geometry.userData as GPUGeometry;
-        const gpuMaterial = material.userData as GPUMaterial;
-        if (
-          !material.vertexShader ||
-          !material.fragmentShader ||
-          !gpuMaterial.pipeline ||
-          !gpuGeometry.position ||
-          gpuMaterial.pipeline instanceof Promise
-        )
-          return;
+    opaqueList.forEach(node => this.drawMesh(node, passEncoder));
+    if (useOpaquePass) {
+      passEncoder.end();
+      passEncoder = commandEncoder.beginRenderPass({
+        colorAttachments: [
+          {
+            view: canvasColorView,
+            clearValue,
+            loadOp: 'clear',
+            storeOp: 'store',
+          },
+        ],
+        depthStencilAttachment: {
+          view: canvasDepthView,
+          depthClearValue: 1,
+          depthLoadOp: 'clear',
+          depthStoreOp: 'store',
+        },
+      });
+      // render opaque mesh
+      this.opaquePass.renderOpaque(passEncoder);
+      transparentList.forEach(node => this.drawMesh(node, passEncoder));
+      passEncoder.end();
+    } else {
+      transparentList.forEach(node => this.drawMesh(node, passEncoder));
+      passEncoder.end();
+    }
 
-        passEncoder.setPipeline(gpuMaterial.pipeline as GPURenderPipeline);
-        passEncoder.setBindGroup(0, gpuMaterial.bindGroup);
-        if (gpuGeometry.index) passEncoder.setIndexBuffer(gpuGeometry.index, 'uint16');
-        passEncoder.setVertexBuffer(0, gpuGeometry.position!);
-        passEncoder.setVertexBuffer(1, gpuGeometry.uv!);
-        passEncoder.setVertexBuffer(2, gpuGeometry.normal!);
-        if (gpuGeometry.index) {
-          passEncoder.drawIndexed(geometry.index!.count);
-        } else {
-          passEncoder.draw(geometry.getAttribute('position').count);
-        }
-      }
-    });
-    passEncoder.end();
     this.queue.submit([commandEncoder.finish()]);
     this.lastSubmit = this.queue.onSubmittedWorkDone();
   }

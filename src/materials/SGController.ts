@@ -38,6 +38,7 @@ const IT_ModelView = new Matrix4();
 const ViewProj = new Matrix4();
 const I_ViewProj = new Matrix4();
 const cameraWS = new Vector3();
+const zBufferParam = new Vector4();
 
 export interface TemplateStore {
   [template: string]: {
@@ -100,6 +101,11 @@ type SetParams = {
   Camera: {
     [k in 'orthographic' | 'nearPlane' | 'farPlane' | 'zBufferSign' | 'width' | 'height']: number;
   };
+  SceneDepth: {
+    depthTexture: Texture | GPUTextureView | undefined;
+    zBufferParam: Vector4 | undefined;
+  };
+  SceneColor: { colorTexture: Texture | GPUTextureView | undefined };
 };
 
 export class SGController {
@@ -149,10 +155,15 @@ export class SGController {
       else if (nodeName === 'TransformationMatrix') value = new Matrix4();
 
       const unifromKey = compilation.uniformMap[contextKey];
-      material.uniforms[unifromKey.name] = {
-        value,
-        type: unifromKey.type.replace('<', '_').replace('>', '') as any,
-      };
+      const type = unifromKey.type.replace('<', '_').replace('>', '') as any;
+      material.uniforms[unifromKey.name] = { value, type };
+    });
+
+    Object.keys(compilation.bindingMap).forEach(contextKey => {
+      const binding = compilation.bindingMap[contextKey];
+      if (!material.uniforms[binding.name] && !compilation.resource.texture[contextKey]) {
+        material.uniforms[binding.name] = { value: null, type: binding.type as any };
+      }
     });
 
     // init resource
@@ -214,21 +225,13 @@ export class SGController {
     name: Name,
     value: SetParams[NodeName][Name],
   ): void {
-    const { material, uniformMap } = this;
+    const { material, uniformMap, bindingMap } = this;
     const contextKey = `${nodeName}_${name as string}`;
-    const uniformKey = uniformMap[contextKey];
+    const uniformKey = uniformMap[contextKey] || bindingMap[contextKey];
     const uniform = material.uniforms[uniformKey?.name];
     if (uniform) {
       uniform.value = value;
       material.uniformsNeedUpdate = true;
-      // texture2d更新时 尝试更新对应size
-      // if (value instanceof Texture) {
-      //   this.set(
-      //     'TexelSize',
-      //     uniformMap[contextKey] + '_size',
-      //     new Vector2(value.image!.width, value.image!.height),
-      //   );
-      // }
     }
   }
 
@@ -254,6 +257,16 @@ export class SGController {
     camera: PerspectiveCamera | OrthographicCamera,
     renderer: WebGPURenderer,
   ): void {
+    if (this.material.transparent) {
+      this.set('SceneDepth', 'depthTexture', renderer.opaquePass.depthView);
+      this.set('SceneColor', 'colorTexture', renderer.opaquePass.colorView);
+    }
+    // FIXME 结果还是不太对...但是换了矩阵的推导结果和unity的是一样的...
+    const { near: n, far: f } = camera;
+    const x = 1 - f / n;
+    const y = f / n;
+    zBufferParam.set(x, y, x / f, y / f);
+    this.set('SceneDepth', 'zBufferParam', zBufferParam);
     this.set('Matrix', 'Model', object.matrixWorld);
     this.set('Matrix', 'View', camera.matrixWorldInverse);
     this.set('Matrix', 'Proj', camera.projectionMatrix);

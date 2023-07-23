@@ -43,6 +43,8 @@ import {
   CameraRC,
   ObjectRC,
   ScreenRC,
+  SceneDepthRC,
+  SceneColorRC,
 } from './input';
 import {
   AbsoluteRC,
@@ -262,4 +264,6 @@ export const initShaderGraphComponents = () => [
   new RadialShearRC(),
   new SpherizeRC(),
   new TriplanarRC(),
+  new SceneDepthRC(),
+  new SceneColorRC(),
 ];
