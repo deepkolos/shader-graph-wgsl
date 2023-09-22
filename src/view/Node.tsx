@@ -1,4 +1,5 @@
 import './Node.less';
+import './Rete.less';
 import React from 'react';
 import { Title, IO, Preview } from './common';
 import { ReteNode, Rete } from '../types';
