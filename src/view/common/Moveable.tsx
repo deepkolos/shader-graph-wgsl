@@ -24,6 +24,7 @@ export const Moveable: FC<MoveableProps> = ({ gap = 0, children, x = 0, y = 0, c
   useEffect(() => {
     const el = canRef.current!;
     const moveState = { x, y, w: 0, h: 0 };
+    let stateFromProps = true;
     moveableState.current.moveState = moveState;
     let startInfo: { sx: number; sy: number; cx: number; cy: number } | undefined;
     let canRectCache: Rect | undefined;
@@ -39,8 +40,13 @@ export const Moveable: FC<MoveableProps> = ({ gap = 0, children, x = 0, y = 0, c
       return canRect;
     };
     const move = () => {
-      const { x, y, w, h } = moveState;
       const [cx, cy, cw, ch, px, py] = getCanRect();
+      if (stateFromProps) {
+        moveState.x -= cx;
+        moveState.y -= cy;
+        stateFromProps = false;
+      }
+      const { x, y, w, h } = moveState;
       moveState.x = Math.max(gap + cx, Math.min(cx + cw - w - gap, x + px)) - px;
       moveState.y = Math.max(gap + cy, Math.min(cy + ch - h - gap, y + py)) - py;
       el.style.transform = `translate(${moveState.x}px, ${moveState.y}px)`;

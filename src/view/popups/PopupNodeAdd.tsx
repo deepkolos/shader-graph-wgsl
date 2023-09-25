@@ -37,7 +37,7 @@ export const PopupNodeAdd: FC<PopupNodeAddProps> = ({ editor, view, x = 0, y = 0
   const setDataRef = useRef(setData);
   const [keywordDebounced] = useDebounce(keyword, 150);
   const nodeRemovedRef = useRef(0);
-  const [kbCursor, setkbCursor] = useState(0);
+  // const [kbCursor, setkbCursor] = useState(0);
   setDataRef.current = setData;
 
   const onItemClick = async (item: TreeNode) => {
@@ -191,8 +191,8 @@ export const PopupNodeAdd: FC<PopupNodeAddProps> = ({ editor, view, x = 0, y = 0
   }, [keywordDebounced]);
 
   return (
-    <Popup view={view} onShowChange={show => (show ? inputRef.current?.focus() : setKeyword(''))}>
-      <Moveable gap={10} x={x} y={y}>
+    <Popup view={view} onShowChange={show => (show ? inputRef.current?.focus() : setKeyword(''))} root={editor.view.container}>
+      <Moveable gap={10} x={x} y={y} containerEl={editor.view.container}>
         <div className="sg-popup-node-add">
           <PopupTitle>{'Create Node'}</PopupTitle>
           <div className="sg-popup-node-add-search">

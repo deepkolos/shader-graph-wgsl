@@ -88,10 +88,11 @@ export class CameraRC extends RC {
     if (node.outputs.position.connections.length || node.outputs.direction.connections.length) {
       const I_View = TransformationMatrixRC.initMatrixContext(compiler, 'I_View');
       // TODO 确认是否正确
-      // 与unity的写法不一样, unity的实现有点绕
+      // 与unity的写法不一样, unity的实现有点绕, 结果与unity不一样, 需要检查逻辑...
       // -1 * mul((float3x3)UNITY_MATRIX_M, transpose(mul(UNITY_MATRIX_I_M, UNITY_MATRIX_I_V)) [2].xyz)
       outputs.direction = `-(${I_View}[2].xyz)`;
-      outputs.position = `vec3f(${I_View}[0][3], ${I_View}[1][3], ${I_View}[2][3])`;
+      outputs.position = `${I_View}[3].xyz`;
+      
     }
 
     return { code: '', outputs };

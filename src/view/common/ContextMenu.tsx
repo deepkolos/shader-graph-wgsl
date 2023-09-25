@@ -9,9 +9,19 @@ interface ContextMenuProps extends DefaultProps {
   onVisiableChange: (v: boolean) => void;
   clickable?: boolean;
   disabled?: boolean;
+  root?: HTMLElement;
 }
 
-export const ContextMenu: FC<ContextMenuProps> = ({ disabled, visiable, onVisiableChange, children, className, items, clickable }) => {
+export const ContextMenu: FC<ContextMenuProps> = ({
+  disabled,
+  visiable,
+  onVisiableChange,
+  children,
+  className,
+  items,
+  clickable,
+  root,
+}) => {
   const [position, setPosition] = useState([0, 0]);
   const onContextMenu = (e: any) => {
     if (disabled) return;
@@ -26,10 +36,15 @@ export const ContextMenu: FC<ContextMenuProps> = ({ disabled, visiable, onVisiab
   };
 
   return (
-    <div className={className} onPointerDownCapture={onPointerDown} onContextMenuCapture={onContextMenu} onClick={clickable ? onContextMenu : undefined}>
+    <div
+      className={className}
+      onPointerDownCapture={onPointerDown}
+      onContextMenuCapture={onContextMenu}
+      onClick={clickable ? onContextMenu : undefined}
+    >
       {children}
-      <Popup visiable={visiable} onShowChange={onVisiableChange}>
-        <MenuList x={position[0]} y={position[1]} items={items}></MenuList>
+      <Popup visiable={visiable} onShowChange={onVisiableChange} root={root}>
+        <MenuList x={position[0]} y={position[1]} items={items} root={root}></MenuList>
       </Popup>
     </div>
   );

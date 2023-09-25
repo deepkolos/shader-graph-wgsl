@@ -13,9 +13,10 @@ export interface MenuListProps {
   items: Array<Array<MenuItem>>;
   x: number;
   y: number;
+  root?: HTMLElement;
 }
 
-export const MenuList: FC<MenuListProps> = ({ items, x, y }) => {
+export const MenuList: FC<MenuListProps> = ({ items, x, y, root }) => {
   const [submenuPosition, setSubmenuPosition] = useState<'left' | 'right'>('right');
   const canRef = useRef<HTMLDivElement>();
 
@@ -24,10 +25,18 @@ export const MenuList: FC<MenuListProps> = ({ items, x, y }) => {
     const resizeObserver = new ResizeObserver(entries => {
       const { width, height } = entries[0].contentRect;
       const gap = 20;
-      const nx = Math.min(innerWidth - width - gap, x);
-      const ny = Math.min(innerHeight - height - gap, y);
+      let px = x;
+      let py = y;
+      if (root) {
+        const rootRect = root.getBoundingClientRect();
+        px -= rootRect.left;
+        py -= rootRect.top;
+      }
+      const nx = Math.min(innerWidth - width - gap, px);
+      const ny = Math.min(innerHeight - height - gap, py);
       el.style.top = ny + 'px';
       el.style.left = nx + 'px';
+      el.style.opacity = '1';
       if (x > innerWidth - width * 2 - gap) setSubmenuPosition('left');
     });
     resizeObserver.observe(el);

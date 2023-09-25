@@ -63,6 +63,7 @@ export const MainPreview: FC<MainPreviewProps> = ({ editor, view }) => {
 
           <ContextMenu
             className="sg-main-preview-canvas-can"
+            root={editor.view.container}
             visiable={show}
             onVisiableChange={setShow}
             items={[MenuItems.map(name => ({ name, onclick: onMenuClick }))]}

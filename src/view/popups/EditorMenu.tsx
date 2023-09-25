@@ -240,7 +240,7 @@ const EditorContextMenu: FC<MenuProps> = ({ editor, connection, node, popupAdd, 
   ];
 
   return (
-    <Popup view={view}>
+    <Popup view={view} root={editor.view.container}>
       <MenuList
         x={x}
         y={y}
@@ -255,6 +255,7 @@ const EditorContextMenu: FC<MenuProps> = ({ editor, connection, node, popupAdd, 
             selectUnusedNode,
           ].filter(i => !!i) as MenuListProps['items']
         }
+        root={editor.view.container}
       />
     </Popup>
   );

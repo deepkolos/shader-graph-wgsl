@@ -73,6 +73,7 @@ const ParameterItem: FC<ParameterItemProps> = ({ editor, view, item }) => {
 
   return (
     <ContextMenu
+      root={editor.view.container}
       visiable={show}
       disabled={edit}
       onVisiableChange={setShow}
@@ -188,6 +189,7 @@ export const BlackBoard: FC<BlackBoardProps> = ({ visiable, view, editor, subtit
             <div className="sg-blackboard-h2">
               <div className="sg-blackboard-subtitle">{subtitle}</div>
               <ContextMenu
+                root={editor.view.container}
                 clickable
                 visiable={showMenu}
                 items={[menuList.map(name => ({ name, onclick: onItemClick }))]}
