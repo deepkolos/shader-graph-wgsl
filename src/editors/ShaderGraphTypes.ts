@@ -401,5 +401,5 @@ export const SGSettingValueCfgs: SettingValueCfgs = {
   depthTest: {
     options: ['never', 'less', 'equal', 'l equal', 'greater', 'not equal', 'g equal', 'always'],
   },
-  blendingMode: { options: ['alpha', 'premultiply', 'additive', 'multiply'] },
+  blendingMode: { options: ['alpha', 'premultiply', 'additive', 'multiply', 'normal'] },
 };
