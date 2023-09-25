@@ -144,6 +144,7 @@ import {
   ReteTriplanarNode,
   ReteSceneColorNode,
   ReteSceneDepthNode,
+  ReteRefractNode,
 } from '../components';
 import { NodeData } from '../rete/core/data';
 import { Rete, ParameterData, GraphData } from '../types';
@@ -269,6 +270,7 @@ export type SGNodes =
   | ReteSphereMaskNode
   | ReteCrossProductNode
   | ReteTransformNode
+  | ReteRefractNode
   // math/wave
   | ReteNoiseSineWaveNode
   | ReteSawtoothWaveNode

@@ -60,8 +60,8 @@ export class SampleTexture2DRC extends RC {
     const rgba = new Rete.Output('rgba', 'RGBA', Sockets.vec4);
     const r = new Rete.Output('r', 'R', Sockets.float);
     const g = new Rete.Output('g', 'G', Sockets.float);
-    const b = new Rete.Output('a', 'B', Sockets.float);
-    const a = new Rete.Output('b', 'A', Sockets.float);
+    const b = new Rete.Output('b', 'B', Sockets.float);
+    const a = new Rete.Output('a', 'A', Sockets.float);
     [rgba, r, g, b, a].forEach(o => node.addOutput(o));
 
     const texture = new Rete.Input('texture', 'Texture', Sockets.texture2d);

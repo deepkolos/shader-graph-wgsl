@@ -89,6 +89,7 @@ import {
   ReciprocalRC,
   ReciprocalSquareRootRC,
   ReflectionRC,
+  RefractRC,
   RemapRC,
   RotateAboutAxisRC,
   RoundRC,
@@ -266,4 +267,5 @@ export const initShaderGraphComponents = () => [
   new TriplanarRC(),
   new SceneDepthRC(),
   new SceneColorRC(),
+  new RefractRC(),
 ];

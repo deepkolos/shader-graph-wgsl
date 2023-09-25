@@ -7,3 +7,4 @@ export * from './ReflectionRC';
 export * from './RotateAboutAxisRC';
 export * from './SphereMaskRC';
 export * from './TransformRC';
+export * from './RefractRC';
