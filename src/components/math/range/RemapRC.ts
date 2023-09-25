@@ -53,11 +53,11 @@ export class RemapRC extends RC {
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteRemapNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'out', 'remap');
     const inVar = compiler.getInputVarConverted(node, 'in');
-    const minVar = compiler.getInputVarConverted(node, 'inMinMax');
-    const maxVar = compiler.getInputVarConverted(node, 'outMinMax');
+    const inMinMaxVar = compiler.getInputVarConverted(node, 'inMinMax');
+    const outMinMaxVar = compiler.getInputVarConverted(node, 'outMinMax');
     return {
       outputs: { out: outVar },
-      code: `let ${outVar} = ${maxVar}.x + (${inVar} - ${minVar}.x) * (${maxVar}.y - ${minVar}.x) / (${minVar}.y - ${maxVar}.x);`,
+      code: `let ${outVar} = ${outMinMaxVar}.x + (${inVar} - ${inMinMaxVar}.x) * (${outMinMaxVar}.y - ${outMinMaxVar}.x) / (${inMinMaxVar}.y - ${inMinMaxVar}.x);`,
     };
   }
 }
