@@ -73,6 +73,9 @@ export class VariableDefRC extends RC {
     meta.internalIO = ['out'];
     meta.nodeCfgs = NodeCfgs;
     meta.uncloneable = true;
+    if (data.nameValue) {
+      meta.label = data.nameValue + '(VarDef)';
+    }
   }
 
   async builder(node: ReteVariableDefNode) {
