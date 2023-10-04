@@ -2,7 +2,7 @@ export const UnlitSGTemplate = Object.freeze({
   vert: (body: string) => /* wgsl */ `fn sg_vert(
   positionOS: ptr<function, vec3<f32>>, 
   normalOS: ptr<function, vec3<f32>>, 
-  tangentOS: ptr<function, vec3<f32>>,
+  tangentOS: ptr<function, vec4<f32>>,
   v: ptr<function, Varying>,
   uv: vec2<f32>
 ) {
@@ -27,11 +27,12 @@ fn main(
   @location(0) position: vec3<f32>,
   @location(1) uv: vec2<f32>,
   @location(2) normal: vec3<f32>,
+  @location(3) tangent: vec4<f32>,
 ) -> Varying {
   var v: Varying;
   var sg_position = vec3<f32>(position);
   var sg_normal = vec3<f32>(normal);
-  var sg_tangent = vec3<f32>(0);
+  var sg_tangent = tangent;
   sg_vert(&sg_position, &sg_normal, &sg_tangent, &v, uv);
 
   v.position = u.sg_Matrix_Proj * u.sg_Matrix_ModelView * vec4<f32>(sg_position, 1.0);

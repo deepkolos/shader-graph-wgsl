@@ -1,4 +1,4 @@
-import { ShaderGraphCompiler, SGNodeOutput } from '../../../compilers';
+import { ShaderGraphCompiler, SGNodeOutput, initTBNContext } from '../../../compilers';
 import { SGNodeData } from '../../../editors';
 import { Sockets } from '../../../sockets';
 import { ExtendReteNode, ValueType, Rete, SpaceValue, SpaceSuffixMap } from '../../../types';
@@ -67,13 +67,14 @@ export class ViewVectorRC extends RC {
       vertVar = compiler.setContext('vertShared', node, key, codeFn);
       fragVar = compiler.setContext('fragShared', node, key, codeFn);
     } else {
-      // TODO
-      const codeFn = (varName: string) => `let ${varName} = vec3<f32>(0);`;
+      const viewVectorVar = ViewVectorRC.initViewVectorContext(compiler, 'world');
+      const { TBN_IT, TBN_IT_sgn } = initTBNContext(compiler, 'world')!;
+      const codeFn = (varName: string) => `let ${varName} = ${TBN_IT_sgn} * (${TBN_IT} * ${viewVectorVar});`;
       vertVar = compiler.setContext('vertShared', node, key, codeFn);
       fragVar = compiler.setContext('fragShared', node, key, codeFn);
     }
 
-    return compiler.setVarNameMap(node, key, vertVar, fragVar);
+    return compiler.setVarNameMap(node, key + '_def', vertVar, fragVar);
   }
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteViewVectorNode>): SGNodeOutput {

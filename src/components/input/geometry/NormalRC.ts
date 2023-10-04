@@ -38,9 +38,7 @@ export class NormalRC extends RC {
     const out = new Rete.Output('out', 'Out', Sockets.vec3);
     node
       .addOutput(out)
-      .addControl(
-        new SelectControl('space', node, 'Space', ['object', 'view', 'world', 'tangent'], false),
-      );
+      .addControl(new SelectControl('space', node, 'Space', ['object', 'view', 'world', 'tangent'], false));
   }
 
   static initNormalContext(compiler: ShaderGraphCompiler, space: SpaceValue) {
@@ -58,16 +56,11 @@ export class NormalRC extends RC {
         const IT_ModelViewVar = TransformationMatrixRC.initMatrixContext(compiler, 'IT_ModelView');
         code = `let ${vertVar} = mat3x3<f32>(${IT_ModelViewVar}[0].xyz, ${IT_ModelViewVar}[1].xyz, ${IT_ModelViewVar}[2].xyz) * (*normalOS);`;
       } else {
-        code = `let ${vertVar} = vec3<f32>(0);`; // TODO
+        code = `let ${vertVar} = vec3<f32>(0, 0, 1);`; // TODO
       }
       compiler.setContext('vertShared', node, key, { varName: vertVar, code });
     }
-    const varyingVar = compiler.setContext(
-      'varyings',
-      node,
-      key,
-      varName => `${varName}: vec3<f32>`,
-    );
+    const varyingVar = compiler.setContext('varyings', node, key, varName => `${varName}: vec3<f32>`);
     const fragVar = compiler.setContext(
       'fragShared',
       node,

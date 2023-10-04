@@ -49,6 +49,7 @@ export class SampleTexture2DRC extends RC {
     node.initValueType('type', 'default', ValueType.string);
     node.initValueType('space', 'object', ValueType.string);
     data.expanded ??= true;
+    data.preview ??= true;
 
     meta.previewDisabled = false;
     meta.category = 'input/texture';

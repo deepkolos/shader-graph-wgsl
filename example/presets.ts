@@ -31,6 +31,7 @@ import demoFlowMapSubGraph from './demo/demoFlowMapSubGraph.json';
 import demoFlowMap from './demo/demoFlowMap.json';
 import demoImageFlip from './demo/demoImageFlip.json';
 import demoCartoonWater from './demo/demoCartoonWater';
+import demoSkybox from './demo/demoSkybox.json';
 
 export const Presets = {
   devCompile,
@@ -66,4 +67,5 @@ export const Presets = {
   demoFlowMap,
   demoImageFlip,
   demoCartoonWater,
+  demoSkybox,
 };

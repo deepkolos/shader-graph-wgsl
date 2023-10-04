@@ -45,6 +45,8 @@ import {
   ScreenRC,
   SceneDepthRC,
   SceneColorRC,
+  BiTangentVectorRC,
+  TangentVectorRC,
 } from './input';
 import {
   AbsoluteRC,
@@ -268,4 +270,6 @@ export const initShaderGraphComponents = () => [
   new SceneDepthRC(),
   new SceneColorRC(),
   new RefractRC(),
+  new TangentVectorRC(),
+  new BiTangentVectorRC(),
 ];

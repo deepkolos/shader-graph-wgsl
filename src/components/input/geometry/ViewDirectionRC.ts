@@ -1,4 +1,4 @@
-import { ShaderGraphCompiler, SGNodeOutput } from '../../../compilers';
+import { ShaderGraphCompiler, SGNodeOutput, initTBNContext } from '../../../compilers';
 import { SGNodeData } from '../../../editors';
 import { Sockets } from '../../../sockets';
 import { ExtendReteNode, ValueType, Rete, SpaceValue, SpaceSuffixMap } from '../../../types';
@@ -37,21 +37,39 @@ export class ViewDirectionRC extends RC {
   async builder(node: ReteViewDirectionNode) {
     this.initNode(node);
     const out = new Rete.Output('out', 'Out', Sockets.vec3);
-    node.addOutput(out).addControl(new SelectControl('space', node, 'Space', ['object', 'view', 'world', 'tangent'], false));
+    node
+      .addOutput(out)
+      .addControl(
+        new SelectControl('space', node, 'Space', ['object', 'view', 'world', 'tangent'], false),
+      );
   }
 
   static initViewDirectionContext(compiler: ShaderGraphCompiler, space: SpaceValue) {
     const node = { name: ViewDirectionRC.Name, data: {} } as any;
     const suffix = SpaceSuffixMap[space];
     const key = 'viewDir' + suffix;
+
+    if (space === 'tangent') {
+      const viewVectorVar = ViewVectorRC.initViewVectorContext(compiler, 'world');
+      const { TBN_IT, TBN_IT_sgn } = initTBNContext(compiler, 'world')!;
+      const codeFn = (varName: string) =>
+        `let ${varName} = normalize(${TBN_IT_sgn} * (${TBN_IT} * ${viewVectorVar}));`;
+      const vertVar = compiler.setContext('vertShared', node, key, codeFn);
+      const fragVar = compiler.setContext('fragShared', node, key, codeFn);
+      return compiler.setVarNameMap(node, key + '_def', vertVar, fragVar);
+    }
+
     const viewVectorVar = ViewVectorRC.initViewVectorContext(compiler, space);
     const codeFn = (varName: string) => `let ${varName} = normalize(${viewVectorVar});`;
     const vertVar = compiler.setContext('vertShared', node, key, codeFn);
     const fragVar = compiler.setContext('fragShared', node, key, codeFn);
-    return compiler.setVarNameMap(node, key, vertVar, fragVar);
+    return compiler.setVarNameMap(node, key + '_def', vertVar, fragVar);
   }
 
   compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteViewDirectionNode>): SGNodeOutput {
-    return { outputs: { out: ViewDirectionRC.initViewDirectionContext(compiler, node.data.spaceValue) }, code: '' };
+    return {
+      outputs: { out: ViewDirectionRC.initViewDirectionContext(compiler, node.data.spaceValue) },
+      code: '',
+    };
   }
 }

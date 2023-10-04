@@ -1,7 +1,14 @@
 import { ShaderGraphCompiler, SGNodeOutput } from '../../../compilers';
 import { SGNodeData } from '../../../editors';
 import { Sockets } from '../../../sockets';
-import { ExtendReteNode, ValueType, Rete, SpaceValue, SpaceSuffixMap } from '../../../types';
+import {
+  ExtendReteNode,
+  ValueType,
+  Rete,
+  SpaceValue,
+  SpaceSuffixMap,
+  SpaceOptions,
+} from '../../../types';
 import { NodeView, SelectControl } from '../../../view';
 import { RC } from '../../ReteComponent';
 import { TransformationMatrixRC } from '../matrix';
@@ -38,9 +45,7 @@ export class PositionRC extends RC {
     const out = new Rete.Output('out', 'Out', Sockets.vec3);
     node
       .addOutput(out)
-      .addControl(
-        new SelectControl('space', node, 'Space', ['object', 'view', 'world', 'tangent'], false),
-      );
+      .addControl(new SelectControl('space', node, 'Space', SpaceOptions as any, false));
   }
 
   static initPositionContext(compiler: ShaderGraphCompiler, space: SpaceValue) {
@@ -58,7 +63,7 @@ export class PositionRC extends RC {
         const ModelViewVar = TransformationMatrixRC.initMatrixContext(compiler, 'ModelView');
         code = `let ${vertVar} = (${ModelViewVar} * vec4<f32>(*positionOS, 1.0)).xyz;`;
       } else {
-        code = `let ${vertVar} = vec3<f32>(0);`; // TODO
+        code = `let ${vertVar} = vec3<f32>(0,0,0);`; // tangent
       }
       compiler.setContext('vertShared', node, key, { varName: vertVar, code });
     } else {

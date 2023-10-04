@@ -2,7 +2,7 @@ import { NodeView, DynamicControl, SelectControl, SelectDualControl } from '../.
 import { Sockets } from '../../../sockets';
 import { ArrayElement, ExtendReteNode, Rete, ValueType } from '../../../types';
 import { RC } from '../../ReteComponent';
-import { ShaderGraphCompiler, SGNodeOutput } from '../../../compilers';
+import { ShaderGraphCompiler, SGNodeOutput, initTBNContext } from '../../../compilers';
 import { SGNodeData } from '../../../editors';
 import { TransformationMatrixRC } from '../../input';
 
@@ -68,48 +68,54 @@ export class TransformRC extends RC {
     // space 相同直接转发inVar即可
     if (inSpace === outSpace) return { outputs: { out: inVar }, code: '' };
 
-    const outVar = compiler.getOutVarName(node, 'out', 'transform');
+    const outVar = compiler.getOutVarName(node, 'out', combine);
     const typeClass = compiler.getTypeClass(node.data.outValueType);
     const Mat = (type: Parameters<typeof TransformationMatrixRC.initMatrixContext>['1']) =>
       TransformationMatrixRC.initMatrixContext(compiler, type);
     const w = node.data.typeValue === 'position' ? '1.0' : '0.0';
     const vec4Var = `vec4<f32>(${inVar}, ${w})`;
-
-    // TODO tangent
+    const { TBN, TBN_IT, TBN_IT_sgn } = initTBNContext(compiler, 'world')!;
 
     let varCode = `${typeClass}(0)`;
     if (combine === 'object_to_world') {
       varCode = `${Mat('Model')} * ${vec4Var}`;
     }
     if (combine === 'object_to_view') {
-      varCode = `${Mat('I_View')} * ${Mat('Model')} * ${vec4Var}`;
+      varCode = `${Mat('ModelView')} * ${vec4Var}`;
     }
     if (combine === 'object_to_tangent') {
+      const model = Mat('Model');
+      varCode = `normalize(${TBN_IT_sgn} * (${TBN_IT} * (mat3x3f(${model}[0].xyz, ${model}[1].xyz, ${model}[2].xyz) * ${vec4Var}.xyz)))`;
     }
 
     if (combine === 'world_to_object') {
       varCode = `${Mat('I_Model')} * ${vec4Var}`;
     }
     if (combine === 'world_to_view') {
-      varCode = `${Mat('I_View')} * ${vec4Var}`;
+      varCode = `${Mat('View')} * ${vec4Var}`;
     }
     if (combine === 'world_to_tangent') {
+      varCode = `normalize(${TBN_IT_sgn} * (${TBN_IT} * ${vec4Var}.xyz))`;
     }
 
     if (combine === 'view_to_object') {
-      varCode = `${Mat('I_Model')} * ${Mat('View')} * ${vec4Var}`;
+      varCode = `${Mat('I_ModelView')} * ${vec4Var}`;
     }
     if (combine === 'view_to_world') {
-      varCode = `${Mat('View')} * ${vec4Var}`;
+      varCode = `${Mat('I_View')} * ${vec4Var}`;
     }
     if (combine === 'view_to_tangent') {
+      varCode = `normalize(${TBN_IT_sgn} * (${TBN_IT} * (${Mat('View')} * vec4(${vec4Var}.xyz, 1.)).xyz))`;
     }
 
     if (combine === 'tangent_to_object') {
+      varCode = `${Mat('I_Model')} * vec4(${vec4Var}.xyz * ${TBN}, ${w})`;
     }
     if (combine === 'tangent_to_world') {
+      varCode = `vec4(${vec4Var}.xyz * ${TBN}, ${w})`;
     }
     if (combine === 'tangent_to_view') {
+      varCode = `${Mat('I_View')} * vec4(${vec4Var}.xyz * ${TBN}, ${w})`;
     }
 
     return {

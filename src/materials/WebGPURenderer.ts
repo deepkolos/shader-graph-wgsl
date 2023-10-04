@@ -42,6 +42,7 @@ export interface GPUGeometry {
   position?: GPUBuffer;
   uv?: GPUBuffer;
   normal?: GPUBuffer;
+  tangent?: GPUBuffer;
   index?: GPUBuffer;
 }
 
@@ -180,7 +181,8 @@ export class WebGPURenderer {
     const gpuMaterial = material.userData as GPUMaterial;
 
     if (!gpuGeometry.position) {
-      (['position', 'normal', 'uv'] as const).forEach(name => {
+      geometry.computeTangents();
+      (['position', 'normal', 'uv', 'tangent'] as const).forEach(name => {
         const attribute = geometry.getAttribute(name);
         let bufferAttribute = attribute as BufferAttribute;
         if (attribute instanceof InterleavedBuffer) {
@@ -317,7 +319,7 @@ export class WebGPURenderer {
           vertex: {
             module: vsm,
             entryPoint: 'main',
-            // position uv normal
+            // position uv normal tangent
             buffers: [
               {
                 arrayStride: 4 * 3,
@@ -330,6 +332,10 @@ export class WebGPURenderer {
               {
                 arrayStride: 4 * 3,
                 attributes: [{ shaderLocation: 2, offset: 0, format: 'float32x3' }],
+              },
+              {
+                arrayStride: 4 * 4,
+                attributes: [{ shaderLocation: 3, offset: 0, format: 'float32x4' }],
               },
             ],
           },
@@ -424,6 +430,7 @@ export class WebGPURenderer {
     passEncoder.setVertexBuffer(0, gpuGeometry.position!);
     passEncoder.setVertexBuffer(1, gpuGeometry.uv!);
     passEncoder.setVertexBuffer(2, gpuGeometry.normal!);
+    passEncoder.setVertexBuffer(3, gpuGeometry.tangent!);
     if (gpuGeometry.index) {
       passEncoder.drawIndexed(geometry.index!.count);
     } else {
@@ -573,6 +580,7 @@ export function disposeGeometry(geometry: BufferGeometry) {
   gpuGeometry.index?.destroy();
   gpuGeometry.normal?.destroy();
   gpuGeometry.position?.destroy();
+  gpuGeometry.tangent?.destroy();
   gpuGeometry.uv?.destroy();
 }
 

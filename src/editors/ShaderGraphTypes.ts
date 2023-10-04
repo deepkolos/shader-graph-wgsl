@@ -145,6 +145,8 @@ import {
   ReteSceneColorNode,
   ReteSceneDepthNode,
   ReteRefractNode,
+  ReteTangentVectorNode,
+  ReteBiTangentVectorNode,
 } from '../components';
 import { NodeData } from '../rete/core/data';
 import { Rete, ParameterData, GraphData } from '../types';
@@ -194,6 +196,8 @@ export type SGNodes =
   | ReteViewVectorNode
   | ReteViewDirectionNode
   | ReteScreenPositionNode
+  | ReteTangentVectorNode
+  | ReteBiTangentVectorNode
   // input/matrix
   | ReteTransformationMatrixNode
   | ReteMatrix4x4Node

@@ -181,7 +181,7 @@ export interface ParameterData {
 
 export type AssetValue = { id: string; label: string } | undefined;
 // TODO support tangent
-export const SpaceOptions = ['object', 'view', 'world'] as const;
+export const SpaceOptions = ['object', 'view', 'world', 'tangent'] as const;
 export type SpaceValue = ArrayElement<typeof SpaceOptions>;
 // TODO support UV123
 export const UVOptions = ['UV0'] as const;
