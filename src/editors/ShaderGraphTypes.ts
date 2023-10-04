@@ -147,6 +147,8 @@ import {
   ReteRefractNode,
   ReteTangentVectorNode,
   ReteBiTangentVectorNode,
+  ReteVariableDefNode,
+  ReteVariableRefNode,
 } from '../components';
 import { NodeData } from '../rete/core/data';
 import { Rete, ParameterData, GraphData } from '../types';
@@ -300,6 +302,8 @@ export type SGNodes =
   | ReteSubGraphNode
   | RetePreviewNode
   | RetePreviewNumberNode
+  | ReteVariableDefNode
+  | ReteVariableRefNode
   // artistic/adjustment
   | ReteChannelMixerNode
   | ReteContrastNode

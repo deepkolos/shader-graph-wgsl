@@ -136,6 +136,7 @@ export interface ReteNode extends Rete.Node {
   };
   meta: {
     undeleteable?: boolean;
+    uncloneable?: boolean;
     previewDisabled: boolean;
     category: string;
     keywords?: string[];
@@ -143,6 +144,8 @@ export interface ReteNode extends Rete.Node {
     nodeCfgs?: {
       [label: string]: NodeValueCfg | NodeListCfg;
     };
+    highlight?: boolean;
+    internalIO?: string[];
     [k: string]: any;
   };
 }

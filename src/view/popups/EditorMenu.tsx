@@ -23,7 +23,7 @@ const EditorContextMenu: FC<MenuProps> = ({ editor, connection, node, popupAdd, 
   const nodeHasConnection = node && node.getConnections().length > 0;
   const nodeCanPreview = node && !node.meta.previewDisabled;
 
-  const selectedUndeleteableNodes = editor.selected.list.filter(i => !i.meta.undeleteable);
+  const selectedCloneableNodes = editor.selected.list.filter(i => !i.meta.undeleteable && !i.meta.uncloneable);
 
   useEffect(() => {
     return listenWindow('keyup', e => {
@@ -81,7 +81,7 @@ const EditorContextMenu: FC<MenuProps> = ({ editor, connection, node, popupAdd, 
         editor.selected.copy();
         view.hide();
       },
-      disabled: selectedUndeleteableNodes.length === 0,
+      disabled: selectedCloneableNodes.length === 0,
     },
     {
       name: '粘贴',
@@ -179,11 +179,11 @@ const EditorContextMenu: FC<MenuProps> = ({ editor, connection, node, popupAdd, 
         editor.selected.each(node => editor.removeNode(node));
         view.hide();
       },
-      disabled: selectedUndeleteableNodes.length === 0,
+      disabled: selectedCloneableNodes.length === 0,
     },
   ];
 
-  const deleteNode = (node || selectedUndeleteableNodes.length) && [
+  const deleteNode = (node || selectedCloneableNodes.length) && [
     {
       name: '删除',
       onclick: () => {
@@ -196,7 +196,7 @@ const EditorContextMenu: FC<MenuProps> = ({ editor, connection, node, popupAdd, 
           view.hide();
         }
       },
-      disabled: (!node || node.meta.undeleteable) && selectedUndeleteableNodes.length === 0,
+      disabled: (!node || node.meta.undeleteable) && selectedCloneableNodes.length === 0,
     },
   ];
 

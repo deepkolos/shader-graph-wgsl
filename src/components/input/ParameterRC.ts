@@ -7,14 +7,14 @@ import { SGNodeData } from '../../editors';
 
 declare module '../../rete/core/events' {
   interface EventsTypes {
-    paramterchange: {
+    parameterchange: {
       name: string;
       outValue: any;
       outValueType: ValueType;
       outValueName: string;
       exposed: boolean;
     };
-    paramterdelete: { name: string };
+    parameterdelete: { name: string };
   }
 }
 
@@ -35,9 +35,9 @@ export class ParameterRC extends RC {
   }
 
   onRegister(editor: Rete.NodeEditor): void {
-    editor.bind('paramterchange');
-    editor.bind('paramterdelete');
-    editor.on('paramterchange', ({ name, outValue, outValueName, outValueType, exposed }) => {
+    editor.bind('parameterchange');
+    editor.bind('parameterdelete');
+    editor.on('parameterchange', ({ name, outValue, outValueName, outValueType, exposed }) => {
       const nodes = editor.nodes.filter(node => node.name === ParameterRC.Name && node.data.outValueName === name);
       nodes.forEach(node => {
         node.data.outValue = outValue;
@@ -49,7 +49,7 @@ export class ParameterRC extends RC {
       });
     });
 
-    editor.on('paramterdelete', ({ name }) => {
+    editor.on('parameterdelete', ({ name }) => {
       const nodes = editor.nodes.filter(node => node.name === ParameterRC.Name && node.data.outValueName === name);
       nodes.forEach(node => {
         // unity sg 是根据类型创建占位节点替换 删除已有, vfx graph则是不删除节点, 但是会标记invalid

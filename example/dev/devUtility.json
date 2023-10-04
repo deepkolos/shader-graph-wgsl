@@ -776,6 +776,242 @@
         784.6221472305494
       ],
       "name": "PreviewNumber"
+    },
+    "1121": {
+      "id": 1121,
+      "data": {
+        "inValue": 0.23,
+        "inValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "nameValue": "",
+        "nameValueType": "string",
+        "expanded": true,
+        "preview": false
+      },
+      "inputs": {
+        "in": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 1150,
+              "input": "in",
+              "data": {
+                "internal": true
+              }
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -355.95524910478895,
+        1163.9598655002835
+      ],
+      "name": "VariableDef"
+    },
+    "1150": {
+      "id": 1150,
+      "data": {
+        "inValueType": "float",
+        "inValue": 0,
+        "outValueName": "",
+        "outValueType": "float",
+        "outValue": 0,
+        "defNodeIdValue": "1121",
+        "defNodeIdValueType": "string",
+        "expanded": true,
+        "preview": false
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 1121,
+              "output": "out",
+              "data": {
+                "internal": true
+              }
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 1199,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -157.24268109295477,
+        1169.9956774824582
+      ],
+      "name": "VariableRef"
+    },
+    "1199": {
+      "id": 1199,
+      "data": {
+        "inValue": 0,
+        "inValueType": "float",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 1150,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        39.36207492484763,
+        1161.8934053040382
+      ],
+      "name": "PreviewNumber"
+    },
+    "1632": {
+      "id": 1632,
+      "data": {
+        "inValue": 0.44,
+        "inValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "nameValue": "test",
+        "nameValueType": "string",
+        "expanded": true,
+        "preview": false
+      },
+      "inputs": {
+        "in": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 1673,
+              "input": "in",
+              "data": {
+                "internal": true
+              }
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -348.84259631517835,
+        1446.4736007672966
+      ],
+      "name": "VariableDef"
+    },
+    "1673": {
+      "id": 1673,
+      "data": {
+        "inValueType": "float",
+        "inValue": 0,
+        "outValueName": "test",
+        "outValueType": "float",
+        "outValue": 0,
+        "defNodeIdValue": "1632",
+        "defNodeIdValueType": "string",
+        "expanded": true,
+        "preview": false
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 1632,
+              "output": "out",
+              "data": {
+                "internal": true
+              }
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 1740,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -163.73216386576803,
+        1454.5159355879468
+      ],
+      "name": "VariableRef"
+    },
+    "1740": {
+      "id": 1740,
+      "data": {
+        "inValue": 0,
+        "inValueType": "float",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 1673,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        42.11093591599987,
+        1463.6416971836888
+      ],
+      "name": "PreviewNumber"
     }
   },
   "UIState": {
@@ -784,7 +1020,7 @@
     "showInspector": false
   },
   "type": "ShaderGraph",
-  "version": "",
+  "version": "0.0.0",
   "setting": {
     "template": "unlit",
     "precision": "single",

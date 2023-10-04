@@ -32,7 +32,7 @@ export class Selected {
   }
 
   copy() {
-    const list = this.list.filter(i => !i.meta.undeleteable);
+    const list = this.list.filter(i => !i.meta.undeleteable && !i.meta.uncloneable);
     const { copyedBox, editor } = this;
     copyedBox.makeEmpty();
     this.copyed = list.map(i => {

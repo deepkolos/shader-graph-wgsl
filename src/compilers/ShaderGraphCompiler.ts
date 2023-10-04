@@ -553,7 +553,6 @@ ${code}`;
       const colorOut = (await BaseColorBlock.prototype.compileSG.call(null, this, baseColorData))!;
       const fragOut = (await FragmentRC.prototype.compileSG.call(null, this, fragNodeData))!;
       delete graphData.nodes[baseColorData.id];
-      debugger;
       const fragBody = this.prependFragSharedCode(fragOut.code + '\n  ' + colorOut.code);
       fragCode = this.compileHeadCode(fragBody, 'frag') + SGTemplates.unlit.frag(fragBody);
       vertBody += this.getAutoVaryingsCode(fragCode);

@@ -24,12 +24,17 @@
       border-color: #306782;
     }
 
-    &.selected::after {
+    &.selected::after,
+    &.highlight::after {
       @borderW: 2px;
       border-color: #268bbd;
       border-width: @borderW;
       top: -@wHalf - @borderW;
       left: -@wHalf - @borderW;
+    }
+
+    &.highlight::after {
+      border-color: #17d3dd !important;
     }
 
     &-control-can {

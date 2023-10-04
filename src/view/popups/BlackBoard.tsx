@@ -259,7 +259,7 @@ export class BlackBoardView extends PopupView<BlackBoardProps> {
         // @ts-ignore
         item[key] = data[key];
       });
-      this.editor.trigger('paramterchange', {
+      this.editor.trigger('parameterchange', {
         name,
         outValue: item.defalutValue,
         outValueName: item.name,
@@ -276,7 +276,7 @@ export class BlackBoardView extends PopupView<BlackBoardProps> {
     const index = this.data.findIndex(i => i.name === name);
     if (index > -1) {
       this.data.splice(index, 1);
-      this.editor.trigger('paramterdelete', { name });
+      this.editor.trigger('parameterdelete', { name });
       this.update();
     }
   }

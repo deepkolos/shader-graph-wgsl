@@ -1,6 +1,6 @@
 import './PopupNodeAdd.less';
 import React, { FC, useContext, useEffect, useRef, useState } from 'react';
-import { Rete, ValueTypeAbbreviationMap } from '../../types';
+import { Rete, ReteNode, ValueType, ValueTypeAbbreviationMap } from '../../types';
 import { useDebounce } from 'use-debounce';
 import { moveableContext, Moveable } from '../common/Moveable';
 import { Popup } from '../common/Popup';
@@ -9,7 +9,7 @@ import { TreeNode, sortTree, filterTree, Tree } from '../common/Tree';
 import { PopupView, PopupViewProps } from './PopupView';
 import { RCBlock, RC } from '../../components/ReteComponent';
 import { capitalizeFirstLetter, deepCopy } from '../../utils';
-import { CustomInterpolatorBlock, ReteCustomInterpolatorBlock, SubGraphRC, VaryingRC, VertexRC } from '../../components';
+import { CustomInterpolatorBlock, ReteCustomInterpolatorBlock, SubGraphRC, VariableDefRC, VariableRefRC, VaryingRC, VertexRC } from '../../components';
 import { ShaderGraphEditor } from '../../editors';
 
 const PopupTitle: FC<DefaultProps> = ({ children, className = '' }) => {
@@ -44,11 +44,13 @@ export const PopupNodeAdd: FC<PopupNodeAddProps> = ({ editor, view, x = 0, y = 0
     const nameParts = item.name.split('_');
     const isVarying = nameParts[0] === CustomInterpolatorBlock.Name && item.name !== CustomInterpolatorBlock.Name;
     const isSubGraph = nameParts[0] === SubGraphRC.Name;
+    const isVariableRef = nameParts[0] === VariableDefRC.Name && nameParts[1];
     const isNodeIO = io && scope === 'node-io-pick';
     let nodeName = item.name;
     let ioKey = '';
     if (isVarying) nodeName = VaryingRC.Name;
     if (isSubGraph) nodeName = SubGraphRC.Name;
+    if (isVariableRef) nodeName = VariableRefRC.Name;
     if (isNodeIO) [nodeName, ioKey] = item.name.split(':');
     const com = editor.components.get(nodeName) as RCBlock | Rete.Component | undefined;
     if (!com) return;
@@ -59,6 +61,22 @@ export const PopupNodeAdd: FC<PopupNodeAddProps> = ({ editor, view, x = 0, y = 0
         data.assetValue = { id: nameParts[1], label: item.label };
         data.assetValueType = 'subgraph';
       }
+      let varDef: Rete.Node | undefined;
+      if (isVariableRef) {
+        const nodeId = Number(nameParts[1]);
+        varDef = editor.nodes.find(i => i.name === VariableDefRC.Name && i.id === nodeId);
+        if (varDef) {
+          data.inValueType = varDef.data.inValueType;
+          data.inValue = varDef.data.inValue;
+
+          data.outValueName = varDef.data.nameValue;
+          data.outValueType = varDef.data.outValueType;
+          data.outValue = varDef.data.outValue;
+
+          data.defNodeIdValue = String(varDef.id);
+          data.defNodeIdValueType = ValueType.string;
+        }
+      }
 
       const node = await com.createNode(data);
       if (scope === 'node') {
@@ -66,6 +84,11 @@ export const PopupNodeAdd: FC<PopupNodeAddProps> = ({ editor, view, x = 0, y = 0
         node.position[0] = gx;
         node.position[1] = gy;
         editor.addNode(node);
+
+        // 链接varDef
+        if (isVariableRef && varDef) {
+          editor.connect(varDef.outputs.get('out')!, node.inputs.get('in')!, { internal: true });
+        }
       } else if (contextNode && scope === 'context') {
         editor.addBlock(contextNode, node, com as RCBlock);
       } else if (isNodeIO) {
@@ -91,6 +114,7 @@ export const PopupNodeAdd: FC<PopupNodeAddProps> = ({ editor, view, x = 0, y = 0
   }, []);
 
   // 初始化initTreeData
+  const varDefs = editor.nodes.filter(i => i.name === VariableDefRC.Name);
   useEffect(() => {
     const fn = async () => {
       const rootData: Array<TreeNode> = [];
@@ -141,6 +165,16 @@ export const PopupNodeAdd: FC<PopupNodeAddProps> = ({ editor, view, x = 0, y = 0
             list.push({ name, label: asset.label, keywords: [asset.label] });
           });
         }
+
+        // Variable Define
+        if (varDefs.length) {
+          const list = ['Variable'].reduce((scope, dir) => getDir(capitalizeFirstLetter(dir), scope), rootData);
+          varDefs.forEach(node => {
+            const varName = node.getValue('name') || 'untitled';
+            const name = VariableDefRC.Name + '_' + node.id;
+            list.push({ name, label: varName, keywords: ['variable', varName] });
+          });
+        }
       } else if (contextNode && scope === 'context') {
         const com = editor.components.get(contextNode.name) as RC | undefined;
         if (com && com.nodeLayout.meta.blockComponents) {
@@ -175,7 +209,7 @@ export const PopupNodeAdd: FC<PopupNodeAddProps> = ({ editor, view, x = 0, y = 0
       initTreeData.current = rootData;
     };
     fn();
-  }, [scope, contextNode, nodeRemovedRef.current, io?.type]);
+  }, [scope, contextNode, nodeRemovedRef.current, io?.type, varDefs.map(i => i.getValue('name')).join()]);
 
   // 更新treeData
   useEffect(() => {

@@ -33,6 +33,8 @@ export class EditorEvents extends Events {
             nodeselect: [],
             nodeselected: [],
             nodeunselectall: [],
+            nodemouseenter: [],
+            nodemouseleave: [],
             rendernode: [],
             disposenode: [],
             rendersocket: [],
@@ -85,6 +87,8 @@ export interface EventsTypes extends DefaultEventsTypes {
     nodeselect: Node;
     nodeselected: Node;
     nodeunselectall: void;
+    nodemouseenter: Node,
+    nodemouseleave: Node,
     rendernode: {
         el: HTMLElement;
         node: Node;

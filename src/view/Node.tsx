@@ -19,9 +19,9 @@ export class NodeView extends React.Component<NodeViewProps> {
 
   static getDerivedStateFromProps({ node, editor }: NodeViewProps) {
     return {
-      outputs: Array.from(node.outputs.values()),
+      outputs: Array.from(node.outputs.values()).filter(i => !node.meta.internalIO?.includes(i.key)),
       controls: Array.from(node.controls.values()),
-      inputs: Array.from(node.inputs.values()),
+      inputs: Array.from(node.inputs.values()).filter(i => !node.meta.internalIO?.includes(i.key)),
       selected: editor.selected.contains(node) ? 'selected' : '',
     };
   }
@@ -31,7 +31,7 @@ export class NodeView extends React.Component<NodeViewProps> {
     const { outputs, controls, inputs, selected } = this.state;
 
     return (
-      <div className={`sg-node ${selected}`}>
+      <div className={`sg-node ${selected} ${node.meta.highlight ? 'highlight' : ''}`}>
         <Title node={node} />
         <IO inputs={inputs} outputs={outputs} node={node} bindSocket={bindSocket} bindControl={bindControl} />
 

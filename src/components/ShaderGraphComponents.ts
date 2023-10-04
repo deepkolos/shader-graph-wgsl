@@ -122,7 +122,7 @@ import {
   SimpleNoiseRC,
   VoronoiRC,
 } from './procedural';
-import { CustomFunctionRC, PreviewNumberRC, PreviewRC, SubGraphRC } from './utility';
+import { CustomFunctionRC, PreviewNumberRC, PreviewRC, SubGraphRC, VariableDefRC, VariableRefRC } from './utility';
 import { FlipBookRC, PolarCoordinatesRC, RadialShearRC, RotateRC, SpherizeRC, TilingAndOffsetRC, TriplanarRC, TwirlRC } from './uv';
 
 export const initShaderGraphComponents = () => [
@@ -272,4 +272,6 @@ export const initShaderGraphComponents = () => [
   new RefractRC(),
   new TangentVectorRC(),
   new BiTangentVectorRC(),
+  new VariableDefRC(),
+  new VariableRefRC(),
 ];

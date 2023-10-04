@@ -111,18 +111,30 @@ function install(editor: NodeEditor) {
   const disposePointerUp = listenWindow('pointerup', pointerUp);
 
   editor.on('renderconnection', ({ el, connection, points }) => {
+    // 如VariableDef/Ref之间的链接
+    if ((connection.data as any).internal) {
+      return;
+    }
     const d = renderPathData(editor, points, connection);
 
     renderConnection({ el, d, connection, editorView: editor.view });
   });
 
   editor.on('updateconnection', ({ el, connection, points, updateColor }) => {
+    // 如VariableDef/Ref之间的链接
+    if ((connection.data as any).internal) {
+      return;
+    }
     const d = renderPathData(editor, points, connection);
 
     updateConnection({ el, d, updateColor, connection, points });
   });
 
   editor.on('disposeconnection', ({ el, connection }) => {
+    // 如VariableDef/Ref之间的链接
+    if ((connection.data as any).internal) {
+      return;
+    }
     const path = (el as any)._path;
     delete (el as any)._path;
     delete (el as any)._stop1;

@@ -48,7 +48,7 @@ export const PreviewPlugin: Plugin = {
     });
 
     editor.on(
-      ['paramterchange', 'imported', 'nodecreated', 'noderemoved', 'connectioncreated', 'connectionremoved', 'settingupdated'],
+      ['parameterchange', 'imported', 'nodecreated', 'noderemoved', 'connectioncreated', 'connectionremoved', 'settingupdated'],
       () => {
         if (editor.silent || editor.clearing) return;
         server.updateAllMaterial();

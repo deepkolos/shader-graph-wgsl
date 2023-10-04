@@ -28,6 +28,8 @@ export class NodeView extends Emitter<EventsTypes> {
   resizeObserver: ResizeObserver;
   disposeContextMenu: () => void;
   boundingBox = new Box2();
+  disposeMouseEnter: () => void;
+  disposeMouseLeave: () => void;
 
   constructor(node: Node, component: Component, public editorView: EditorView, components: Map<string, Component>) {
     super(editorView);
@@ -45,6 +47,8 @@ export class NodeView extends Emitter<EventsTypes> {
     });
 
     this.disposeContextMenu = listen(this.el, 'contextmenu', e => this.trigger('contextmenu', { e, node: this.node }));
+    this.disposeMouseEnter = listen(this.el, 'mouseenter', () => this.trigger('nodemouseenter', this.node));
+    this.disposeMouseLeave = listen(this.el, 'mouseleave', () => this.trigger('nodemouseleave', this.node));
 
     this.trigger('rendernode', {
       el: this.el,
@@ -175,5 +179,7 @@ export class NodeView extends Emitter<EventsTypes> {
     this.blocks.clear();
     this.controls.clear();
     this.disposeContextMenu();
+    this.disposeMouseEnter();
+    this.disposeMouseLeave();
   }
 }
