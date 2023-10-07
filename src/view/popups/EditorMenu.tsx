@@ -183,9 +183,11 @@ const EditorContextMenu: FC<MenuProps> = ({ editor, connection, node, popupAdd, 
     },
   ];
 
+  const hideDeleteNode = (!node || node.meta.undeleteable) && selectedCloneableNodes.length === 0;
+  const hideDeleteConnection = !connection || (connection.data as any).fixed;
   const deleteNode = (node || selectedCloneableNodes.length) && [
     {
-      name: '删除',
+      name: '删除' + (hideDeleteConnection ? '' : '节点'),
       onclick: () => {
         try {
           if (node && !editor.selected.contains(node)) editor.removeNode(node);
@@ -196,13 +198,13 @@ const EditorContextMenu: FC<MenuProps> = ({ editor, connection, node, popupAdd, 
           view.hide();
         }
       },
-      disabled: (!node || node.meta.undeleteable) && selectedCloneableNodes.length === 0,
+      disabled: hideDeleteNode,
     },
   ];
 
   const deleteConnection = connection && [
     {
-      name: '删除',
+      name: '删除' + (hideDeleteNode ? '' : '连线'),
       onclick: () => {
         try {
           editor.removeConnection(connection!);
@@ -212,7 +214,7 @@ const EditorContextMenu: FC<MenuProps> = ({ editor, connection, node, popupAdd, 
           view.hide();
         }
       },
-      disabled: !connection || (connection.data as any).fixed,
+      disabled: hideDeleteConnection,
     },
   ];
 
@@ -249,8 +251,8 @@ const EditorContextMenu: FC<MenuProps> = ({ editor, connection, node, popupAdd, 
             copyShaderLink,
             addNode,
             copyPasteCut,
-            deleteNode,
             deleteConnection,
+            deleteNode,
             // !connection && [{ name: '克隆', onclick: () => {}, disabled: true }],
             selectUnusedNode,
           ].filter(i => !!i) as MenuListProps['items']
