@@ -45,7 +45,7 @@ export const MenuList: FC<MenuListProps> = ({ items, x, y, root }) => {
   }, []);
 
   return (
-    <div className="sg-menu-list" ref={el => (canRef.current = el!)} onContextMenu={preventDefault} onClick={stopPropagation}>
+    <div className="sg-menu-list sg-menu-list-can" ref={el => (canRef.current = el!)} onContextMenu={preventDefault} onClick={stopPropagation}>
       {items.map((group, i) => (
         <div key={i}>
           {group.map(({ name, onclick, sublist, disabled = false }) => (
