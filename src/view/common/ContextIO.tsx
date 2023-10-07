@@ -22,6 +22,7 @@ export const ContextIO: FC<ContextIOProps> = ({ bindSocket, node }) => {
               socket={input.socket}
               io={input}
               innerRef={bindSocket}
+              vertical
             >
               {inputs.length > 1 && <div className="sg-context-input-title">{input.name}</div>}
             </Socket>
@@ -38,6 +39,7 @@ export const ContextIO: FC<ContextIOProps> = ({ bindSocket, node }) => {
               socket={output.socket}
               io={output}
               innerRef={bindSocket}
+              vertical
             >
               {outputs.length > 1 && <div className="sg-context-output-title">{output.name}</div>}
             </Socket>

@@ -9,12 +9,13 @@ export const Socket: FC<{
   io?: Rete.Input | Rete.Output;
   socket?: Rete.Socket;
   disabled?: boolean;
+  vertical?: boolean;
   children?: ReactNode;
-}> = ({ type, innerRef, io, valueType, children }) => {
+}> = ({ type, innerRef, io, valueType, children, vertical }) => {
   // @ts-ignore
   const color = ValueTypeColorMap[valueType] || 'red';
   return (
-    <div className="sg-socket-can" ref={el => el && innerRef && innerRef(el, type, io)}>
+    <div className="sg-socket-can" ref={el => el && innerRef && innerRef(el, type, io)} data-type={type} data-vertical={vertical}>
       <div
         className="sg-socket"
         data-connected={io?.hasConnection()}
