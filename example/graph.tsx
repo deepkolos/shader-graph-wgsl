@@ -1,12 +1,8 @@
 import { useState, useEffect, useRef, MutableRefObject } from 'react';
 import AreaPlugin from 'rete-area-plugin';
-import {
-  ShaderGraphEditor,
-  AssetSimplePlugin,
-  setResourceAdapter,
-  PreviewCustomMeshPlugin,
-} from '../src';
+import { ShaderGraphEditor, AssetSimplePlugin, setResourceAdapter, PreviewCustomMeshPlugin } from '../src';
 import { Presets } from './presets';
+import { printCompile } from '../src/view/utils';
 
 setResourceAdapter(asset => asset?.id);
 
@@ -42,10 +38,7 @@ export async function createEditor(container: HTMLElement) {
   return editor;
 }
 
-export function useRete(): [
-  ReturnType<typeof useState<HTMLElement>>['1'],
-  MutableRefObject<ShaderGraphEditor | undefined>,
-] {
+export function useRete(): [ReturnType<typeof useState<HTMLElement>>['1'], MutableRefObject<ShaderGraphEditor | undefined>] {
   const [container, setContainer] = useState<HTMLElement>();
   const editorRef = useRef<ShaderGraphEditor>();
 
@@ -62,21 +55,4 @@ export function useRete(): [
   }, []);
 
   return [setContainer, editorRef];
-}
-
-export async function printCompile(editor?: ShaderGraphEditor) {
-  if (editor) {
-    let vertCode = '';
-    let fragCode = '';
-    if (editor.editing === 'ShaderGraph') {
-      ({ vertCode, fragCode } = await editor.compiler.compile(editor.toJSON()));
-    }
-    if (editor.editing === 'SubGraph') {
-      ({ vertCode, fragCode } = await editor.compiler.compileSubGraphPreview(editor.toJSON()));
-    }
-    console.log('===== vertCode =====');
-    console.log('%c' + vertCode, 'font-size: 14px');
-    console.log('===== fragCode =====');
-    console.log('%c' + fragCode, 'font-size: 14px');
-  }
 }

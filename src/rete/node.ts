@@ -145,17 +145,30 @@ export class Node {
         this.data[prefix + 'ValueName'] = name;
     }
 
+    getValueUsage(prefix: string): string {
+        return this.data[prefix + 'ValueUsage'] as string;
+    }
+    
+    setValueUsage(prefix: string, name: string) {
+        this.data[prefix + 'ValueUsage'] = name;
+    }
+
     removeValue(prefix: string) {
         delete this.data[prefix + 'Value'];
         delete this.data[prefix + 'ValueType'];
         delete this.data[prefix + 'ValueName'];
     }
 
-    initValueType(prefix: string, value: any, type?: string, name?: string) {
-        if (this.data[prefix + 'ValueType'] === undefined) {
+    initValueType(prefix: string, value: any, type?: string, name?: string, usage?: string) {
+        const currType = this.data[prefix + 'ValueType'];
+        const currUsage = this.data[prefix + 'ValueUsage'];
+        if (currType === undefined) {
             this.setValue(prefix, value);
             type && this.setValueType(prefix, type);
             name && this.setValueName(prefix, name);
+            usage && this.setValueUsage(prefix, usage);
+        } else if (usage && currUsage !== usage) {
+            this.setValueUsage(prefix, usage);
         }
     }
 

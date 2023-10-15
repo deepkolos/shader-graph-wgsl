@@ -10,6 +10,7 @@ import {
   OutputRC,
   ReteParameterNode,
   TransformationMatrixRC,
+  ColorSpaceConversionRC,
 } from '../components';
 import { RC } from '../components/ReteComponent';
 import { ShaderGraphData, SGNodeData, SGNodes, SubGraphProvider } from '../editors';
@@ -24,8 +25,9 @@ import {
   isMatrixType,
   VectorValueType,
   SamplerValue,
+  ValueUsage,
 } from '../types';
-import { hash, lowerCaseFirstLetter, removeWhiteSpace } from '../utils';
+import { SRGBToLinear, hash, lowerCaseFirstLetter, removeWhiteSpace } from '../utils';
 import { GraphCompiler } from './GraphCompiler';
 import {
   Context,
@@ -85,12 +87,17 @@ export class ShaderGraphCompiler extends GraphCompiler {
     if (node.data.outValueType === ValueType.texture2d) {
       return this.compileValue(node.data.outValue, node.data.outValueType);
     }
-    return this.setContext(
-      'uniforms',
-      node,
-      node.data.outValueName,
-      varName => `${varName}: ${this.getTypeClass(node.data.outValueType)}`,
-    );
+    const uniformVar = this.setContext('uniforms', node, node.data.outValueName, varName => `${varName}: ${this.getTypeClass(node.data.outValueType)}`);
+    if (node.data.outValueUsage === ValueUsage.Color) {
+      // 目前实际输入的是sRGB, 后面再同步接入最新three的颜色空间管理
+      const SRGBToLinear = ColorSpaceConversionRC.initFnContext(this, 'sRGB', 'Linear');
+      const codeFn = (varName: string) => /* wgsl */ `let ${varName} = ${SRGBToLinear}(${uniformVar});`;
+      const fragVar = this.setContext('fragShared', node, node.data.outValueName, codeFn);
+      const vertVar = this.setContext('vertShared', node, node.data.outValueName, codeFn);
+      return this.setVarNameMap(node, node.data.outValueName, vertVar, fragVar);
+    }
+
+    return uniformVar
   }
 
   setVarNameMap(node: NodeName, key: string, vertName: string, fragName: string, varName?: string) {
@@ -119,12 +126,7 @@ export class ShaderGraphCompiler extends GraphCompiler {
 
   setContext(type: ContextKeys, node: NodeName, key: string, item: ContextItem): string;
   setContext(type: ContextKeys, node: NodeName, key: string, codeFn: CodeFn): string;
-  setContext(
-    type: ContextKeys,
-    node: NodeName,
-    key: string,
-    itemOrCode: ContextItem | CodeFn,
-  ): string {
+  setContext(type: ContextKeys, node: NodeName, key: string, itemOrCode: ContextItem | CodeFn): string {
     const contextKey = this.getContextKey(node, key);
 
     if (!this.context[type as ContextKeys][contextKey]) {
@@ -177,11 +179,7 @@ export class ShaderGraphCompiler extends GraphCompiler {
   }
 
   /** 读取分量 只支持vec1234 */
-  getVarChannel(
-    varName: string,
-    inType: ValueType,
-    channel: 'r' | 'g' | 'b' | 'a' | 'x' | 'y' | 'z' | 'w',
-  ) {
+  getVarChannel(varName: string, inType: ValueType, channel: 'r' | 'g' | 'b' | 'a' | 'x' | 'y' | 'z' | 'w') {
     const len = ValueComponentMap[inType];
     const channelLenNeeds = ChannelLenNeedsMap[channel];
     if (channelLenNeeds > len) return '0.0';
@@ -208,10 +206,7 @@ export class ShaderGraphCompiler extends GraphCompiler {
       if (inType === ValueType.float) return `${this.getTypeClass(outType)}(${varName})`;
       // 升 vec2 > vec3 vec3 > vec4
       //   vec2 > vec4
-      if (
-        (inType === ValueType.vec2 && outType === ValueType.vec3) ||
-        (inType === ValueType.vec3 && outType === ValueType.vec4)
-      ) {
+      if ((inType === ValueType.vec2 && outType === ValueType.vec3) || (inType === ValueType.vec3 && outType === ValueType.vec4)) {
         return `${this.getTypeClass(outType)}(${varName}, 0)`;
       } else if (inType === ValueType.vec2 && outType === ValueType.vec4) {
         return `${this.getTypeClass(outType)}(${varName}, 0, 0)`;
@@ -240,25 +235,16 @@ export class ShaderGraphCompiler extends GraphCompiler {
 
   getInputType(node: SGNodeData<SGNodes>, inputKey: string): ValueType {
     const inCon = node.inputs[inputKey]?.connections[0];
-    if (inCon)
-      return this.graphData.nodes[inCon.node].data[inCon.output + 'ValueType'] as ValueType;
+    if (inCon) return this.graphData.nodes[inCon.node].data[inCon.output + 'ValueType'] as ValueType;
     return node.data[inputKey + 'ValueType'];
   }
 
   getInputVarConverted(node: SGNodeData<SGNodes>, inputKey: string): string;
-  getInputVarConverted(
-    node: SGNodeData<SGNodes>,
-    inputKey: string,
-    fallback: false,
-  ): string | undefined;
+  getInputVarConverted(node: SGNodeData<SGNodes>, inputKey: string, fallback: false): string | undefined;
   getInputVarConverted(node: SGNodeData<SGNodes>, inputKey: string, fallback = true) {
     const inType = this.getInputType(node, inputKey);
     if (fallback) {
-      return this.typeConvert(
-        this.getInputVar(node, inputKey),
-        inType,
-        node.data[inputKey + 'ValueType'],
-      );
+      return this.typeConvert(this.getInputVar(node, inputKey), inType, node.data[inputKey + 'ValueType']);
     } else {
       const inVar = this.getInputVar(node, inputKey, false);
       if (inVar) return this.typeConvert(inVar, inType, node.data[inputKey + 'ValueType']);
@@ -304,7 +290,7 @@ export class ShaderGraphCompiler extends GraphCompiler {
     return 'sg_' + this.getContextKey(node, key);
   }
 
-  compileValue(value: any, type: ValueType) {
+  compileValue(value: any, type: ValueType, usage?: ValueUsage) {
     if (Number.isNaN(value) || (Array.isArray(value) && value.some(i => Number.isNaN(i)))) {
       console.warn(`value contains NaN`, value, type);
     }
@@ -312,11 +298,11 @@ export class ShaderGraphCompiler extends GraphCompiler {
       case ValueType.float:
         return stringifyFloat(value);
       case ValueType.vec2:
-        return `vec2<f32>(${value[0] || 0}, ${value[1] || 0})`;
+        return stringifyVector(value, 2);
       case ValueType.vec3:
-        return `vec3<f32>(${value[0] || 0}, ${value[1] || 0}, ${value[2] || 0})`;
+        return usage === ValueUsage.Color ? stringifyVector(value.map(SRGBToLinear), 3) : stringifyVector(value, 3);
       case ValueType.vec4:
-        return `vec4<f32>(${value[0] || 0}, ${value[1] || 0}, ${value[2] || 0}, ${value[3] || 0})`;
+        return usage === ValueUsage.Color ? stringifyVector(value.map(SRGBToLinear), 4) : stringifyVector(value, 4);
       case ValueType.mat2:
       case ValueType.mat3:
       case ValueType.mat4:
@@ -326,12 +312,7 @@ export class ShaderGraphCompiler extends GraphCompiler {
         if (!asset) return '';
         const key = hash(asset.id);
         const node = { data: {}, name: 'Texture2D' } as any;
-        const outVar = this.setContext(
-          'bindings',
-          node,
-          key,
-          (varName, i) => `@group(0) @binding(${i}) var ${varName}: texture_2d<f32>;`,
-        );
+        const outVar = this.setContext('bindings', node, key, (varName, i) => `@group(0) @binding(${i}) var ${varName}: texture_2d<f32>;`);
         this.setResource('texture', node, key, value);
         return outVar;
       }
@@ -339,12 +320,7 @@ export class ShaderGraphCompiler extends GraphCompiler {
         const sampler = (value || { filter: 'point', warp: 'clamp' }) as SamplerValue;
         const key = sampler.filter + '_' + sampler.warp;
         const node = { data: {}, name: 'Sampler' } as any;
-        const outVar = this.setContext(
-          'bindings',
-          node,
-          key,
-          (varName, i) => `@group(0) @binding(${i}) var ${varName}: sampler;`,
-        );
+        const outVar = this.setContext('bindings', node, key, (varName, i) => `@group(0) @binding(${i}) var ${varName}: sampler;`);
         this.setResource('sampler', node, key, sampler);
         return outVar;
       }
@@ -354,7 +330,7 @@ export class ShaderGraphCompiler extends GraphCompiler {
   }
 
   compileNodeValue(node: SGNodeData<SGNodes>, key: string) {
-    return this.compileValue(node.data[key + 'Value'], node.data[key + 'ValueType']);
+    return this.compileValue(node.data[key + 'Value'], node.data[key + 'ValueType'], node.data[key + 'ValueUsage']);
   }
 
   compileHeadCode(body: string, scope: 'vert' | 'frag') {
@@ -384,9 +360,7 @@ export class ShaderGraphCompiler extends GraphCompiler {
         code = [
           'struct Varying {',
           '  @builtin(position) position: vec4<f32>,',
-          ...items
-            .filter(i => testCode.includes(i.varName.replace('v.', '')))
-            .map((i, k) => `  @location(${k}) ${i.code},`),
+          ...items.filter(i => testCode.includes(i.varName.replace('v.', ''))).map((i, k) => `  @location(${k}) ${i.code},`),
           '};',
         ].join('\n');
       } else {
@@ -404,17 +378,12 @@ ${code}`;
     return headCode ? headCode + '\n\n' : '';
   }
 
-  getLinkedVaryingNodes(
-    nodeId: number,
-    output: Array<SGNodeData<ReteVaryingNode>> = [],
-  ): Array<SGNodeData<ReteVaryingNode>> {
+  getLinkedVaryingNodes(nodeId: number, output: Array<SGNodeData<ReteVaryingNode>> = []): Array<SGNodeData<ReteVaryingNode>> {
     const nodeData = this.graphData.nodes[nodeId];
     if (!nodeData) return [];
     if (nodeData.name === VaryingRC.Name) output.push(nodeData as SGNodeData<ReteVaryingNode>);
 
-    Object.values(nodeData.inputs).forEach(i =>
-      i.connections.forEach(con => this.getLinkedVaryingNodes(con.node, output)),
-    );
+    Object.values(nodeData.inputs).forEach(i => i.connections.forEach(con => this.getLinkedVaryingNodes(con.node, output)));
     return output;
   }
 
@@ -449,10 +418,7 @@ ${code}`;
 
   doVarMap(body: string, scope: 'vert' | 'frag') {
     return Object.values(this.varNameMap).reduce((body, map) => {
-      return body.replace(
-        new RegExp(`(${map.varName})`, 'g'),
-        scope === 'frag' ? map.fragName : map.vertName,
-      );
+      return body.replace(new RegExp(`(${map.varName})`, 'g'), scope === 'frag' ? map.fragName : map.vertName);
     }, body);
   }
 
@@ -516,31 +482,21 @@ ${code}`;
     // if (!vert) throw new Error('missing Vertex Context');
     const varyingNodes = this.getLinkedVaryingNodes(node.id);
     const varyingBlocks = (vert?.blocks || []).filter(
-      i =>
-        i.name === CustomInterpolatorBlock.Name &&
-        varyingNodes.some(node => node.data.outValueName === i.data.varyingValueName),
+      i => i.name === CustomInterpolatorBlock.Name && varyingNodes.some(node => node.data.outValueName === i.data.varyingValueName),
     );
     let vertBody = this.linkBlocks(varyingBlocks);
     let fragCode = '';
     let vertCode = '';
 
     if (node.name === VaryingRC.Name) {
-      if (!varyingBlocks[0])
-        throw new Error('compile varying preview failed: missing CustomInterpolatorBlock');
-      const { varName } = this.getContext(
-        'varyings',
-        varyingBlocks[0],
-        varyingBlocks[0].data.varyingValueName,
-      )!;
-      const bodyCode = SGTemplates.unlit.frag(
-        this.prependFragSharedCode(`*baseColor = ${varName}.xyz;`),
-      );
+      if (!varyingBlocks[0]) throw new Error('compile varying preview failed: missing CustomInterpolatorBlock');
+      const { varName } = this.getContext('varyings', varyingBlocks[0], varyingBlocks[0].data.varyingValueName)!;
+      const bodyCode = SGTemplates.unlit.frag(this.prependFragSharedCode(`*baseColor = ${varName}.xyz;`));
       const headCode = this.compileHeadCode(bodyCode, 'frag');
       fragCode = headCode + '\n' + bodyCode;
       vertBody += this.getAutoVaryingsCode(fragCode);
       vertBody = this.prependVertSharedCode(vertBody);
-      vertCode =
-        SG_VERT + this.compileHeadCode(vertBody, 'vert') + SGTemplates.unlit.vert(vertBody);
+      vertCode = SG_VERT + this.compileHeadCode(vertBody, 'vert') + SGTemplates.unlit.vert(vertBody);
     } else {
       const baseColorData = await ctx.getNodeData<ReteBaseColorBlock>(ctx.baseColorBlock);
       const output = [...node.outputs.keys()][0];
@@ -557,8 +513,7 @@ ${code}`;
       fragCode = this.compileHeadCode(fragBody, 'frag') + SGTemplates.unlit.frag(fragBody);
       vertBody += this.getAutoVaryingsCode(fragCode);
       vertBody = this.prependVertSharedCode(vertBody);
-      vertCode =
-        SG_VERT + this.compileHeadCode(vertBody, 'vert') + SGTemplates.unlit.vert(vertBody);
+      vertCode = SG_VERT + this.compileHeadCode(vertBody, 'vert') + SGTemplates.unlit.vert(vertBody);
     }
 
     return { ...this.compilation, fragCode, vertCode };
@@ -650,10 +605,23 @@ ${code}`;
   }
 }
 
-const stringifyFloat = (num: number): string => {
+const stringifyFloat = (num: number | number[]): string => {
+  if (Array.isArray(num)) {
+    num = num[0] || 0;
+  }
   const str = String(num);
-  if (str.includes('.')) return str;
+  const dotIndex = str.indexOf('.');
+  if (dotIndex > -1) {
+    return str;
+  }
   return str + '.0';
+};
+
+const stringifyVector = (value: number[], len: 2 | 3 | 4): string => {
+  return `vec${len}(${new Array(len)
+    .fill(0)
+    .map((v, k) => stringifyFloat(value[k] || 0))
+    .join(', ')})`;
 };
 
 export class SubGraphCompiler extends ShaderGraphCompiler {

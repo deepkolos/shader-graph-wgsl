@@ -1,6 +1,6 @@
 import { ColorControl, BlockView } from '../../../view';
 import { Sockets } from '../../../sockets';
-import { Rete, ValueType, ExtendReteNode } from '../../../types';
+import { Rete, ValueType, ExtendReteNode, ValueUsage } from '../../../types';
 import { RCBlock } from '../../ReteComponent';
 import { ShaderGraphCompiler, SGNodeOutput } from '../../../compilers';
 import { SGNodeData } from '../../../editors';
@@ -10,6 +10,7 @@ export type ReteBaseColorBlock = ExtendReteNode<
   {
     baseColorValue: number[];
     baseColorValueType: ValueType.vec3;
+    baseColorValueUsage: ValueUsage;
   }
 >;
 
@@ -22,7 +23,7 @@ export class BaseColorBlock extends RCBlock {
 
   async initNode(node: ReteBaseColorBlock) {
     const { data, meta } = node;
-    node.initValueType('baseColor', [0, 0, 0], ValueType.vec3);
+    node.initValueType('baseColor', [0, 0, 0], ValueType.vec3, undefined, ValueUsage.Color);
     data.expanded ??= true;
     meta.category = '';
     meta.isContext = false;

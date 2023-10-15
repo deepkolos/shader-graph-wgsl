@@ -20,6 +20,9 @@ export enum ValueType {
   string = 'string',
   bool = 'bool',
 }
+export enum ValueUsage {
+  Color = 'color',
+}
 export const VectorTypes = [ValueType.float, ValueType.vec2, ValueType.vec3, ValueType.vec4];
 export type VectorValueType = ValueType.float | ValueType.vec2 | ValueType.vec3 | ValueType.vec4;
 export const MatrixTypes = [ValueType.mat2, ValueType.mat3, ValueType.mat4];
@@ -172,7 +175,7 @@ export interface ExtendReteContext<Name extends string, Data = {}, Meta = {}>
   meta: ReteContextNode['meta'] & Meta;
 }
 
-export type ValueTypeEdit = undefined | 'color';
+export type ValueTypeEdit = undefined | ValueUsage.Color;
 export interface ParameterData {
   type: ValueType;
   name: string;
@@ -203,6 +206,9 @@ export const SpaceSuffixMap = Object.freeze({
 } as const);
 
 export const UV_OPTIONS = ['UV0', 'UV1', 'UV2', 'UV3'];
+export const TYPE_OPTIONS = ['default', 'normal'];
+export const SPACE_OPTIONS = ['tangent', 'object'];
+export const COLOR_SPACE_OPTIONS = ['sRGB', 'Linear'];
 
 export type ValueOf<T> = T[keyof T];
 export type MaybePromise<T> = T | Promise<T>;

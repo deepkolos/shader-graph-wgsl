@@ -63,3 +63,32 @@ fn ${varName}(tangentToWorld: mat3x3f, matTBN_I_T: ptr<function, mat3x3f>, sgn: 
     };
   }
 };
+
+export const initUnpackNormalContext = (compiler: ShaderGraphCompiler) => {
+  const node = { name: 'Unpack', data: {} } as any;
+  const codeFn = (varName: string) => /* wgsl */ `
+fn ${varName}NormalRGB(packednormal: vec4f, bumpScale: f32) -> vec3f {
+  vec3 normal;
+  normal.xyz = packednormal.rgb * 2.0 - 1.0;
+  normal.xy *= bumpScale;
+  return normal;
+}
+fn ${varName}ScaleNormalRGorAG(packednormal_: vec4f, bumpScale: f32) {
+  var packednormal = vec4f(packednormal_);
+  packednormal.x *= packednormal.w;
+
+  var normal: vec3f;
+  normal.xy = (packednormal.xy * 2.0 - 1.0);
+  normal.z = sqrt(1.0 - clamp(dot(normal.xy, normal.xy), 0.0, 1.0));
+  return normal;
+}
+fn ${varName}ScaleNormal(packednormal: vec4f, bumpScale: f32) -> vec3f {
+  return ${varName}ScaleNormalRGorAG(packednormal, bumpScale);
+}`;
+  const varName = compiler.setContext('defines', node, 'fn', codeFn);
+  return {
+    UnpackNormalRGB: `${varName}NormalRGB`,
+    UnpackScaleNormalRGorAG: `${varName}ScaleNormalRGorAG`,
+    UnpackScaleNormal: `${varName}ScaleNormal`,
+  };
+};

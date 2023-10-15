@@ -1,6 +1,6 @@
 import { ColorControl, NodeView } from '../../../view';
 import { Sockets } from '../../../sockets';
-import { ValueType, Rete, ExtendReteNode } from '../../../types';
+import { ValueType, Rete, ExtendReteNode, ValueUsage } from '../../../types';
 import { RC } from '../../ReteComponent';
 import { ShaderGraphCompiler, SGNodeOutput } from '../../../compilers';
 import { SGNodeData } from '../../../editors';
@@ -10,6 +10,7 @@ export type ReteColorNode = ExtendReteNode<
   {
     outValue: number[];
     outValueType: ValueType.vec3;
+    outValueUsage: ValueUsage.Color;
   }
 >;
 
@@ -21,7 +22,7 @@ export class ColorRC extends RC {
 
   initNode(node: ReteColorNode) {
     const { data, meta } = node;
-    node.initValueType('out', [0, 0, 0], ValueType.vec3);
+    node.initValueType('out', [0, 0, 0], ValueType.vec3, undefined, ValueUsage.Color);
     data.expanded ??= true;
 
     meta.previewDisabled = true;
@@ -39,7 +40,7 @@ export class ColorRC extends RC {
     const outVar = compiler.getOutVarName(node, 'out', 'color');
     return {
       outputs: { out: outVar },
-      code: `let ${outVar} = ${compiler.compileNodeValue(node, 'out')};\n`,
+      code: `let ${outVar} = ${compiler.compileNodeValue(node, 'out')};`,
     };
   }
 }

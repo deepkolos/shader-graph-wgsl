@@ -44,13 +44,17 @@ fn main(
 
 @group(0) @binding(0) var<uniform> u: Uniform;
 
+fn LinearToGammaSpace(linRGB: vec3f) -> vec3f {
+  return max(vec3f(1.055) * pow(max(linRGB, vec3f(0.0)), vec3f(0.416666667)) - 0.055, vec3f(0.0));
+}
+
 @fragment
 fn main(v: Varying) -> @location(0) vec4<f32> {
   var sg_baseColor = vec3<f32>();
   var sg_alpha = 1.0;
   sg_frag(&sg_baseColor, &sg_alpha, v);
 
-  return vec4<f32>(sg_baseColor, sg_alpha);
+  return vec4<f32>(LinearToGammaSpace(sg_baseColor), sg_alpha);
   // return vec4<f32>(0.0, 1.0, 0.0, 1.0);
 }`,
 };

@@ -1,7 +1,7 @@
 import { ShaderGraphCompiler, SGNodeOutput } from '../../compilers';
 import { SGNodeData } from '../../editors';
 import { Sockets } from '../../sockets';
-import { ExtendReteNode, ValueType, Rete, UV_OPTIONS } from '../../types';
+import { ExtendReteNode, ValueType, Rete, UV_OPTIONS, ValueUsage } from '../../types';
 import { NodeView, SelectControl, ColorControl, DynamicControl } from '../../view';
 import { UVRC } from '../input';
 import { RC } from '../ReteComponent';
@@ -13,8 +13,10 @@ export type ReteCheckerboardNode = ExtendReteNode<
     uvValueType: ValueType.vec2;
     colorAValue: number[];
     colorAValueType: ValueType.vec3;
+    colorAValueUsage: ValueUsage.Color;
     colorBValue: number[];
     colorBValueType: ValueType.vec3;
+    colorBValueUsage: ValueUsage.Color;
     frequencyValue: number[];
     frequencyValueType: ValueType.vec2;
     outValue: number[];
@@ -31,8 +33,8 @@ export class CheckerboardRC extends RC {
   initNode(node: ReteCheckerboardNode) {
     const { data, meta } = node;
     node.initValueType('uv', 'UV0', ValueType.vec2);
-    node.initValueType('colorA', [0, 0.98, 1], ValueType.vec3);
-    node.initValueType('colorB', [0.62, 0.58, 1], ValueType.vec3);
+    node.initValueType('colorA', [0, 0.98, 1], ValueType.vec3, undefined, ValueUsage.Color);
+    node.initValueType('colorB', [0.62, 0.58, 1], ValueType.vec3, undefined, ValueUsage.Color);
     node.initValueType('frequency', [1, 1], ValueType.vec2);
     node.initValueType('out', [0, 0, 0], ValueType.vec3);
     data.expanded ??= true;

@@ -9,6 +9,7 @@ import copy from 'copy-to-clipboard';
 import { Input, Node, Output } from '../../rete';
 import { NodeData } from '../../rete/core/data';
 import { getIOLinkToContextType } from '../../plugins';
+import { printCollapsed } from '../utils';
 
 interface MenuProps extends PopupViewProps {
   popupAdd: PopupNodeAddView;
@@ -41,8 +42,8 @@ const EditorContextMenu: FC<MenuProps> = ({ editor, connection, node, popupAdd, 
           editor.trigger('previewcopyshader', {
             node,
             callback: data => {
-              console.log('VertCode:\n', data?.vertCode);
-              console.log('FragCode:\n', data?.fragCode);
+              printCollapsed(`${node.name} ${node.id} Vert`, data?.vertCode);
+              printCollapsed(`${node.name} ${node.id} Frag`, data?.fragCode);
               data && copy(JSON.stringify(data, null, 2));
               view.hide();
             },

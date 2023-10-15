@@ -1,10 +1,11 @@
 import './index.css';
 import { createRoot } from 'react-dom/client';
 import React, { FC, MutableRefObject, useEffect, useState } from 'react';
-import { printCompile, useRete } from './graph';
+import { useRete } from './graph';
 import copy from 'copy-to-clipboard';
 import { Select, ShaderGraphEditor } from '../src';
 import { Presets } from './presets';
+import { printCompile } from '../src/view/utils';
 
 let toasted = false;
 const GraphKey = 'graph';

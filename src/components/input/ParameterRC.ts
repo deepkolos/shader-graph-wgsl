@@ -1,6 +1,6 @@
 import { ParameterView } from '../../view';
 import { Sockets } from '../../sockets';
-import { ValueType, Rete, ValueTypeSocketMap, ExtendReteNode } from '../../types';
+import { ValueType, Rete, ValueTypeSocketMap, ExtendReteNode, ValueUsage } from '../../types';
 import { RC } from '../ReteComponent';
 import { ShaderGraphCompiler, SGNodeOutput } from '../../compilers';
 import { SGNodeData } from '../../editors';
@@ -11,6 +11,7 @@ declare module '../../rete/core/events' {
       name: string;
       outValue: any;
       outValueType: ValueType;
+      outValueUsage?: ValueUsage;
       outValueName: string;
       exposed: boolean;
     };
@@ -23,6 +24,7 @@ export type ReteParameterNode = ExtendReteNode<
   {
     outValue: any;
     outValueType: ValueType;
+    outValueUsage?: ValueUsage;
     outValueName: string;
   }
 >;
@@ -37,12 +39,13 @@ export class ParameterRC extends RC {
   onRegister(editor: Rete.NodeEditor): void {
     editor.bind('parameterchange');
     editor.bind('parameterdelete');
-    editor.on('parameterchange', ({ name, outValue, outValueName, outValueType, exposed }) => {
+    editor.on('parameterchange', ({ name, outValue, outValueName, outValueType, exposed, outValueUsage }) => {
       const nodes = editor.nodes.filter(node => node.name === ParameterRC.Name && node.data.outValueName === name);
       nodes.forEach(node => {
         node.data.outValue = outValue;
         node.data.outValueName = outValueName;
         node.data.outValueType = outValueType;
+        node.data.outValueUsage = outValueUsage;
         node.data.exposed = exposed;
         node.dataChanged = true;
         node.update();

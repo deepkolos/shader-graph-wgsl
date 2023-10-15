@@ -7,6 +7,7 @@ import {
   ValueTypeEdit,
   ValueTypeNameMap,
   ValueTypeNameReverseMap,
+  ValueUsage,
   VectorTypes,
 } from '../../types';
 import React, { FC, MouseEventHandler, useContext, useEffect, useRef, useState } from 'react';
@@ -82,7 +83,7 @@ const ParameterItem: FC<ParameterItemProps> = ({ editor, view, item }) => {
           { name: '重命名', onclick: close(() => setEdit(true)) },
           { name: '删除', onclick: close(() => view.delParameter(name)) },
         ],
-        [{ name: '克隆', onclick: close(() => view.cloneParamter(name)) }],
+        [{ name: '克隆', onclick: close(() => view.cloneParameter(name)) }],
       ]}>
       <div className="sg-parameter-item-can">
         <div className="sg-parameter-item-head">
@@ -174,10 +175,10 @@ export const BlackBoard: FC<BlackBoardProps> = ({ visiable, view, editor, subtit
     let customName: string | undefined;
     if (name === 'Color') {
       type = ValueType.vec3;
-      typeEdit = 'color';
+      typeEdit = ValueUsage.Color;
       customName = 'Color';
     }
-    view.addParamter(type, true, typeEdit, customName);
+    view.addParameter(type, true, typeEdit, customName);
   };
 
   return (
@@ -231,7 +232,7 @@ export class BlackBoardView extends PopupView<BlackBoardProps> {
     return this.data.map(i => ({ name: i.name, type: i.type, defalutValue: i.defalutValue, exposed: i.exposed, typeEdit: i.typeEdit }));
   }
 
-  addParamter(type: ValueType, editing = false, typeEdit?: ValueTypeEdit, customName?: string) {
+  addParameter(type: ValueType, editing = false, typeEdit?: ValueTypeEdit, customName?: string) {
     const nextIndex = this.data.filter(i => i.type == type).length;
     let name = customName || ValueTypeNameMap[type];
     if (nextIndex) name += `(${nextIndex})`;
@@ -243,14 +244,14 @@ export class BlackBoardView extends PopupView<BlackBoardProps> {
   setParameter(name: string, data: Partial<ParameterData>): boolean {
     const item = this.data.find(i => i.name === name);
     if (data.name !== undefined && !data.name) {
-      this.editor.trigger('warn', `Paramter name invalid ${data.name}`);
+      this.editor.trigger('warn', `Parameter name invalid ${data.name}`);
       return false;
     }
     if (data.name) {
       if (data.name === name) return true;
       const nameUsedItem = this.data.find(i => i.name === data.name);
       if (nameUsedItem) {
-        this.editor.trigger('warn', `Paramter name used ${data.name}`);
+        this.editor.trigger('warn', `Parameter name used ${data.name}`);
         return false;
       }
     }
@@ -264,6 +265,7 @@ export class BlackBoardView extends PopupView<BlackBoardProps> {
         outValue: item.defalutValue,
         outValueName: item.name,
         outValueType: item.type,
+        outValueUsage: item.typeEdit,
         exposed: item.exposed,
       });
       this.update();
@@ -281,7 +283,7 @@ export class BlackBoardView extends PopupView<BlackBoardProps> {
     }
   }
 
-  cloneParamter(name: string) {
+  cloneParameter(name: string) {
     const item = this.data.find(i => i.name === name);
 
     if (item) {

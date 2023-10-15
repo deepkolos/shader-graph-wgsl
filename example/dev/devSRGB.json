@@ -1,0 +1,1349 @@
+{
+  "id": "",
+  "nodes": {
+    "1403": {
+      "id": 1403,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 1404,
+              "output": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "outputs": {},
+      "blocks": [
+        {
+          "id": 1407,
+          "data": {
+            "baseColorValue": [
+              0,
+              0,
+              0
+            ],
+            "baseColorValueType": "vec3",
+            "expanded": true,
+            "baseColorValueUsage": "color"
+          },
+          "inputs": {
+            "baseColor": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "BaseColorBlock",
+          "contextId": 1403
+        }
+      ],
+      "position": [
+        484.3908264807476,
+        1004.4686476670662
+      ],
+      "name": "Fragment"
+    },
+    "1404": {
+      "id": 1404,
+      "data": {
+        "vertValue": 0,
+        "vertValueType": "vertex",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "vert": {
+          "connections": [
+            {
+              "node": 1403,
+              "input": "vert",
+              "data": {
+                "fixed": true
+              }
+            }
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "id": 1405,
+          "data": {
+            "positionValue": [
+              0,
+              0,
+              0
+            ],
+            "positionValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "position": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "PositionBlock",
+          "contextId": 1404
+        },
+        {
+          "id": 1406,
+          "data": {
+            "normalValue": [
+              0,
+              0,
+              0
+            ],
+            "normalValueType": "vec3",
+            "expanded": true
+          },
+          "inputs": {
+            "normal": {
+              "connections": []
+            }
+          },
+          "outputs": {},
+          "blocks": [],
+          "position": [
+            0,
+            0
+          ],
+          "name": "NormalBlock",
+          "contextId": 1404
+        }
+      ],
+      "position": [
+        484.3908264807476,
+        804.4686476670662
+      ],
+      "name": "Vertex"
+    },
+    "1408": {
+      "id": 1408,
+      "data": {
+        "outValue": [
+          0.07058823529411765,
+          0.20392156862745098,
+          0.33725490196078434
+        ],
+        "outValueType": "vec3",
+        "outValueUsage": "color",
+        "expanded": true
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 1409,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -1452.7479819543387,
+        250.04983913554486
+      ],
+      "name": "Color"
+    },
+    "1409": {
+      "id": 1409,
+      "data": {
+        "inValue": [
+          0,
+          0,
+          0
+        ],
+        "inValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 1408,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 1419,
+              "input": "in",
+              "data": {}
+            },
+            {
+              "node": 1478,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -1227.8391689759542,
+        248.89623530723816
+      ],
+      "name": "Preview"
+    },
+    "1419": {
+      "id": 1419,
+      "data": {
+        "inValue": [
+          0,
+          0,
+          0
+        ],
+        "inValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "fromValue": "sRGB",
+        "fromValueType": "string",
+        "toValue": "Linear",
+        "toValueType": "string",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 1409,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 1440,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -916.062807280652,
+        237.67277508247582
+      ],
+      "name": "ColorSpaceConversion"
+    },
+    "1440": {
+      "id": 1440,
+      "data": {
+        "aValue": [
+          0,
+          0,
+          0
+        ],
+        "aValueType": "vec3",
+        "bValue": [
+          0,
+          0,
+          0
+        ],
+        "bValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 1419,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 1459,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 1527,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -490.00742884249996,
+        256.9153421959767
+      ],
+      "name": "Add"
+    },
+    "1459": {
+      "id": 1459,
+      "data": {
+        "xValue": "0.1",
+        "xValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true
+      },
+      "inputs": {
+        "x": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 1440,
+              "input": "b",
+              "data": {}
+            },
+            {
+              "node": 1478,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -850.1147992728971,
+        588.7708758735437
+      ],
+      "name": "Float"
+    },
+    "1478": {
+      "id": 1478,
+      "data": {
+        "aValue": [
+          0,
+          0,
+          0
+        ],
+        "aValueType": "vec3",
+        "bValue": [
+          0,
+          0,
+          0
+        ],
+        "bValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 1409,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 1459,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -490.4852277266939,
+        604.0584975076154
+      ],
+      "name": "Add"
+    },
+    "1527": {
+      "id": 1527,
+      "data": {
+        "inValue": [
+          0,
+          0,
+          0
+        ],
+        "inValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "fromValue": "Linear",
+        "fromValueType": "string",
+        "toValue": "sRGB",
+        "toValueType": "string",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 1440,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -147.51851183915318,
+        271.55755435743174
+      ],
+      "name": "ColorSpaceConversion"
+    },
+    "1550": {
+      "id": 1550,
+      "data": {
+        "outValue": [
+          0.07058823529411765,
+          0.20392156862745098,
+          0.33725490196078434
+        ],
+        "outValueType": "vec3",
+        "outValueName": "Color",
+        "exposed": true,
+        "expanded": true,
+        "outValueUsage": "color"
+      },
+      "inputs": {},
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 1561,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -1552.148770519548,
+        1064.15686922814
+      ],
+      "name": "Parameter"
+    },
+    "1561": {
+      "id": 1561,
+      "data": {
+        "inValue": [
+          0,
+          0,
+          0
+        ],
+        "inValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 1550,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 1987,
+              "input": "in",
+              "data": {}
+            },
+            {
+              "node": 1990,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -1263.1714799682054,
+        1007.4924839038126
+      ],
+      "name": "Preview"
+    },
+    "1987": {
+      "id": 1987,
+      "data": {
+        "inValue": [
+          0,
+          0,
+          0
+        ],
+        "inValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "fromValue": "sRGB",
+        "fromValueType": "string",
+        "toValue": "Linear",
+        "toValueType": "string",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 1561,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 1988,
+              "input": "a",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -928.5276749524386,
+        1002.6309123766316
+      ],
+      "name": "ColorSpaceConversion"
+    },
+    "1988": {
+      "id": 1988,
+      "data": {
+        "aValue": [
+          0,
+          0,
+          0
+        ],
+        "aValueType": "vec3",
+        "bValue": [
+          0,
+          0,
+          0
+        ],
+        "bValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 1987,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 1989,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 1991,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -502.47229651428654,
+        1021.8734794901322
+      ],
+      "name": "Add"
+    },
+    "1989": {
+      "id": 1989,
+      "data": {
+        "xValue": "0.1",
+        "xValueType": "float",
+        "outValue": 0,
+        "outValueType": "float",
+        "expanded": true
+      },
+      "inputs": {
+        "x": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": [
+            {
+              "node": 1988,
+              "input": "b",
+              "data": {}
+            },
+            {
+              "node": 1990,
+              "input": "b",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        -862.5796669446837,
+        1353.7290131676993
+      ],
+      "name": "Float"
+    },
+    "1990": {
+      "id": 1990,
+      "data": {
+        "aValue": [
+          0,
+          0,
+          0
+        ],
+        "aValueType": "vec3",
+        "bValue": [
+          0,
+          0,
+          0
+        ],
+        "bValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "a": {
+          "connections": [
+            {
+              "node": 1561,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        },
+        "b": {
+          "connections": [
+            {
+              "node": 1989,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -502.95009539848047,
+        1369.0166348017708
+      ],
+      "name": "Add"
+    },
+    "1991": {
+      "id": 1991,
+      "data": {
+        "inValue": [
+          0,
+          0,
+          0
+        ],
+        "inValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "fromValue": "Linear",
+        "fromValueType": "string",
+        "toValue": "sRGB",
+        "toValueType": "string",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 1988,
+              "output": "out",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -159.98337951093976,
+        1036.5156916515873
+      ],
+      "name": "ColorSpaceConversion"
+    },
+    "2034": {
+      "id": 2034,
+      "data": {
+        "rgbaValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rgbaValueType": "vec4",
+        "rValue": 0,
+        "rValueType": "float",
+        "gValue": 0,
+        "gValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "aValue": 0,
+        "aValueType": "float",
+        "textureValueType": "texture2d",
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "typeValue": "default",
+        "typeValueType": "string",
+        "spaceValue": "tangent",
+        "spaceValueType": "string",
+        "texColorSpaceValue": "sRGB",
+        "texColorSpaceValueType": "string",
+        "expanded": true,
+        "preview": true,
+        "textureValue": {
+          "id": "/example/dev/gLTF/Default_albedo.jpg",
+          "label": "Default_albedo.jpg"
+        }
+      },
+      "inputs": {
+        "texture": {
+          "connections": []
+        },
+        "uv": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "rgba": {
+          "connections": []
+        },
+        "r": {
+          "connections": []
+        },
+        "g": {
+          "connections": []
+        },
+        "b": {
+          "connections": []
+        },
+        "a": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -795.3166942596437,
+        2042.6426982879639
+      ],
+      "name": "SampleTexture2D"
+    },
+    "2079": {
+      "id": 2079,
+      "data": {
+        "rgbaValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rgbaValueType": "vec4",
+        "rValue": 0,
+        "rValueType": "float",
+        "gValue": 0,
+        "gValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "aValue": 0,
+        "aValueType": "float",
+        "textureValueType": "texture2d",
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "typeValue": "default",
+        "typeValueType": "string",
+        "spaceValue": "tangent",
+        "spaceValueType": "string",
+        "texColorSpaceValue": "sRGB",
+        "texColorSpaceValueType": "string",
+        "expanded": true,
+        "preview": true,
+        "textureValue": {
+          "id": "/example/dev/gLTF/Default_AO.jpg",
+          "label": "Default_AO.jpg"
+        }
+      },
+      "inputs": {
+        "texture": {
+          "connections": []
+        },
+        "uv": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "rgba": {
+          "connections": []
+        },
+        "r": {
+          "connections": []
+        },
+        "g": {
+          "connections": []
+        },
+        "b": {
+          "connections": []
+        },
+        "a": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -351.635831695723,
+        2050.119493723508
+      ],
+      "name": "SampleTexture2D"
+    },
+    "2128": {
+      "id": 2128,
+      "data": {
+        "rgbaValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rgbaValueType": "vec4",
+        "rValue": 0,
+        "rValueType": "float",
+        "gValue": 0,
+        "gValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "aValue": 0,
+        "aValueType": "float",
+        "textureValueType": "texture2d",
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "typeValue": "default",
+        "typeValueType": "string",
+        "spaceValue": "tangent",
+        "spaceValueType": "string",
+        "texColorSpaceValue": "sRGB",
+        "texColorSpaceValueType": "string",
+        "expanded": true,
+        "preview": true,
+        "textureValue": {
+          "id": "/example/dev/gLTF/Default_metalRoughness.jpg",
+          "label": "Default_metalRoughness.jpg"
+        }
+      },
+      "inputs": {
+        "texture": {
+          "connections": []
+        },
+        "uv": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "rgba": {
+          "connections": []
+        },
+        "r": {
+          "connections": []
+        },
+        "g": {
+          "connections": []
+        },
+        "b": {
+          "connections": []
+        },
+        "a": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -818.8072502900317,
+        2663.2661232009687
+      ],
+      "name": "SampleTexture2D"
+    },
+    "2181": {
+      "id": 2181,
+      "data": {
+        "rgbaValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rgbaValueType": "vec4",
+        "rValue": 0,
+        "rValueType": "float",
+        "gValue": 0,
+        "gValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "aValue": 0,
+        "aValueType": "float",
+        "textureValueType": "texture2d",
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "typeValue": "default",
+        "typeValueType": "string",
+        "spaceValue": "tangent",
+        "spaceValueType": "string",
+        "texColorSpaceValue": "sRGB",
+        "texColorSpaceValueType": "string",
+        "expanded": true,
+        "preview": true,
+        "textureValue": {
+          "id": "/example/dev/gLTF/Default_normal.jpg",
+          "label": "Default_normal.jpg"
+        }
+      },
+      "inputs": {
+        "texture": {
+          "connections": []
+        },
+        "uv": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "rgba": {
+          "connections": []
+        },
+        "r": {
+          "connections": []
+        },
+        "g": {
+          "connections": []
+        },
+        "b": {
+          "connections": []
+        },
+        "a": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        148.28336014674096,
+        2719.133562595263
+      ],
+      "name": "SampleTexture2D"
+    },
+    "2238": {
+      "id": 2238,
+      "data": {
+        "rgbaValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rgbaValueType": "vec4",
+        "rValue": 0,
+        "rValueType": "float",
+        "gValue": 0,
+        "gValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "aValue": 0,
+        "aValueType": "float",
+        "textureValueType": "texture2d",
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "typeValue": "default",
+        "typeValueType": "string",
+        "spaceValue": "tangent",
+        "spaceValueType": "string",
+        "texColorSpaceValue": "sRGB",
+        "texColorSpaceValueType": "string",
+        "expanded": true,
+        "preview": true,
+        "textureValue": {
+          "id": "/example/dev/gLTF/Default_emissive.jpg",
+          "label": "Default_emissive.jpg"
+        }
+      },
+      "inputs": {
+        "texture": {
+          "connections": []
+        },
+        "uv": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "rgba": {
+          "connections": []
+        },
+        "r": {
+          "connections": []
+        },
+        "g": {
+          "connections": []
+        },
+        "b": {
+          "connections": []
+        },
+        "a": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -335.58890443705235,
+        2679.8346957062886
+      ],
+      "name": "SampleTexture2D"
+    },
+    "2954": {
+      "id": 2954,
+      "data": {
+        "rgbaValue": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rgbaValueType": "vec4",
+        "rValue": 0,
+        "rValueType": "float",
+        "gValue": 0,
+        "gValueType": "float",
+        "bValue": 0,
+        "bValueType": "float",
+        "aValue": 0,
+        "aValueType": "float",
+        "textureValueType": "texture2d",
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "typeValue": "default",
+        "typeValueType": "string",
+        "spaceValue": "tangent",
+        "spaceValueType": "string",
+        "texColorSpaceValue": "Linear",
+        "texColorSpaceValueType": "string",
+        "expanded": true,
+        "preview": true,
+        "textureValue": {
+          "id": "/example/dev/gLTF/Default_normal.jpg",
+          "label": "Default_normal.jpg"
+        }
+      },
+      "inputs": {
+        "texture": {
+          "connections": []
+        },
+        "uv": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "rgba": {
+          "connections": [
+            {
+              "node": 3019,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        },
+        "r": {
+          "connections": []
+        },
+        "g": {
+          "connections": []
+        },
+        "b": {
+          "connections": []
+        },
+        "a": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        156.1770155100248,
+        3326.714204189191
+      ],
+      "name": "SampleTexture2D"
+    },
+    "3019": {
+      "id": 3019,
+      "data": {
+        "inValue": [
+          0,
+          0,
+          0
+        ],
+        "inValueType": "vec3",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "fromValue": "sRGB",
+        "fromValueType": "string",
+        "toValue": "Linear",
+        "toValueType": "string",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 2954,
+              "output": "rgba",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        490.2333650552211,
+        3331.0834985525976
+      ],
+      "name": "ColorSpaceConversion"
+    },
+    "3509": {
+      "id": 3509,
+      "data": {
+        "uvValue": "UV0",
+        "uvValueType": "vec2",
+        "colorAValue": [
+          0.07058823529411765,
+          0.20392156862745098,
+          0.33725490196078434
+        ],
+        "colorAValueType": "vec3",
+        "colorAValueUsage": "color",
+        "colorBValue": [
+          0.6980392156862745,
+          0.6980392156862745,
+          0.6980392156862745
+        ],
+        "colorBValueType": "vec3",
+        "colorBValueUsage": "color",
+        "frequencyValue": [
+          1,
+          1
+        ],
+        "frequencyValueType": "vec2",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "uv": {
+          "connections": []
+        },
+        "colorA": {
+          "connections": []
+        },
+        "colorB": {
+          "connections": []
+        },
+        "frequency": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        -1682.0945529622738,
+        1807.8321293115537
+      ],
+      "name": "Checkerboard"
+    }
+  },
+  "UIState": {
+    "showMainPreview": true,
+    "showBlackBoard": true,
+    "showInspector": true
+  },
+  "type": "ShaderGraph",
+  "version": "",
+  "setting": {
+    "template": "unlit",
+    "precision": "single",
+    "allowMaterialOverride": false,
+    "surfaceType": "opaque",
+    "blendingMode": "alpha",
+    "renderFace": "front",
+    "depthWrite": "auto",
+    "depthTest": "l equal",
+    "alphaClipping": false,
+    "castShadows": true,
+    "clearCoat": false,
+    "linearColorSpace": true
+  },
+  "parameters": [
+    {
+      "name": "Color",
+      "type": "vec3",
+      "defalutValue": [
+        0.07058823529411765,
+        0.20392156862745098,
+        0.33725490196078434
+      ],
+      "exposed": true,
+      "typeEdit": "color"
+    }
+  ]
+}

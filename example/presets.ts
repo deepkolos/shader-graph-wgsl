@@ -23,6 +23,7 @@ import devSubGraphUsage from './dev/devSubGraphUsage.json';
 import devArtistic from './dev/devArtistic.json';
 import devUV from './dev/devUV.json';
 import devInput from './dev/devInput.json';
+import devSRGB_ from './dev/devSRGB.json';
 import demoGradient from './demo/demoGradient.json';
 import demoDissolve from './demo/demoDissolve.json';
 import demoFresnelOutline from './demo/demoFresnelOutline.json';
@@ -32,6 +33,22 @@ import demoFlowMap from './demo/demoFlowMap.json';
 import demoImageFlip from './demo/demoImageFlip.json';
 import demoCartoonWater from './demo/demoCartoonWater';
 import demoSkybox from './demo/demoSkybox.json';
+
+import * as gLTF from './dev/gLTF';
+
+const replaceGLTFTex = <T>(json: T): T => {
+  const data = JSON.parse(JSON.stringify(json)) as any;
+  const gLTFKeys = Object.keys(gLTF);
+  Object.values(data.nodes).forEach((node: any) => {
+    if (node.name === 'SampleTexture2D' && node.data.textureValue) {
+      const { label } = node.data.textureValue;
+      // @ts-ignore
+      node.data.textureValue.id = gLTF[gLTFKeys.find(i => label.includes(i))];
+    }
+  });
+  return data as T;
+};
+const devSRGB = replaceGLTFTex(devSRGB_);
 
 export const Presets = {
   devCompile,
@@ -59,6 +76,7 @@ export const Presets = {
   devArtistic,
   devUV,
   devInput,
+  devSRGB,
   demoGradient,
   demoDissolve,
   demoFresnelOutline,

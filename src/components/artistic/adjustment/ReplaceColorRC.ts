@@ -1,6 +1,6 @@
 import { NodeView, DynamicControl, ColorControl } from '../../../view';
 import { Sockets } from '../../../sockets';
-import { ExtendReteNode, Rete, ValueType } from '../../../types';
+import { ExtendReteNode, Rete, ValueType, ValueUsage } from '../../../types';
 import { RC } from '../../ReteComponent';
 import { ShaderGraphCompiler, SGNodeOutput } from '../../../compilers';
 import { SGNodeData } from '../../../editors';
@@ -18,8 +18,10 @@ export type ReteReplaceColorNode = ExtendReteNode<
     fuzzinessValueType: ValueType.float;
     fromValue: number[];
     fromValueType: ValueType.vec3;
+    fromValueUsage: ValueUsage;
     toValue: number[];
     toValueType: ValueType.vec3;
+    toValueUsage: ValueUsage;
   }
 >;
 
@@ -36,8 +38,8 @@ export class ReplaceColorRC extends RC {
     node.initValueType('out', [0, 0, 0], ValueType.vec3);
     node.initValueType('range', 0, ValueType.float);
     node.initValueType('fuzziness', 0, ValueType.float);
-    node.initValueType('from', [0, 0, 0], ValueType.vec3);
-    node.initValueType('to', [0, 0, 0], ValueType.vec3);
+    node.initValueType('from', [0, 0, 0], ValueType.vec3, undefined, ValueUsage.Color);
+    node.initValueType('to', [0, 0, 0], ValueType.vec3, undefined, ValueUsage.Color);
     data.expanded ??= true;
 
     meta.previewDisabled = false;

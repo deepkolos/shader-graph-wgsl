@@ -1,6 +1,6 @@
 import { BlockView, ColorControl } from '../../../view';
 import { Sockets } from '../../../sockets';
-import { Rete, ValueType, ExtendReteNode } from '../../../types';
+import { Rete, ValueType, ExtendReteNode, ValueUsage } from '../../../types';
 import { RCBlock } from '../../ReteComponent';
 import { ShaderGraphCompiler, SGNodeOutput } from '../../../compilers';
 import { SGNodeData } from '../../../editors';
@@ -10,6 +10,7 @@ export type ReteEmissionBlock = ExtendReteNode<
   {
     emissionValue: number[];
     emissionValueType: ValueType.vec3;
+    emissionValueUsage: ValueUsage;
   }
 >;
 
@@ -22,7 +23,7 @@ export class EmissionBlock extends RCBlock {
 
   async initNode(node: ReteEmissionBlock) {
     const { data, meta } = node;
-    node.initValueType('emission', [0, 0, 0], ValueType.vec3);
+    node.initValueType('emission', [0, 0, 0], ValueType.vec3, undefined, ValueUsage.Color);
     data.expanded ??= true;
     meta.category = '';
     meta.isContext = false;

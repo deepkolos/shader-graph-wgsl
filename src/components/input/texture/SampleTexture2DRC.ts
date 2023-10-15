@@ -1,10 +1,11 @@
 import { AssetControl, NodeView, SelectControl } from '../../../view';
 import { Sockets } from '../../../sockets';
-import { ValueType, Rete, ExtendReteNode, AssetValue } from '../../../types';
+import { ValueType, Rete, ExtendReteNode, AssetValue, COLOR_SPACE_OPTIONS, UV_OPTIONS, TYPE_OPTIONS, SPACE_OPTIONS } from '../../../types';
 import { RC } from '../../ReteComponent';
-import { ShaderGraphCompiler, SGNodeOutput } from '../../../compilers';
+import { ShaderGraphCompiler, SGNodeOutput, initUnpackNormalContext } from '../../../compilers';
 import { SGNodeData } from '../../../editors';
 import { UVRC } from '../geometry';
+import { ColorSpaceConversionRC } from '../../artistic';
 
 export type ReteSampleTexture2DNode = ExtendReteNode<
   'SampleTexture2D',
@@ -27,6 +28,8 @@ export type ReteSampleTexture2DNode = ExtendReteNode<
 
     typeValue: 'default' | 'normal';
     spaceValue: 'object' | 'tangent';
+    texColorSpaceValue: 'sRGB' | 'Linear';
+    texColorSpaceValueType: ValueType.string;
   }
 >;
 
@@ -47,7 +50,8 @@ export class SampleTexture2DRC extends RC {
     node.initValueType('uv', 'UV0', ValueType.vec2);
     node.initValueType('sampler', undefined, ValueType.sampler);
     node.initValueType('type', 'default', ValueType.string);
-    node.initValueType('space', 'object', ValueType.string);
+    node.initValueType('space', 'tangent', ValueType.string);
+    node.initValueType('texColorSpace', 'sRGB', ValueType.string);
     data.expanded ??= true;
     data.preview ??= true;
 
@@ -69,16 +73,14 @@ export class SampleTexture2DRC extends RC {
     const uv = new Rete.Input('uv', 'UV', Sockets.vec2);
     const sampler = new Rete.Input('sampler', 'Sampler', Sockets.sampler);
     [texture, uv, sampler].forEach(i => node.addInput(i));
-    uv.addControl(new SelectControl('uv', node, '', ['UV0', 'UV1', 'UV2', 'UV3'], true));
+    uv.addControl(new SelectControl('uv', node, '', UV_OPTIONS, true));
     texture.addControl(new AssetControl('texture', node, this.editor!, true));
-    node.addControl(new SelectControl('type', node, 'Type', ['default', 'normal'], false));
-    node.addControl(new SelectControl('space', node, 'Space', ['object', 'tangent'], false));
+    node.addControl(new SelectControl('type', node, 'Type', TYPE_OPTIONS, false));
+    node.addControl(new SelectControl('space', node, 'Space', SPACE_OPTIONS, false));
+    node.addControl(new SelectControl('texColorSpace', node, 'TexColorSpace', COLOR_SPACE_OPTIONS, false));
   }
 
-  compileSG(
-    compiler: ShaderGraphCompiler,
-    node: SGNodeData<ReteSampleTexture2DNode>,
-  ): SGNodeOutput {
+  compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteSampleTexture2DNode>): SGNodeOutput {
     const outVar = compiler.getOutVarName(node, 'rgba', 'texColor');
     const textureVar = compiler.getInputVar(node, 'texture');
     const samplerVar = textureVar ? compiler.getInputVar(node, 'sampler') : '';
@@ -86,18 +88,21 @@ export class SampleTexture2DRC extends RC {
 
     if (!uvVar) uvVar = UVRC.initUVContext(compiler);
 
-    // TODO type space
+    const { typeValue, spaceValue, texColorSpaceValue } = node.data;
+    let normalizeCode = '';
+    if (typeValue === 'normal') {
+      const { UnpackScaleNormal, UnpackNormalRGB } = initUnpackNormalContext(compiler);
+      normalizeCode = `\n  ${outVar}.rgb = normalize(${spaceValue === 'tangent' ? UnpackScaleNormal : UnpackNormalRGB}(vec4(${outVar}.rgb, 1.), 1.0));\n`;
+    }
+    // 后面将由纹理确定 GPUTexture format rgbaXXXX-srgb
+    let toLinearCode = '';
+    if (typeValue === 'default' && texColorSpaceValue === 'sRGB') {
+      const sRGBToLinear = ColorSpaceConversionRC.initFnContext(compiler, 'sRGB', 'Linear');
+      toLinearCode = `\n  ${outVar} = vec4f(${sRGBToLinear}(${outVar}.rgb), ${outVar}.a);`;
+    }
     return {
-      outputs: {
-        rgba: outVar,
-        r: `${outVar}.r`,
-        g: `${outVar}.g`,
-        b: `${outVar}.b`,
-        a: `${outVar}.a`,
-      },
-      code: `let ${outVar} = ${
-        textureVar ? `textureSample(${textureVar}, ${samplerVar}, ${uvVar})` : 'vec4<f32>(0)'
-      };`,
+      outputs: { rgba: outVar, r: `${outVar}.r`, g: `${outVar}.g`, b: `${outVar}.b`, a: `${outVar}.a` },
+      code: `var ${outVar} = ${textureVar ? `textureSample(${textureVar}, ${samplerVar}, ${uvVar})` : 'vec4<f32>(0)'};${normalizeCode}${toLinearCode}`,
     };
   }
 }

@@ -1,6 +1,6 @@
 import { NodeView, DynamicControl, ColorControl } from '../../../view';
 import { Sockets } from '../../../sockets';
-import { ExtendReteNode, Rete, ValueType } from '../../../types';
+import { ExtendReteNode, Rete, ValueType, ValueUsage } from '../../../types';
 import { RC } from '../../ReteComponent';
 import { ShaderGraphCompiler, SGNodeOutput } from '../../../compilers';
 import { SGNodeData } from '../../../editors';
@@ -12,6 +12,7 @@ export type ReteColorMaskNode = ExtendReteNode<
     inValueType: ValueType.vec3;
     maskColorValue: number;
     maskColorValueType: ValueType.vec3;
+    maskColorValueUsage: ValueUsage;
     rangeValue: number;
     rangeValueType: ValueType.float;
     fuzzinessValue: number;
@@ -31,7 +32,7 @@ export class ColorMaskRC extends RC {
   initNode(node: ReteColorMaskNode) {
     const { data, meta } = node;
     node.initValueType('in', [0, 0, 0], ValueType.vec3);
-    node.initValueType('maskColor', [0, 0, 0], ValueType.vec3);
+    node.initValueType('maskColor', [0, 0, 0], ValueType.vec3, undefined, ValueUsage.Color);
     node.initValueType('range', 0, ValueType.float);
     node.initValueType('fuzziness', 0, ValueType.float);
     node.initValueType('out', 0, ValueType.float);

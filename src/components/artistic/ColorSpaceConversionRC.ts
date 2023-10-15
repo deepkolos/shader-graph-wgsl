@@ -59,17 +59,8 @@ export class ColorSpaceConversionRC extends RC {
       );
   }
 
-  compileSG(
-    compiler: ShaderGraphCompiler,
-    node: SGNodeData<ReteColorSpaceConversionNode>,
-  ): SGNodeOutput {
-    const outVar = compiler.getOutVarName(node, 'out', 'contrast');
-    const inVar = compiler.getInputVarConverted(node, 'in');
-    const from = node.data.fromValue;
-    const to = node.data.toValue;
-
-    if (from === to) return { outputs: { out: inVar }, code: '' };
-
+  static initFnContext(compiler: ShaderGraphCompiler, from: ColorSpace, to: ColorSpace) {
+    const node = { name: ColorSpaceConversionRC.Name };
     let codeFn: (n: string) => string;
     if (from === 'sRGB' && to === 'HSV') {
       codeFn = (varName: string) => /* wgsl */ `
@@ -86,9 +77,9 @@ fn ${varName}(In: vec3<f32>) -> vec3<f32> {
     if (from === 'sRGB' && to === 'Linear') {
       codeFn = (varName: string) => /* wgsl */ `
 fn ${varName}(In: vec3<f32>) -> vec3<f32> {
-  vec3<f32> linearRGBLo = In / 12.92;
-  vec3<f32> linearRGBHi = pow(max(abs((In + 0.055) / 1.055), 1.192092896e-07), vec3<f32>(2.4, 2.4, 2.4));
-  vec3<f32> stepCheck = step(0.04045, In);
+  let linearRGBLo = In / 12.92;
+  let linearRGBHi = pow(max(abs((In + 0.055) / 1.055), vec3f(1.192092896e-07)), vec3<f32>(2.4, 2.4, 2.4));
+  let stepCheck = step(vec3f(0.04045), In);
   return stepCheck * linearRGBHi + (1.0 - stepCheck) * linearRGBLo;
 }`;
     }
@@ -118,8 +109,8 @@ fn ${varName}(In: vec3<f32>) -> vec3<f32> {
       codeFn = (varName: string) => /* wgsl */ `
 fn ${varName}(In: vec3<f32>) -> vec3<f32> {
   let sRGBLo = In * 12.92;
-  let sRGBHi = (pow(max(abs(In), 1.192092896e-07), vec3<f32>(1.0 / 2.4, 1.0 / 2.4, 1.0 / 2.4)) * 1.055) - 0.055;
-  let stepCheck = step(0.0031308, In);
+  let sRGBHi = (pow(max(abs(In), vec3f(1.192092896e-07)), vec3<f32>(1.0 / 2.4, 1.0 / 2.4, 1.0 / 2.4)) * 1.055) - 0.055;
+  let stepCheck = step(vec3f(0.0031308), In);
   return stepCheck * sRGBHi + (1.0 - stepCheck) * sRGBLo;
 }`;
     }
@@ -128,7 +119,7 @@ fn ${varName}(In: vec3<f32>) -> vec3<f32> {
 fn ${varName}(In: vec3<f32>) -> vec3<f32> {
     let sRGBLo = In * 12.92;
     let sRGBHi = (pow(max(abs(In), 1.192092896e-07), vec3<f32>(1.0 / 2.4, 1.0 / 2.4, 1.0 / 2.4)) * 1.055) - 0.055;
-    let stepCheck = step(0.0031308, In);
+    let stepCheck = step(vec3f(0.0031308), In);
     let Linear = stepCheck * sRGBHi + (1.0 - stepCheck) * sRGBLo;
     let K = vec4<f32>(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
     let P = mix(vec4<f32>(Linear.bg, K.wz), vec4<f32>(Linear.gb, K.xy), step(Linear.b, Linear.g));
@@ -140,7 +131,21 @@ fn ${varName}(In: vec3<f32>) -> vec3<f32> {
     }
 
     const fnVar = compiler.setContext('defines', node, from + '_' + to, codeFn!);
+    return fnVar;
+  }
 
+  compileSG(
+    compiler: ShaderGraphCompiler,
+    node: SGNodeData<ReteColorSpaceConversionNode>,
+  ): SGNodeOutput {
+    const outVar = compiler.getOutVarName(node, 'out', 'contrast');
+    const inVar = compiler.getInputVarConverted(node, 'in');
+    const from = node.data.fromValue;
+    const to = node.data.toValue;
+
+    if (from === to) return { outputs: { out: inVar }, code: '' };
+
+    const fnVar = ColorSpaceConversionRC.initFnContext(compiler, from, to);
     return {
       outputs: { out: outVar },
       code: `let ${outVar} = ${fnVar}(${inVar});`,
