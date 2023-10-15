@@ -1,18 +1,4 @@
-import {
-  BufferAttribute,
-  BufferGeometry,
-  Camera,
-  Color,
-  InterleavedBuffer,
-  Matrix3,
-  Matrix4,
-  Mesh,
-  Scene,
-  Texture,
-  Vector2,
-  Vector3,
-  Vector4,
-} from 'three';
+import { BufferAttribute, BufferGeometry, Camera, Color, InterleavedBuffer, Matrix3, Matrix4, Mesh, Scene, Texture, Vector2, Vector3, Vector4 } from 'three';
 import { WebGPUMaterial } from './WebGPUMaterial';
 import { wgsl } from './StructBuffer';
 import { OpaquePass } from './OpaquePass';
@@ -76,12 +62,7 @@ export class WebGPURenderer {
     } satisfies GPUCanvasConfiguration;
   }
 
-  createBuffer(
-    data: Float32Array | Uint32Array | Uint8Array | Uint16Array,
-    usage: GPUFlagsConstant,
-    mappedAtCreation = false,
-    alignment = 4,
-  ) {
+  createBuffer(data: Float32Array | Uint32Array | Uint8Array | Uint16Array, usage: GPUFlagsConstant, mappedAtCreation = false, alignment = 4) {
     const buffer = this.device.createBuffer({
       usage,
       size: align(data.byteLength, alignment),
@@ -95,31 +76,32 @@ export class WebGPURenderer {
     return buffer;
   }
 
-  async createTexture(texture: Texture, flipY = true) {
+  private async createTextureFromImg(img: HTMLImageElement, flipY: boolean) {
+    await img.decode();
+    const bitmap = await createImageBitmap(img, {
+      // @ts-ignore
+      imageOrientation: flipY ? 'flipY' : 'from-image',
+    });
+    const colorTexture = this.device.createTexture({
+      size: [bitmap.width, bitmap.height, 1],
+      format: 'rgba8unorm',
+      usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.COPY_DST | GPUTextureUsage.TEXTURE_BINDING,
+    });
+    this.queue.copyExternalImageToTexture({ source: bitmap }, { texture: colorTexture }, [bitmap.width, bitmap.height]);
+    return colorTexture;
+  }
+
+  createTexture(texture: Texture, flipY = true) {
     const img = texture.image as HTMLImageElement;
     // TODO needsUpdate
     if (!texture.userData.gpuTexture) {
-      await img.decode();
-      const bitmap = await createImageBitmap(img, {
-        // @ts-ignore
-        imageOrientation: flipY ? 'flipY' : 'from-image',
+      texture.userData.gpuTexture = this.createTextureFromImg(img, flipY).then(colorTexture => {
+        texture.userData.gpuTexture = colorTexture;
+        return colorTexture;
       });
-      const colorTexture = this.device.createTexture({
-        size: [bitmap.width, bitmap.height, 1],
-        format: 'rgba8unorm',
-        usage:
-          GPUTextureUsage.RENDER_ATTACHMENT |
-          GPUTextureUsage.COPY_DST |
-          GPUTextureUsage.TEXTURE_BINDING,
-      });
-      this.queue.copyExternalImageToTexture({ source: bitmap }, { texture: colorTexture }, [
-        bitmap.width,
-        bitmap.height,
-      ]);
-      texture.userData.gpuTexture = colorTexture;
     }
 
-    return texture.userData.gpuTexture as GPUTexture;
+    return texture.userData.gpuTexture as GPUTexture | Promise<GPUTexture>;
   }
 
   prepareCtx(targetCtx: GPUCanvasContext) {
@@ -171,9 +153,7 @@ export class WebGPURenderer {
   prepareMesh(mesh: Mesh) {
     const { device, queue } = this;
     const geometry = mesh.geometry;
-    const material = (
-      Array.isArray(mesh.material) ? mesh.material[0] : mesh.material
-    ) as WebGPUMaterial;
+    const material = (Array.isArray(mesh.material) ? mesh.material[0] : mesh.material) as WebGPUMaterial;
 
     if (!material.vertexShader || !material.fragmentShader) return;
 
@@ -189,19 +169,11 @@ export class WebGPURenderer {
           // @ts-ignore 变成bufferAttribute
           bufferAttribute = attribute.clone() as BufferAttribute;
         }
-        gpuGeometry[name] = this.createBuffer(
-          bufferAttribute.array as any,
-          GPUBufferUsage.VERTEX,
-          true,
-        );
+        gpuGeometry[name] = this.createBuffer(bufferAttribute.array as any, GPUBufferUsage.VERTEX, true);
       });
 
       if (geometry.index) {
-        gpuGeometry.index = this.createBuffer(
-          geometry.index.array as any,
-          GPUBufferUsage.INDEX,
-          true,
-        );
+        gpuGeometry.index = this.createBuffer(geometry.index.array as any, GPUBufferUsage.INDEX, true);
       }
     }
 
@@ -222,8 +194,7 @@ export class WebGPURenderer {
               const uniform = material.uniforms[key];
               const bindingCfg = material.sg.bindingMap[key.replace('sg_', '')];
               const isDepthTexture = uniform.type === 'texture_depth_2d';
-              const isColorTexture =
-                uniform.type === 'texture2d_f32' || uniform.type === 'texture_2d<f32>';
+              const isColorTexture = uniform.type === 'texture2d_f32' || uniform.type === 'texture_2d<f32>';
               if (isDepthTexture || isColorTexture) {
                 if (!bindingCfg) return;
                 const binding = bindingCfg.index;
@@ -240,9 +211,7 @@ export class WebGPURenderer {
                 } else {
                   bindingEntries.push({
                     binding,
-                    resource: isDepthTexture
-                      ? this.defaultDepthTextureView!
-                      : this.defaultColorTextureView!,
+                    resource: isDepthTexture ? this.defaultDepthTextureView! : this.defaultColorTextureView!,
                   });
                 }
               } else if (uniformUsed.includes(key)) {
@@ -307,10 +276,7 @@ export class WebGPURenderer {
         });
 
         const uniformStructBuffer = new wgsl.StructBuffer(uniformStruct);
-        const uniformBuffer = this.createBuffer(
-          uniformStructBuffer.buffer,
-          GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
-        );
+        const uniformBuffer = this.createBuffer(uniformStructBuffer.buffer, GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST);
 
         const vsm = device.createShaderModule({ code: material.vertexShader });
         const fsm = device.createShaderModule({ code: material.fragmentShader });
@@ -397,32 +363,17 @@ export class WebGPURenderer {
           } else debugger;
         }
       });
-      queue.writeBuffer(
-        uniform,
-        0,
-        uniformStruct.buffer,
-        uniformStruct.buffer.byteOffset,
-        uniformStruct.buffer.byteLength,
-      );
+      queue.writeBuffer(uniform, 0, uniformStruct.buffer, uniformStruct.buffer.byteOffset, uniformStruct.buffer.byteLength);
     }
   }
 
   drawMesh(node: Mesh, passEncoder: GPURenderPassEncoder) {
     this.prepareMesh(node);
     const geometry = node.geometry;
-    const material = (
-      Array.isArray(node.material) ? node.material[0] : node.material
-    ) as WebGPUMaterial;
+    const material = (Array.isArray(node.material) ? node.material[0] : node.material) as WebGPUMaterial;
     const gpuGeometry = geometry.userData as GPUGeometry;
     const gpuMaterial = material.userData as GPUMaterial;
-    if (
-      !material.vertexShader ||
-      !material.fragmentShader ||
-      !gpuMaterial.pipeline ||
-      !gpuGeometry.position ||
-      gpuMaterial.pipeline instanceof Promise
-    )
-      return;
+    if (!material.vertexShader || !material.fragmentShader || !gpuMaterial.pipeline || !gpuGeometry.position || gpuMaterial.pipeline instanceof Promise) return;
 
     passEncoder.setPipeline(gpuMaterial.pipeline as GPURenderPipeline);
     passEncoder.setBindGroup(0, gpuMaterial.bindGroup);
