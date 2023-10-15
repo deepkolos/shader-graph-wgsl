@@ -51,6 +51,8 @@ export class PreviewServer {
   mainMaterial: WebGPUMaterial;
   disposed = false;
   floor: Mesh<BoxGeometry, WebGPUMaterial>;
+  updatingMaterial = false;
+  updatingMaterialNext = false;
 
   constructor(public editor: ShaderGraphEditor) {
     this.canvas = document.createElement('canvas');
@@ -122,7 +124,7 @@ export class PreviewServer {
     if (this.disposed) return;
     const deltaTime = this.clock.getDelta();
     this.mainMaterial.sg.update(deltaTime);
-    this.clients.forEach(this.renderClient);
+    if (!this.updatingMaterial) this.clients.forEach(this.renderClient);
     requestAnimationFrame(this.render);
     // setTimeout(this.render, 500);
   };
@@ -154,6 +156,11 @@ export class PreviewServer {
   }
 
   async updateAllMaterial() {
+    if (this.updatingMaterial) {
+      this.updatingMaterialNext = true;
+      return;
+    }
+    this.updatingMaterial = true;
     SGController.textureInUsed.clear();
     if (this.editor.editing === 'ShaderGraph') {
       const graphData = await this.editor.compiler.compile(this.editor.toJSON());
@@ -179,6 +186,11 @@ export class PreviewServer {
         }
       }),
     );
+    this.updatingMaterial = false;
+    if (this.updatingMaterialNext) {
+      this.updatingMaterialNext = false;
+      this.updateAllMaterial();
+    }
   }
 
   renderClient = (client: PreviewClient) => {
