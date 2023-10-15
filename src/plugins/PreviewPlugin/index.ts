@@ -8,9 +8,9 @@ export * from './PreviewCustomMeshPlugin';
 
 declare module '../../rete/core/events' {
   interface EventsTypes {
-    previewclientcreate: { canvas: HTMLCanvasElement; node?: ReteNode; type?: '2d' | '3d'; enable?: boolean };
-    previewclientremove: { canvas: HTMLCanvasElement };
-    previewclientupdate: { canvas: HTMLCanvasElement; type?: '2d' | '3d'; enable?: boolean };
+    previewclientcreate: { canvas: HTMLDivElement; node?: ReteNode; type?: '2d' | '3d'; enable?: boolean };
+    previewclientremove: { canvas: HTMLDivElement };
+    previewclientupdate: { canvas: HTMLDivElement; type?: '2d' | '3d'; enable?: boolean };
     previewsettingupdate: { geometry: string };
     previewcopyshader: { node: ReteNode; callback: (data?: { fragCode: string; vertCode: string }) => void };
     previewcustommesh: (geometry?: BufferGeometry) => void;

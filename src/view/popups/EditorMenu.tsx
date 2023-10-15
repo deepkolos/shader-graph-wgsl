@@ -247,6 +247,7 @@ const EditorContextMenu: FC<MenuProps> = ({ editor, connection, node, popupAdd, 
       <MenuList
         x={x}
         y={y}
+        z={4}
         items={
           [
             copyShaderLink,

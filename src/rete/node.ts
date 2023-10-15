@@ -14,7 +14,7 @@ export class Node {
     controls = new Map<string, Control>();
     blocks: Array<Node> = [];
     data: {[key: string]: unknown} = {};
-    meta: {[key: string]: unknown} = {};
+    meta: { hovering?: boolean } & {[key: string]: unknown} = {};
     contextNode?: Node;
 
     static latestId = 0;

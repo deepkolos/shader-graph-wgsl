@@ -306,8 +306,8 @@ export class SGController {
     } else {
       this.set('Camera', 'orthographic', 0);
     }
-    this.set('Screen', 'width', renderer.viewport[0]);
-    this.set('Screen', 'height', renderer.viewport[1]);
+    this.set('Screen', 'width', renderer.viewport[2]);
+    this.set('Screen', 'height', renderer.viewport[3]);
   }
 
   static loadTexture(asset: AssetValue) {

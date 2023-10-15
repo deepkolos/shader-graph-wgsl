@@ -5,7 +5,7 @@ import { NodeView } from '../../rete/view/node';
 
 export const Preview: FC<{ node: ReteNode; view: NodeView }> = ({ node, view }) => {
   const [show, setShow] = useState(node.data.preview);
-  const canvasRef = useRef<HTMLCanvasElement | null>();
+  const canvasRef = useRef<HTMLDivElement | null>();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -33,7 +33,7 @@ export const Preview: FC<{ node: ReteNode; view: NodeView }> = ({ node, view }) 
         ▾
       </div>
       <div className="sg-preview-canvas-can">
-        <canvas className="sg-preview-canvas" style={{ display: !show ? 'none' : 'block' }} ref={el => (canvasRef.current = el)} />
+        <div className="sg-preview-canvas" style={{ display: !show ? 'none' : 'block' }} ref={el => (canvasRef.current = el)} />
       </div>
     </div>
   );

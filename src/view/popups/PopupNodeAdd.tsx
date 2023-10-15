@@ -226,7 +226,7 @@ export const PopupNodeAdd: FC<PopupNodeAddProps> = ({ editor, view, x = 0, y = 0
 
   return (
     <Popup view={view} onShowChange={show => (show ? inputRef.current?.focus() : setKeyword(''))} root={editor.view.container}>
-      <Moveable gap={10} x={x} y={y} containerEl={editor.view.container}>
+      <Moveable gap={10} x={x} y={y} z={4} containerEl={editor.view.container}>
         <div className="sg-popup-node-add">
           <PopupTitle>{'Create Node'}</PopupTitle>
           <div className="sg-popup-node-add-search">

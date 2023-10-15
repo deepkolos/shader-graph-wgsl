@@ -1,10 +1,10 @@
+import './PreviewServer.less';
 import {
   AmbientLight,
   BoxGeometry,
   BufferGeometry,
   CapsuleGeometry,
   Clock,
-  Color,
   CylinderGeometry,
   DirectionalLight,
   Matrix4,
@@ -16,7 +16,7 @@ import {
   Scene,
   SphereGeometry,
 } from 'three';
-import { getClientSize, PreviewClient } from './PreviewClient';
+import { PreviewClient } from './PreviewClient';
 import { ShaderGraphEditor } from '../../editors';
 import { Rete } from '../../types';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -29,7 +29,7 @@ export class PreviewServer {
   clock: Clock;
   canvas: HTMLCanvasElement;
   scene: Scene;
-  clients = new Map<HTMLCanvasElement, PreviewClient>();
+  clients = new Map<HTMLDivElement, PreviewClient>();
   nodeClients = new Set<PreviewClient>();
   mainClients = new Set<PreviewClient>();
   geometries = {
@@ -53,6 +53,9 @@ export class PreviewServer {
   floor: Mesh<BoxGeometry, WebGPUMaterial>;
   updatingMaterial = false;
   updatingMaterialNext = false;
+  resizeObserver: ResizeObserver;
+  ctx: GPUCanvasContext;
+  dpr = devicePixelRatio;
 
   constructor(public editor: ShaderGraphEditor) {
     this.canvas = document.createElement('canvas');
@@ -67,7 +70,6 @@ export class PreviewServer {
 
     this.mesh = new Mesh();
     this.scene.add(this.mesh);
-    this.scene.background = new Color('#2b2b2b');
 
     const ambientLight = new AmbientLight('#ffffff', 0);
     const dirLight = new DirectionalLight('#ffffff', 1);
@@ -78,10 +80,7 @@ export class PreviewServer {
     this.scene.add(this.camera2D, this.camera3D);
 
     const floorMaterial = new WebGPUMaterial();
-    this.floor = new Mesh(
-      new BoxGeometry(40 * scaleFactor, 2 * scaleFactor, 40 * scaleFactor),
-      floorMaterial,
-    );
+    this.floor = new Mesh(new BoxGeometry(40 * scaleFactor, 2 * scaleFactor, 40 * scaleFactor), floorMaterial);
     floorMaterial.uniforms = {
       modelViewMatrix: { value: new Matrix4(), type: 'mat4x4_f32' },
       projectionMatrix: { value: new Matrix4(), type: 'mat4x4_f32' },
@@ -95,6 +94,19 @@ export class PreviewServer {
     this.floor.position.y = 12 * scaleFactor;
     this.floor.updateMatrixWorld(true);
     this.scene.add(this.floor);
+
+    this.ctx = this.canvas.getContext('webgpu')!;
+    this.canvas.classList.add('sg-preview-server-canvas');
+    this.editor.view.container.appendChild(this.canvas);
+
+    // resize
+    this.resizeObserver = new ResizeObserver(() => {
+      this.canvas.width = this.canvas.clientWidth * this.dpr;
+      this.canvas.height = this.canvas.clientHeight * this.dpr;
+    });
+    this.renderer.clearValue.a = 0;
+    this.renderer.clearColor = false;
+    this.resizeObserver.observe(this.canvas);
 
     this.renderer.init().then(this.render);
   }
@@ -124,7 +136,14 @@ export class PreviewServer {
     if (this.disposed) return;
     const deltaTime = this.clock.getDelta();
     this.mainMaterial.sg.update(deltaTime);
-    if (!this.updatingMaterial) this.clients.forEach(this.renderClient);
+
+    // clear canvas with alpha 0
+    const { width, height } = this.canvas;
+    this.renderer.setViewport(0, 0, width, height);
+    this.renderer.setScissor(0, 0, width, height);
+    this.renderer.clear(this.ctx);
+
+    if (!this.updatingMaterial) [...this.clients.values()].sort((a, b) => a.weight - b.weight).forEach(this.renderClient);
     requestAnimationFrame(this.render);
     // setTimeout(this.render, 500);
   };
@@ -204,28 +223,27 @@ export class PreviewServer {
       client.updateCamera(this.camera3D);
       if (!client.node) this.updateFloor();
       this.updateMaterialUnifroms(camera);
-      this.syncCanvasSize(client.canvas);
-      this.renderer.render(this.scene, camera, client.ctx);
+
+      const { top: py, left: px } = this.editor.view.container.getBoundingClientRect();
+      const { width, height, top: cy, left: cx } = client.canvas.getBoundingClientRect();
+      const x = cx - px;
+      const y = cy - py;
+      this.renderer.setScissor(x * this.dpr, y * this.dpr, Math.round(width * this.dpr), Math.round(height * this.dpr));
+      this.renderer.setViewport(x * this.dpr, y * this.dpr, Math.round(width * this.dpr), Math.round(height * this.dpr));
+      this.renderer.render(this.scene, camera, this.ctx);
       if (client.node) this.floor.visible = floorVisible;
     }
   };
-
-  syncCanvasSize(canvas: HTMLCanvasElement) {
-    const { width, height } = getClientSize(canvas);
-    canvas.width = width * devicePixelRatio;
-    canvas.height = height * devicePixelRatio;
-  }
 
   add(client: PreviewClient) {
     // console.log('add', client.node?.name);
     if (this.clients.has(client.canvas)) this.remove(client.canvas);
     this.clients.set(client.canvas, client);
     (client.node ? this.nodeClients : this.mainClients).add(client);
-    if (!client.node)
-      this.control = this.control || new OrbitControls(this.camera3D, client.canvas);
+    if (!client.node) this.control = this.control || new OrbitControls(this.camera3D, client.canvas);
   }
 
-  remove(canvas: HTMLCanvasElement) {
+  remove(canvas: HTMLDivElement) {
     const old = this.clients.get(canvas);
     if (old) {
       (old.node ? this.nodeClients : this.mainClients).delete(old);
@@ -242,6 +260,7 @@ export class PreviewServer {
 
   async dispose() {
     this.disposed = true;
+    this.editor.view.container.removeChild(this.canvas);
     await this.renderer.dispose();
     Object.values(this.geometries).forEach(disposeGeometry);
     disposeGeometry(this.mesh.geometry);

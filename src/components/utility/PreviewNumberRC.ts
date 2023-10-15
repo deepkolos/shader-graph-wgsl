@@ -126,7 +126,7 @@ fn ${varName}_PrintValue( vStringCoords: vec2f, fValue_: f32, fMaxDigits: f32, f
     };
 
     const print = (offset: string, suffix: string) =>
-      /* wgsl */ `vColour = mix( vColour, fontColor, ${fnBaseVar}_PrintValue( (fragCoord - vec2(${offset})) / vFontSize, value${suffix}, fDigits, fDecimalPlaces));`;
+      /* wgsl */ `vColour = mix( vColour, fontColor, ${fnBaseVar}_PrintValue( (fragCoord - vec2f(${offset})) / vFontSize, value${suffix}, fDigits, fDecimalPlaces));`;
     // prettier-ignore
     const printCodeMap = {
       [ValueType.float]: print('-40, 45.0', ''),

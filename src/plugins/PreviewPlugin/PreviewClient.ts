@@ -7,14 +7,14 @@ import { WebGPUMaterial, disposeMaterial } from '../../materials';
 export class PreviewClient {
   enable: boolean = false;
   type: '2d' | '3d' = '2d';
-  ctx: GPUCanvasContext;
   material = new WebGPUMaterial();
 
-  constructor(
-    public canvas: HTMLCanvasElement & { clientWidth_cache?: number; clientHeight_cache?: number },
-    public node?: ReteNode,
-  ) {
-    this.ctx = canvas.getContext('webgpu')!;
+  constructor(public canvas: HTMLDivElement & { clientWidth_cache?: number; clientHeight_cache?: number }, public node?: ReteNode) {}
+
+  get weight() {
+    if (!this.node) return 2;
+    if (this.node.meta.hovering) return 1;
+    return 0;
   }
 
   set(enable?: boolean, type?: '2d' | '3d') {
@@ -47,7 +47,7 @@ export class PreviewClient {
 }
 
 export function getClientSize(
-  canvas: HTMLCanvasElement & {
+  canvas: HTMLElement & {
     clientWidth_cache?: number;
     clientHeight_cache?: number;
     cacheNeedsUpdate?: boolean;

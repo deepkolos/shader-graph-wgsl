@@ -29,7 +29,7 @@ const MenuItems = [
 
 export const MainPreview: FC<MainPreviewProps> = ({ editor, view }) => {
   const [show, setShow] = useState(false);
-  const canvasRef = useRef<HTMLCanvasElement>();
+  const canvasRef = useRef<HTMLDivElement>();
 
   const onMenuClick = (name: string) => {
     editor.trigger('previewsettingupdate', { geometry: name });
@@ -68,7 +68,7 @@ export const MainPreview: FC<MainPreviewProps> = ({ editor, view }) => {
             onVisiableChange={setShow}
             items={[MenuItems.map(name => ({ name, onclick: onMenuClick }))]}
           >
-            <canvas
+            <div
               onPointerDown={stopPropagation}
               onPointerMove={stopPropagation}
               className="sg-main-preview-canvas"

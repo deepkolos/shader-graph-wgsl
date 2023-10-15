@@ -47,8 +47,14 @@ export class NodeView extends Emitter<EventsTypes> {
     });
 
     this.disposeContextMenu = listen(this.el, 'contextmenu', e => this.trigger('contextmenu', { e, node: this.node }));
-    this.disposeMouseEnter = listen(this.el, 'mouseenter', () => this.trigger('nodemouseenter', this.node));
-    this.disposeMouseLeave = listen(this.el, 'mouseleave', () => this.trigger('nodemouseleave', this.node));
+    this.disposeMouseEnter = listen(this.el, 'mouseenter', () => {
+      this.trigger('nodemouseenter', this.node);
+      this.node.meta.hovering = true;
+    });
+    this.disposeMouseLeave = listen(this.el, 'mouseleave', () => {
+      this.trigger('nodemouseleave', this.node);
+      this.node.meta.hovering = false;
+    });
 
     this.trigger('rendernode', {
       el: this.el,

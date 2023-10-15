@@ -13,10 +13,11 @@ export interface MenuListProps {
   items: Array<Array<MenuItem>>;
   x: number;
   y: number;
+  z?: number;
   root?: HTMLElement;
 }
 
-export const MenuList: FC<MenuListProps> = ({ items, x, y, root }) => {
+export const MenuList: FC<MenuListProps> = ({ items, x, y, z, root }) => {
   const [submenuPosition, setSubmenuPosition] = useState<'left' | 'right'>('right');
   const canRef = useRef<HTMLDivElement>();
 
@@ -45,7 +46,13 @@ export const MenuList: FC<MenuListProps> = ({ items, x, y, root }) => {
   }, []);
 
   return (
-    <div className="sg-menu-list sg-menu-list-can" ref={el => (canRef.current = el!)} onContextMenu={preventDefault} onClick={stopPropagation}>
+    <div
+      className="sg-menu-list sg-menu-list-can"
+      ref={el => (canRef.current = el!)}
+      style={{ zIndex: z }}
+      onContextMenu={preventDefault}
+      onClick={stopPropagation}
+    >
       {items.map((group, i) => (
         <div key={i}>
           {group.map(({ name, onclick, sublist, disabled = false }) => (
@@ -55,11 +62,7 @@ export const MenuList: FC<MenuListProps> = ({ items, x, y, root }) => {
               {sublist && (
                 <div className="sg-menu-submenu sg-menu-list" data-position={submenuPosition || 'right'}>
                   {sublist.map(({ name, disabled, onclick }) => (
-                    <div
-                      className="sg-menu-item"
-                      key={name}
-                      onClick={disabled ? undefined : () => onclick?.(name)}
-                      data-aria-disabled={disabled}>
+                    <div className="sg-menu-item" key={name} onClick={disabled ? undefined : () => onclick?.(name)} data-aria-disabled={disabled}>
                       <div className="sg-menu-item-name">{name}</div>
                     </div>
                   ))}

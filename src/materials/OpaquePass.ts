@@ -51,7 +51,7 @@ export class OpaquePass {
       this._camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1000);
       this._camera.updateMatrixWorld(true);
     }
-    let [w, h] = this._renderer.viewport;
+    let [, , w, h] = this._renderer.viewport;
     if (!this.color || this.color.width !== w || this.color.height !== h) {
       w = w < 1 ? 200 : w;
       h = h < 1 ? 200 : h;

@@ -15,9 +15,10 @@ interface MoveableProps extends DefaultProps {
   gap?: number;
   x?: number;
   y?: number;
+  z?: number;
   containerEl?: HTMLElement;
 }
-export const Moveable: FC<MoveableProps> = ({ gap = 0, children, x = 0, y = 0, containerEl }) => {
+export const Moveable: FC<MoveableProps> = ({ gap = 0, children, x = 0, y = 0, z, containerEl }) => {
   const canRef = useRef<HTMLElement>();
   const moveableState = useRef<MoveableContext>({});
 
@@ -92,7 +93,7 @@ export const Moveable: FC<MoveableProps> = ({ gap = 0, children, x = 0, y = 0, c
   }, []);
 
   return (
-    <div className="sg-popup-movable" ref={el => (canRef.current = el!)}>
+    <div className="sg-popup-movable" style={{ zIndex: z }} ref={el => (canRef.current = el!)}>
       <moveableContext.Provider value={moveableState.current}>{children}</moveableContext.Provider>
     </div>
   );

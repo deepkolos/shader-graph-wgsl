@@ -183,7 +183,7 @@ export const BlackBoard: FC<BlackBoardProps> = ({ visiable, view, editor, subtit
 
   return (
     <Popup view={view} visiable={visiable} mask={false} keepAlive root={editor.view.container}>
-      <Moveable containerEl={editor.view.container} gap={20}>
+      <Moveable z={2} containerEl={editor.view.container} gap={20}>
         <div className="sg-blackboard">
           <div className="sg-blackboard-head">
             <div className="sg-blackboard-title">{editor.id}</div>

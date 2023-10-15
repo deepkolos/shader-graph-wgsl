@@ -618,7 +618,7 @@ const stringifyFloat = (num: number | number[]): string => {
 };
 
 const stringifyVector = (value: number[], len: 2 | 3 | 4): string => {
-  return `vec${len}(${new Array(len)
+  return `vec${len}f(${new Array(len)
     .fill(0)
     .map((v, k) => stringifyFloat(value[k] || 0))
     .join(', ')})`;

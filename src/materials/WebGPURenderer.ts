@@ -43,12 +43,24 @@ export class WebGPURenderer {
   depthTextures = new Map<string, GPUTexture>();
   lastSubmit!: Promise<undefined>;
   samplerCache: { [k: string]: GPUSampler } = {};
-  viewport: number[] = [0, 0];
+  viewport: [number, number, number, number] = [0, 0, 0, 0]; // [x,y,w,h]
+  scissor: [number, number, number, number] = [0, 0, 0, 0]; // [x,y,w,h]
+  clearColor = true;
+  clearDepth = true;
+  clearValue = { r: 0, g: 0, b: 0, a: 0 };
   opaquePass = new OpaquePass(this);
   defaultDepthTexture?: GPUTexture;
   defaultColorTexture?: GPUTexture;
   defaultDepthTextureView?: GPUTextureView;
   defaultColorTextureView?: GPUTextureView;
+
+  setViewport(x: number, y: number, w: number, h: number) {
+    this.viewport = [x, y, w, h];
+  }
+
+  setScissor(x: number, y: number, w: number, h: number) {
+    this.scissor = [x, y, w, h];
+  }
 
   async init() {
     this.adapter = (await navigator.gpu.requestAdapter({ powerPreference: 'high-performance' }))!;
@@ -110,13 +122,12 @@ export class WebGPURenderer {
         device: this.device,
         format: this.canvasFormat,
         usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.COPY_SRC,
-        alphaMode: 'opaque',
+        alphaMode: 'premultiplied',
       });
       targetCtx.configured = true;
     }
 
     const { width, height } = targetCtx.canvas;
-    this.viewport = [width, height];
     const key = `${Math.ceil(width)}x${Math.ceil(height)}`;
     let depthTexture = this.depthTextures.get(key);
     if (!depthTexture) {
@@ -391,12 +402,17 @@ export class WebGPURenderer {
 
   render(scene: Scene, camera: Camera, targetCtx: GPUCanvasContext) {
     if (targetCtx.canvas.width === 0) return;
+    const [x, y, w, h] = this.viewport;
+    // check viewport https://www.w3.org/TR/webgpu/#dom-gpurenderpassencoder-setviewport
+    if (!(x >= 0 && y >= 0 && w >= 0 && h >= 0 && x + w <= targetCtx.canvas.width && y + h <= targetCtx.canvas.height)) return;
 
+    let { clearValue } = this;
     const depthTexture = this.prepareCtx(targetCtx);
     // 绘制背景 只支持纯色
-    const clearValue = { r: 1, g: 0, b: 0, a: 1 };
     const bgColor = scene.background as Color | undefined;
-    if (bgColor && bgColor.isColor) Color.prototype.copy.call(clearValue, bgColor);
+    if (bgColor && bgColor.isColor) {
+      clearValue = { r: bgColor.r, g: bgColor.g, b: bgColor.b, a: 1 };
+    }
 
     // 更新矩阵
     scene.updateMatrixWorld();
@@ -423,21 +439,22 @@ export class WebGPURenderer {
         {
           view: useOpaquePass ? this.opaquePass.colorView! : canvasColorView,
           clearValue,
-          loadOp: 'clear',
+          loadOp: this.clearColor ? 'clear' : 'load',
           storeOp: 'store',
         },
       ],
       depthStencilAttachment: {
         view: useOpaquePass ? this.opaquePass.depthView! : canvasDepthView,
         depthClearValue: 1,
-        depthLoadOp: 'clear',
+        depthLoadOp: this.clearDepth ? 'clear' : 'load',
         depthStoreOp: 'store',
       },
     });
 
-    const { width: w, height: h } = targetCtx.canvas;
-    passEncoder.setViewport(0, 0, w, h, 0, 1);
-    passEncoder.setScissorRect(0, 0, w, h);
+    if (!useOpaquePass) {
+      passEncoder.setViewport(...this.viewport, 0, 1);
+      passEncoder.setScissorRect(...this.scissor);
+    }
 
     opaqueList.forEach(node => this.drawMesh(node, passEncoder));
     if (useOpaquePass) {
@@ -447,18 +464,20 @@ export class WebGPURenderer {
           {
             view: canvasColorView,
             clearValue,
-            loadOp: 'clear',
+            loadOp: this.clearColor ? 'clear' : 'load',
             storeOp: 'store',
           },
         ],
         depthStencilAttachment: {
           view: canvasDepthView,
           depthClearValue: 1,
-          depthLoadOp: 'clear',
+          depthLoadOp: this.clearDepth ? 'clear' : 'load',
           depthStoreOp: 'store',
         },
       });
       // render opaque mesh
+      passEncoder.setViewport(...this.viewport, 0, 1);
+      passEncoder.setScissorRect(...this.scissor);
       this.opaquePass.renderOpaque(passEncoder);
       transparentList.forEach(node => this.drawMesh(node, passEncoder));
       passEncoder.end();
@@ -469,6 +488,31 @@ export class WebGPURenderer {
 
     this.queue.submit([commandEncoder.finish()]);
     this.lastSubmit = this.queue.onSubmittedWorkDone();
+  }
+
+  clear(targetCtx: GPUCanvasContext) {
+    const depthTexture = this.prepareCtx(targetCtx);
+    const canvasColorView = targetCtx.getCurrentTexture().createView();
+    const canvasDepthView = depthTexture.createView();
+    const commandEncoder = this.device.createCommandEncoder();
+    const passEncoder = commandEncoder.beginRenderPass({
+      colorAttachments: [
+        {
+          view: canvasColorView,
+          clearValue: this.clearValue,
+          loadOp: 'clear',
+          storeOp: 'store',
+        },
+      ],
+      depthStencilAttachment: {
+        view: canvasDepthView,
+        depthClearValue: 1,
+        depthLoadOp: 'clear',
+        depthStoreOp: 'store',
+      },
+    });
+    passEncoder.end();
+    this.queue.submit([commandEncoder.finish()]);
   }
 
   async dispose() {
