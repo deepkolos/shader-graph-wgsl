@@ -19,7 +19,8 @@ import {
 import { PreviewClient } from './PreviewClient';
 import { ShaderGraphEditor } from '../../editors';
 import { Rete } from '../../types';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+// @ts-ignore 修复旋转上下翻转
+import { OrbitControls } from './OrbitControls';
 import { SGController, WebGPUMaterial, WebGPURenderer, disposeGeometry } from '../../materials';
 import { FloorShader } from './floorShader';
 

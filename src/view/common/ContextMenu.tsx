@@ -44,7 +44,7 @@ export const ContextMenu: FC<ContextMenuProps> = ({
     >
       {children}
       <Popup visiable={visiable} onShowChange={onVisiableChange} root={root}>
-        <MenuList x={position[0]} y={position[1]} items={items} root={root}></MenuList>
+        <MenuList z={6} x={position[0]} y={position[1]} items={items} root={root}></MenuList>
       </Popup>
     </div>
   );
