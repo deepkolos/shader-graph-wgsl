@@ -97,7 +97,7 @@ export class ShaderGraphCompiler extends GraphCompiler {
       return this.setVarNameMap(node, node.data.outValueName, vertVar, fragVar);
     }
 
-    return uniformVar
+    return uniformVar;
   }
 
   setVarNameMap(node: NodeName, key: string, vertName: string, fragName: string, varName?: string) {
@@ -605,7 +605,8 @@ ${code}`;
   }
 }
 
-const stringifyFloat = (num: number | number[]): string => {
+const stringifyFloat = (num: number | number[] | string): string => {
+  if (typeof num === 'string' && parseFloat(num).toString() !== num) return num;
   if (Array.isArray(num)) {
     num = num[0] || 0;
   }
@@ -617,7 +618,7 @@ const stringifyFloat = (num: number | number[]): string => {
   return str + '.0';
 };
 
-const stringifyVector = (value: number[], len: 2 | 3 | 4): string => {
+const stringifyVector = (value: Array<number | string>, len: 2 | 3 | 4): string => {
   return `vec${len}f(${new Array(len)
     .fill(0)
     .map((v, k) => stringifyFloat(value[k] || 0))
