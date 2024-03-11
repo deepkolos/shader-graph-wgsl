@@ -521,7 +521,7 @@
         "exposed": true,
         "expanded": true,
         "outValue": {
-          "id": "/example/demo/demoCartoonWater/flowmap.png",
+          "id": "asset/flowmap.png",
           "label": "flowmap.png"
         }
       },
@@ -837,7 +837,7 @@
         "exposed": true,
         "expanded": true,
         "outValue": {
-          "id": "/example/demo/demoCartoonWater/noise.png",
+          "id": "asset/noise.png",
           "label": "noise.png"
         }
       },
@@ -1099,7 +1099,7 @@
         "exposed": true,
         "expanded": true,
         "outValue": {
-          "id": "/example/demo/demoCartoonWater/noise.png",
+          "id": "asset/noise.png",
           "label": "noise.png"
         }
       },
@@ -2770,7 +2770,7 @@
       "name": "FlowTexture",
       "type": "texture2d",
       "defalutValue": {
-        "id": "/example/demo/demoCartoonWater/flowmap.png",
+        "id": "asset/flowmap.png",
         "label": "flowmap.png"
       },
       "exposed": true
@@ -2779,7 +2779,7 @@
       "name": "FoamTexture",
       "type": "texture2d",
       "defalutValue": {
-        "id": "/example/demo/demoCartoonWater/noise.png",
+        "id": "asset/noise.png",
         "label": "noise.png"
       },
       "exposed": true

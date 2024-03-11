@@ -31,7 +31,7 @@ import demoConstantBiasScaleSubGraph from './demo/demoConstantBiasScaleSubGraph.
 import demoFlowMapSubGraph from './demo/demoFlowMapSubGraph.json';
 import demoFlowMap from './demo/demoFlowMap.json';
 import demoImageFlip from './demo/demoImageFlip.json';
-import demoCartoonWater from './demo/demoCartoonWater';
+import demoCartoonWater from './demo/demoCartoonWater.json';
 import demoSkybox from './demo/demoSkybox.json';
 import demoSummberDissolve from './demo/demoSummberDissolve.json';
 import demoCustomMap from './demo/demoCustomMap.json';
