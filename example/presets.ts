@@ -33,6 +33,7 @@ import demoFlowMap from './demo/demoFlowMap.json';
 import demoImageFlip from './demo/demoImageFlip.json';
 import demoCartoonWater from './demo/demoCartoonWater';
 import demoSkybox from './demo/demoSkybox.json';
+import demoSummberDissolve from './demo/demoSummberDissolve.json';
 
 import * as gLTF from './dev/gLTF';
 
@@ -86,4 +87,5 @@ export const Presets = {
   demoImageFlip,
   demoCartoonWater,
   demoSkybox,
+  demoSummberDissolve,
 };
