@@ -32,7 +32,8 @@
               0
             ],
             "baseColorValueType": "vec3",
-            "expanded": true
+            "expanded": true,
+            "baseColorValueUsage": "color"
           },
           "inputs": {
             "baseColor": {
@@ -157,7 +158,11 @@
         "fnInBValueType": "float",
         "fnOutCValue": 0,
         "fnOutCValueType": "float",
-        "fileValueType": "string"
+        "fileValueType": "string",
+        "codeValue": "",
+        "codeValueType": "string",
+        "editingCodeValue": false,
+        "editingCodeValueType": "bool"
       },
       "inputs": {
         "fnInA": {
@@ -1010,6 +1015,94 @@
       "position": [
         42.11093591599987,
         1463.6416971836888
+      ],
+      "name": "PreviewNumber"
+    },
+    "1844": {
+      "id": 1844,
+      "data": {
+        "typeValue": "code",
+        "typeValueType": "string",
+        "nameValue": "myAdd2",
+        "nameValueType": "string",
+        "bodyValue": "",
+        "bodyValueType": "string",
+        "fileValueType": "string",
+        "expanded": true,
+        "preview": true,
+        "defineValue": "",
+        "defineValueType": "string",
+        "codeValue": "// Custom Function 示例\n\n// 注意事项: \n// 本代码将直接写入到wgsl内, 需注意复制后导致函数重复定义\n// 但会复用完全相同的代码片段\n\nfn myOtherFn2() -> f32 {\n  return 0.2;  \n}\n\n// FnName 填写的函数名 主函数入口 可以定义所需要辅助函数\n// 数据获取, 如UV Position 均可由有SG对应节点提供\n// FN_ARGS 等效于 in float A, in float B, out float Out\nfn myAdd2(FN_ARGS) {\n  *Out = A + B + myOtherFn2();\n}",
+        "codeValueType": "string",
+        "editingCodeValue": true,
+        "editingCodeValueType": "bool",
+        "fnInAValue": "0.5",
+        "fnInAValueType": "float",
+        "fnInBValue": "0.5",
+        "fnInBValueType": "float",
+        "fnOutOutValue": 0,
+        "fnOutOutValueType": "float"
+      },
+      "inputs": {
+        "fnInA": {
+          "connections": []
+        },
+        "fnInB": {
+          "connections": []
+        }
+      },
+      "outputs": {
+        "fnOutOut": {
+          "connections": [
+            {
+              "node": 1901,
+              "input": "in",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "blocks": [],
+      "position": [
+        643.6698623101295,
+        550.3080800495607
+      ],
+      "name": "CustomFunction"
+    },
+    "1901": {
+      "id": 1901,
+      "data": {
+        "inValue": 0,
+        "inValueType": "float",
+        "outValue": [
+          0,
+          0,
+          0
+        ],
+        "outValueType": "vec3",
+        "expanded": true,
+        "preview": true
+      },
+      "inputs": {
+        "in": {
+          "connections": [
+            {
+              "node": 1844,
+              "output": "fnOutOut",
+              "data": {}
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "out": {
+          "connections": []
+        }
+      },
+      "blocks": [],
+      "position": [
+        1098.3933176665905,
+        298.7296816846993
       ],
       "name": "PreviewNumber"
     }

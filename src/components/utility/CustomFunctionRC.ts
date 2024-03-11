@@ -1,24 +1,15 @@
 import { ShaderGraphCompiler, SGNodeOutput } from '../../compilers';
 import { SGNodeData } from '../../editors';
 import { Sockets } from '../../sockets';
-import {
-  ExtendReteNode,
-  ValueType,
-  Rete,
-  ReteNode,
-  ValueTypeCtor,
-  isVectorType,
-  NodeListCfg,
-  AssetValue,
-} from '../../types';
+import { ExtendReteNode, ValueType, Rete, ReteNode, ValueTypeCtor, isVectorType, NodeListCfg, AssetValue } from '../../types';
 import { capitalizeFirstLetter, hash, removeWhiteSpace } from '../../utils';
-import { NodeView, DynamicControl, ListIOItem, ListIOItemValue, AssetControl } from '../../view';
+import { NodeView, DynamicControl, ListIOItem, ListIOItemValue, AssetControl, CustomFunctionControl } from '../../view';
 import { RC } from '../ReteComponent';
 
 export type ReteCustomFunctionNode = ExtendReteNode<
   'CustomFunction',
   {
-    typeValue: 'file' | 'string';
+    typeValue: 'file' | 'string' | 'code';
     typeValueType: ValueType.string;
     nameValue: string;
     nameValueType: ValueType.string;
@@ -26,6 +17,10 @@ export type ReteCustomFunctionNode = ExtendReteNode<
     bodyValueType: ValueType.string;
     fileValue: AssetValue;
     fileValueType: ValueType.string;
+    codeValue: string;
+    codeValueType: ValueType.string;
+    editingCodeValue: boolean;
+    editingCodeValueType: ValueType.bool;
     [k: `fnIn${string}Value`]: any;
     [k: `fnIn${string}Type`]: ValueType;
     [k: `fnOut${string}Value`]: any;
@@ -38,11 +33,7 @@ const onAdd = (list: ListIOItemValue[]): ListIOItemValue => ({
   type: ValueType.float,
 });
 const onDel = () => {};
-const onInputChange = (
-  node: ReteNode,
-  list: ListIOItemValue[],
-  editor: Rete.NodeEditor,
-): boolean => {
+const onInputChange = (node: ReteNode, list: ListIOItemValue[], editor: Rete.NodeEditor): boolean => {
   const nodeView = editor.view.nodes.get(node);
   node.inputs.forEach(input => {
     const name = input.key.replace('fnIn', '');
@@ -69,11 +60,7 @@ const onInputChange = (
   });
   return true;
 };
-const onOutputChange = (
-  node: ReteNode,
-  list: ListIOItemValue[],
-  editor: Rete.NodeEditor,
-): boolean => {
+const onOutputChange = (node: ReteNode, list: ListIOItemValue[], editor: Rete.NodeEditor): boolean => {
   const nodeView = editor.view.nodes.get(node);
   node.outputs.forEach(output => {
     const name = output.key.replace('fnOut', '');
@@ -104,7 +91,7 @@ const onNameChange = (node: ReteNode, value: string): boolean => {
   return true;
 };
 // const TypeOptions = ['file', 'string'];
-const TypeOptions = ['string'];
+const TypeOptions = ['string', 'code'];
 const TypeExcludes = {
   file: ['Body'],
   string: ['File'],
@@ -121,10 +108,12 @@ export class CustomFunctionRC extends RC {
 
   initNode(node: ReteCustomFunctionNode) {
     const { data, meta } = node;
-    node.initValueType('type', 'string', ValueType.string);
+    node.initValueType('type', 'code', ValueType.string);
     node.initValueType('name', '', ValueType.string);
     node.initValueType('body', '', ValueType.string);
     node.initValueType('file', undefined, ValueType.string);
+    node.initValueType('code', '', ValueType.string);
+    node.initValueType('editingCode', false, ValueType.bool);
     data.expanded ??= true;
 
     meta.previewDisabled = false;
@@ -152,10 +141,8 @@ export class CustomFunctionRC extends RC {
     const outputList: ListIOItemValue[] = [];
     Object.keys(node.data).forEach(key => {
       const name = key.replace('Value', '').replace('fnIn', '').replace('fnOut', '');
-      if (key.startsWith('fnIn') && key.endsWith('Value'))
-        inputList.push({ name, type: node.data[`fnIn${name}ValueType`] });
-      if (key.startsWith('fnOut') && key.endsWith('Value'))
-        outputList.push({ name, type: node.data[`fnOut${name}ValueType`] });
+      if (key.startsWith('fnIn') && key.endsWith('Value')) inputList.push({ name, type: node.data[`fnIn${name}ValueType`] });
+      if (key.startsWith('fnOut') && key.endsWith('Value')) outputList.push({ name, type: node.data[`fnOut${name}ValueType`] });
     });
 
     if (this.editor) {
@@ -166,45 +153,57 @@ export class CustomFunctionRC extends RC {
     (nodeCfgs.Inputs as NodeListCfg).list = inputList;
     (nodeCfgs.Outputs as NodeListCfg).list = outputList;
     node.meta.label = node.data.nameValue + '(Custom Function)';
+    node.addControl(new CustomFunctionControl(node, this.editor!));
   }
 
-  compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteCustomFunctionNode>): SGNodeOutput {
+  static getInputOutputList(node: SGNodeData<ReteCustomFunctionNode>) {
     const inputs: string[] = [];
     const outputs: string[] = [];
     Object.keys(node.data).forEach(key => {
-      const prefix = key.replace('Value', '');
-      if (key.startsWith('fnIn') && key.endsWith('Value')) inputs.push(prefix);
-      if (key.startsWith('fnOut') && key.endsWith('Value')) outputs.push(prefix);
+      const prefix = key.replace('ValueType', '');
+      if (key.startsWith('fnIn') && key.endsWith('ValueType')) inputs.push(prefix);
+      if (key.startsWith('fnOut') && key.endsWith('ValueType')) outputs.push(prefix);
     });
+    return { inputs, outputs };
+  }
 
-    const inVars = inputs.map(key => compiler.getInputVarConverted(node, key));
-    const outVars = outputs.map(key => compiler.getOutVarName(node, key, 'fnOut'));
-
-    const codeFn = (varName: string) => {
-      const args = [...inputs, ...outputs].map(i => {
+  static getFnArgsCode(compiler: ShaderGraphCompiler, node: SGNodeData<ReteCustomFunctionNode>) {
+    const { inputs, outputs } = CustomFunctionRC.getInputOutputList(node);
+    return [...inputs, ...outputs]
+      .map(i => {
         const typeClass = compiler.getTypeClass(node.data[i + 'ValueType']);
         const isIn = i.startsWith('fnIn');
         const varName = i.replace(isIn ? 'fnIn' : 'fnOut', '');
         return `${varName}: ${isIn ? typeClass : `ptr<function, ${typeClass}>`}`;
-      });
-      return /* wgsl */ `
-fn ${varName}(${args.join(', ')}) {
-  ${outputs.reduce((body, out) => {
-    const outVarInBody = out.replace('fnOut', '');
-    return body.replace(outVarInBody, `*${outVarInBody}`);
-  }, node.data.bodyValue)}
-}`;
-    };
-    const fnVar = compiler.setContext(
-      'defines',
-      node,
-      `${removeWhiteSpace(node.data.nameValue)}_${hash(node.data.bodyValue)}`,
-      codeFn,
-    );
+      })
+      .join(', ');
+  }
 
-    const outVarDefineCode = outputs
-      .map((v, k) => `var ${outVars[k]}: ${compiler.getTypeClass(node.data[v + 'ValueType'])};`)
-      .join(' ');
+  compileSG(compiler: ShaderGraphCompiler, node: SGNodeData<ReteCustomFunctionNode>): SGNodeOutput {
+    const { inputs, outputs } = CustomFunctionRC.getInputOutputList(node);
+    const inVars = inputs.map(key => compiler.getInputVarConverted(node, key));
+    const outVars = outputs.map(key => compiler.getOutVarName(node, key, 'fnOut'));
+
+    let fnVar = '';
+    const { typeValue, codeValue, nameValue, bodyValue } = node.data;
+    const argsCode = CustomFunctionRC.getFnArgsCode(compiler, node);
+    if (typeValue === 'string') {
+      const codeFn = (varName: string) => {
+        return /* wgsl */ `
+  fn ${varName}(${argsCode}) {
+    ${outputs.reduce((body, out) => {
+      const outVarInBody = out.replace('fnOut', '');
+      return body.replace(outVarInBody, `*${outVarInBody}`);
+    }, bodyValue)}
+  }`;
+      };
+      fnVar = compiler.setContext('defines', node, `${removeWhiteSpace(node.data.nameValue)}_${hash(node.data.bodyValue)}`, codeFn);
+    } else if (typeValue === 'code') {
+      const code = codeValue.replace(/FN_ARGS/g, argsCode);
+      fnVar = compiler.setContext('defines', node, hash(code), { varName: nameValue, code });
+    }
+
+    const outVarDefineCode = outputs.map((v, k) => `var ${outVars[k]}: ${compiler.getTypeClass(node.data[v + 'ValueType'])};`).join(' ');
 
     return {
       outputs: outputs.reduce((acc, curr, i) => {
@@ -212,9 +211,7 @@ fn ${varName}(${args.join(', ')}) {
         acc[curr] = outVars[i];
         return acc;
       }, {}),
-      code: `${outVarDefineCode} ${fnVar}(${[...inVars, ...outVars.map(i => `&${i}`)].join(
-        ', ',
-      )});`,
+      code: `${outVarDefineCode} ${fnVar}(${[...inVars, ...outVars.map(i => `&${i}`)].join(', ')});`,
     };
   }
 }

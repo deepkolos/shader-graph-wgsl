@@ -30,6 +30,14 @@
     "three": "^0.151.3",
     "copy-to-clipboard": "3.3.3",
     "rete-area-plugin": "^0.2.1",
+    "@codemirror/lint": "^6.4.2",
+    "@iizukak/codemirror-lang-wgsl": "^0.3.0",
+    "@codemirror/state": "^6.0.1",
+    "@codemirror/commands": "^6.3.3",
+    "@codemirror/language": "^6.10.1",
+    "@codemirror/view": "^6.25.1",
+    "@codemirror/theme-one-dark": "^6.1.2",
+    "codemirror": "^6.0.1",
     "use-debounce": "^9.0.4"
   },
   "devDependencies": {

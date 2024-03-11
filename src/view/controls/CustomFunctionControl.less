@@ -1,0 +1,57 @@
+.sg-custom-fn {
+  position: absolute;
+  left: 100%;
+
+  &-can {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2; // 位于preview canvas之上
+    transform-origin: top left;
+    background-color: #2b2b2b;
+  }
+
+  @headH: 35px;
+
+  &-btn {
+    user-select: none;
+    cursor: pointer;
+    &-toogle {
+      width: @headH;
+      height: @headH;
+      font-size: 25px;
+      text-align: center;
+      line-height: @headH;
+      position: absolute;
+    }
+
+    &-help {
+      margin: 0 5px;
+    }
+  }
+
+  &-head {
+    height: @headH;
+    display: flex;
+    align-items: center;
+    padding-left: @headH;
+  }
+
+  &-name {
+    margin: 0 5px;
+  }
+
+  &-editor {
+    text-align: left;
+    font-size: 18px;
+
+    .cm-tooltip {
+      // Transform 生成的staking context fixed 也不再 fixed
+      position: absolute !important;
+      top: unset !important;
+      left: 0 !important;
+      bottom: 0 !important;
+      transform: translateY(100%);
+    }
+  }
+}

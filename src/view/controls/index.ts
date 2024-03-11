@@ -11,3 +11,4 @@ export * from './BoolControl';
 export * from './InputGridControl';
 export * from './SelectDualControl';
 export * from './ChannelMixerControl';
+export * from './CustomFunctionControl';
